@@ -1473,17 +1473,17 @@ Step 166:
   stack:             [None]
 
 ================================================
-Running thread T2: player(1)
+Running thread T4: player(3)
 mode:  runnable
-stack: ['1']
+stack: ['3']
 other threads:
   T0: pc=1628 terminated atomic __init__()
   T1: pc=1233 runnable game_umpire(?thegame)
     about to run method game_umpire with argument ?thegame
+  T2: pc=1580 runnable player(1)
+    about to run method player with argument 1
   T3: pc=1580 runnable player(2)
     about to run method player with argument 2
-  T4: pc=1580 runnable player(3)
-    about to run method player with argument 3
   T5: pc=1580 runnable player(4)
     about to run method player with argument 4
   T6: pc=1580 runnable player(5)
@@ -1492,19 +1492,19 @@ other threads:
     about to run method player with argument 6
 shared variables:
   thegame: { "active_game": {:}, "lock": False, "players": {:}, "team1": {}, "team2": {}, "waiting": [] }
-state id: 2
+state id: 4
 ================================================
 
 Step 167:
   program counter:   1580
   hvm code:          Frame player(self)
-  explanation:       pop argument (1), assign to self, and run method "player"
+  explanation:       pop argument (3), assign to self, and run method "player"
   start statement:   line=6 column=1
   end statement:     line=6 column=17
   source code:       def player(self):
                      ^^^^^^^^^^^^^^^^^
-  method variables:  { self: 1 }
-  call trace:        player(1)
+  method variables:  { self: 3 }
+  call trace:        player(3)
   stack:             [{:}]
 
 Step 168:
@@ -1536,39 +1536,39 @@ Step 170:
 Step 171:
   program counter:   1584
   hvm code:          LoadVar self
-  explanation:       push value (1) of variable "self"
+  explanation:       push value (3) of variable "self"
   source code:       let (team1, team2) = game_join(?thegame, self):
                                                               ^^^^
-  stack:             [{:}, [ ?thegame ], 1]
+  stack:             [{:}, [ ?thegame ], 3]
 
 Step 172:
   program counter:   1585
   hvm code:          2-ary ListAdd
-  explanation:       pop 2 values (1, [?thegame]); insert first value into the second; push result ([?thegame, 1])
+  explanation:       pop 2 values (3, [?thegame]); insert first value into the second; push result ([?thegame, 3])
   source code:       let (team1, team2) = game_join(?thegame, self):
                                                     ^^^^^^^^^^^^^^
-  stack:             [{:}, [ ?thegame, 1 ]]
+  stack:             [{:}, [ ?thegame, 3 ]]
 
 Step 173:
   program counter:   1586
   hvm code:          Apply PC(1377)
-  explanation:       pop an argument ([?thegame, 1]) and call method (1377: "game_join")
+  explanation:       pop an argument ([?thegame, 3]) and call method (1377: "game_join")
   source code:       let (team1, team2) = game_join(?thegame, self):
                                           ^^^^^^^^^^^^^^^^^^^^^^^^^
-  call trace:        player(1) --> game_join(?thegame, 1)
-  stack:             [{:}, [], 25378, [ ?thegame, 1 ]]
+  call trace:        player(3) --> game_join(?thegame, 3)
+  stack:             [{:}, [], 25378, [ ?thegame, 3 ]]
 
 Step 174:
   program counter:   1377
   hvm code:          Frame game_join(g, id)
-  explanation:       pop argument ([?thegame, 1]), assign to (g, id), and run method "game_join"
+  explanation:       pop argument ([?thegame, 3]), assign to (g, id), and run method "game_join"
   module:            game
   start statement:   line=33 column=1
   end statement:     line=33 column=35
   source code:       def game_join(g, id) returns teams:
                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  method variables:  { g: ?thegame, id: 1 }
-  stack:             [{:}, [], 25378, { "self": 1 }]
+  method variables:  { g: ?thegame, id: 3 }
+  stack:             [{:}, [], 25378, { "self": 3 }]
 
 Step 175:
   program counter:   1378
@@ -1578,7 +1578,7 @@ Step 175:
   end statement:     line=34 column=21
   source code:       acquire(?g->lock)
                               ^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame]
 
 Step 176:
   program counter:   1379
@@ -1586,7 +1586,7 @@ Step 176:
   explanation:       push constant "lock"
   source code:       acquire(?g->lock)
                                  ^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame, "lock"]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame, "lock"]
 
 Step 177:
   program counter:   1380
@@ -1594,7 +1594,7 @@ Step 177:
   explanation:       pop 2 values ("lock", ?thegame); push result (?thegame["lock"])
   source code:       acquire(?g->lock)
                               ^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame["lock"]]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame["lock"]]
 
 Step 178:
   program counter:   1381
@@ -1602,8 +1602,8 @@ Step 178:
   explanation:       pop an argument (?thegame["lock"]) and call method (954: "acquire")
   source code:       acquire(?g->lock)
                      ^^^^^^^^^^^^^^^^^
-  call trace:        player(1) --> game_join(?thegame, 1) --> acquire(?thegame["lock"])
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22098, ?thegame["lock"]]
+  call trace:        player(3) --> game_join(?thegame, 3) --> acquire(?thegame["lock"])
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22098, ?thegame["lock"]]
 
 Step 179:
   program counter:   954
@@ -1615,7 +1615,7 @@ Step 179:
   source code:       def acquire(binsema):
                      ^^^^^^^^^^^^^^^^^^^^^
   method variables:  { binsema: ?thegame["lock"] }
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22098, { "g": ?thegame, "id": 1 }]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22098, { "g": ?thegame, "id": 3 }]
 
 Step 180:
   program counter:   955
@@ -1624,7 +1624,7 @@ Step 180:
   start statement:   line=35 column=16
   end statement:     line=37 column=6
   source code:       atomically when not !binsema:
-  call trace:        player(1) --> game_join(?thegame, 1) --> acquire(?thegame["lock"])
+  call trace:        player(3) --> game_join(?thegame, 3) --> acquire(?thegame["lock"])
 
 Step 181:
   program counter:   956
@@ -1640,7 +1640,7 @@ Step 182:
   end statement:     line=35 column=32
   source code:       atomically when not !binsema:
                                           ^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22098, { "g": ?thegame, "id": 1 }, ?thegame["lock"]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22098, { "g": ?thegame, "id": 3 }, ?thegame["lock"]]
 
 Step 183:
   program counter:   958
@@ -1648,7 +1648,7 @@ Step 183:
   explanation:       pop address (?thegame["lock"]) and push value (False)
   source code:       atomically when not !binsema:
                                          ^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22098, { "g": ?thegame, "id": 1 }, False]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22098, { "g": ?thegame, "id": 3 }, False]
 
 Step 184:
   program counter:   959
@@ -1656,7 +1656,7 @@ Step 184:
   explanation:       pop a value (False); logical not; push result (True)
   source code:       atomically when not !binsema:
                                      ^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22098, { "g": ?thegame, "id": 1 }, True]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22098, { "g": ?thegame, "id": 3 }, True]
 
 Step 185:
   program counter:   960
@@ -1664,7 +1664,7 @@ Step 185:
   explanation:       pop value (True), compare to False, and jump to 962 if the same
   source code:       atomically when not !binsema:
                                 ^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22098, { "g": ?thegame, "id": 1 }]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22098, { "g": ?thegame, "id": 3 }]
 
 Step 186:
   program counter:   961
@@ -1688,7 +1688,7 @@ Step 188:
   end statement:     line=36 column=23
   source code:       !binsema = True
                       ^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22098, { "g": ?thegame, "id": 1 }, ?thegame["lock"]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22098, { "g": ?thegame, "id": 3 }, ?thegame["lock"]]
 
 Step 189:
   program counter:   967
@@ -1704,7 +1704,7 @@ Step 190:
   explanation:       push constant True
   source code:       !binsema = True
                                 ^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22098, { "g": ?thegame, "id": 1 }, ?thegame["lock"], True]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22098, { "g": ?thegame, "id": 3 }, ?thegame["lock"], True]
 
 Step 191:
   program counter:   969
@@ -1713,7 +1713,7 @@ Step 191:
   source code:       !binsema = True
                      ^^^^^^^^^^
   shared variables:  { thegame: { "active_game": {:}, "lock": True, "players": {:}, "team1": {}, "team2": {}, "waiting": [] } }
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22098, { "g": ?thegame, "id": 1 }]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22098, { "g": ?thegame, "id": 3 }]
 
 Step 192:
   program counter:   970
@@ -1732,9 +1732,9 @@ Step 193:
   end statement:     line=34 column=21
   source code:       def acquire(binsema):
                      ^^^^^^^^^^^^^^^^^^^^^
-  method variables:  { g: ?thegame, id: 1 }
-  call trace:        player(1) --> game_join(?thegame, 1)
-  stack:             [{:}, [], 25378, { "self": 1 }, None]
+  method variables:  { g: ?thegame, id: 3 }
+  call trace:        player(3) --> game_join(?thegame, 3)
+  stack:             [{:}, [], 25378, { "self": 3 }, None]
 
 Step 194:
   program counter:   1382
@@ -1745,7 +1745,7 @@ Step 194:
   end statement:     line=34 column=21
   source code:       acquire(?g->lock)
                      ^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }]
+  stack:             [{:}, [], 25378, { "self": 3 }]
 
 Step 195:
   program counter:   1383
@@ -1755,7 +1755,7 @@ Step 195:
   end statement:     line=36 column=35
   source code:       g->waiting = g->waiting + [id,]
                      ^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame]
 
 Step 196:
   program counter:   1384
@@ -1763,7 +1763,7 @@ Step 196:
   explanation:       push constant "waiting"
   source code:       g->waiting = g->waiting + [id,]
                         ^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame, "waiting"]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame, "waiting"]
 
 Step 197:
   program counter:   1385
@@ -1771,7 +1771,7 @@ Step 197:
   explanation:       pop 2 values ("waiting", ?thegame); push result (?thegame["waiting"])
   source code:       g->waiting = g->waiting + [id,]
                      ^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame["waiting"]]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame["waiting"]]
 
 Step 198:
   program counter:   1386
@@ -1779,7 +1779,7 @@ Step 198:
   explanation:       push value (?thegame) of variable "g"
   source code:       g->waiting = g->waiting + [id,]
                                   ^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame["waiting"], ?thegame]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame["waiting"], ?thegame]
 
 Step 199:
   program counter:   1387
@@ -1787,7 +1787,7 @@ Step 199:
   explanation:       push constant "waiting"
   source code:       g->waiting = g->waiting + [id,]
                                      ^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame["waiting"], ?thegame, "waiting"]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame["waiting"], ?thegame, "waiting"]
 
 Step 200:
   program counter:   1388
@@ -1795,7 +1795,7 @@ Step 200:
   explanation:       pop 2 values ("waiting", ?thegame); push result (?thegame["waiting"])
   source code:       g->waiting = g->waiting + [id,]
                                   ^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame["waiting"], ?thegame["waiting"]]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame["waiting"], ?thegame["waiting"]]
 
 Step 201:
   program counter:   1389
@@ -1803,8 +1803,8 @@ Step 201:
   explanation:       pop address (?thegame["waiting"]) and push value ([])
   start expression:  line=36 column=18
   end expression:    line=36 column=27
-  call trace:        player(1) --> game_join(?thegame, 1)
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame["waiting"], []]
+  call trace:        player(3) --> game_join(?thegame, 3)
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame["waiting"], []]
 
 Step 202:
   program counter:   1390
@@ -1812,41 +1812,41 @@ Step 202:
   explanation:       building a tuple: push constant ()
   source code:       g->waiting = g->waiting + [id,]
                                                 ^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame["waiting"], [], []]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame["waiting"], [], []]
 
 Step 203:
   program counter:   1391
   hvm code:          LoadVar id
-  explanation:       push value (1) of variable "id"
+  explanation:       push value (3) of variable "id"
   source code:       g->waiting = g->waiting + [id,]
                                                 ^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame["waiting"], [], [], 1]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame["waiting"], [], [], 3]
 
 Step 204:
   program counter:   1392
   hvm code:          2-ary ListAdd
-  explanation:       pop 2 values (1, []); insert first value into the second; push result ([1])
+  explanation:       pop 2 values (3, []); insert first value into the second; push result ([3])
   source code:       g->waiting = g->waiting + [id,]
                                                 ^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame["waiting"], [], [ 1 ]]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame["waiting"], [], [ 3 ]]
 
 Step 205:
   program counter:   1393
   hvm code:          2-ary +
-  explanation:       pop 2 values ([1], []); concatenate the lists; push result ([1])
+  explanation:       pop 2 values ([3], []); concatenate the lists; push result ([3])
   source code:       g->waiting = g->waiting + [id,]
                                   ^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame["waiting"], [ 1 ]]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame["waiting"], [ 3 ]]
 
 Step 206:
   program counter:   1394
   hvm code:          Store
-  explanation:       pop value ([1]) and address (?thegame["waiting"]) and store
+  explanation:       pop value ([3]) and address (?thegame["waiting"]) and store
   source code:       g->waiting = g->waiting + [id,]
                      ^^^^^^^^^^^^
-  shared variables:  { thegame: { "active_game": {:}, "lock": True, "players": {:}, "team1": {}, "team2": {}, "waiting": [ 1 ] } }
-  call trace:        player(1) --> game_join(?thegame, 1)
-  stack:             [{:}, [], 25378, { "self": 1 }]
+  shared variables:  { thegame: { "active_game": {:}, "lock": True, "players": {:}, "team1": {}, "team2": {}, "waiting": [ 3 ] } }
+  call trace:        player(3) --> game_join(?thegame, 3)
+  stack:             [{:}, [], 25378, { "self": 3 }]
 
 Step 207:
   program counter:   1395
@@ -1856,7 +1856,7 @@ Step 207:
   end statement:     line=39 column=53
   source code:       if (len(g->team1) == 0) and (len(g->team2) == 0):
                              ^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame]
 
 Step 208:
   program counter:   1396
@@ -1864,7 +1864,7 @@ Step 208:
   explanation:       push constant "team1"
   source code:       if (len(g->team1) == 0) and (len(g->team2) == 0):
                                 ^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame, "team1"]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame, "team1"]
 
 Step 209:
   program counter:   1397
@@ -1872,7 +1872,7 @@ Step 209:
   explanation:       pop 2 values ("team1", ?thegame); push result (?thegame["team1"])
   source code:       if (len(g->team1) == 0) and (len(g->team2) == 0):
                              ^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame["team1"]]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame["team1"]]
 
 Step 210:
   program counter:   1398
@@ -1880,8 +1880,8 @@ Step 210:
   explanation:       pop address (?thegame["team1"]) and push value ({})
   start expression:  line=39 column=13
   end expression:    line=39 column=20
-  call trace:        player(1) --> game_join(?thegame, 1)
-  stack:             [{:}, [], 25378, { "self": 1 }, {}]
+  call trace:        player(3) --> game_join(?thegame, 3)
+  stack:             [{:}, [], 25378, { "self": 3 }, {}]
 
 Step 211:
   program counter:   1399
@@ -1889,7 +1889,7 @@ Step 211:
   explanation:       pop a value ({}); push result (0)
   source code:       if (len(g->team1) == 0) and (len(g->team2) == 0):
                          ^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, 0]
+  stack:             [{:}, [], 25378, { "self": 3 }, 0]
 
 Step 212:
   program counter:   1400
@@ -1897,7 +1897,7 @@ Step 212:
   explanation:       push constant 0
   source code:       if (len(g->team1) == 0) and (len(g->team2) == 0):
                                           ^
-  stack:             [{:}, [], 25378, { "self": 1 }, 0, 0]
+  stack:             [{:}, [], 25378, { "self": 3 }, 0, 0]
 
 Step 213:
   program counter:   1401
@@ -1905,7 +1905,7 @@ Step 213:
   explanation:       pop 2 values (0, 0); check if both values are the same; push result (True)
   source code:       if (len(g->team1) == 0) and (len(g->team2) == 0):
                          ^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, True]
+  stack:             [{:}, [], 25378, { "self": 3 }, True]
 
 Step 214:
   program counter:   1402
@@ -1913,7 +1913,7 @@ Step 214:
   explanation:       pop value (True), compare to False, and jump to 1411 if the same
   source code:       if (len(g->team1) == 0) and (len(g->team2) == 0):
                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }]
+  stack:             [{:}, [], 25378, { "self": 3 }]
 
 Step 215:
   program counter:   1403
@@ -1921,7 +1921,7 @@ Step 215:
   explanation:       push value (?thegame) of variable "g"
   source code:       if (len(g->team1) == 0) and (len(g->team2) == 0):
                                                       ^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame]
 
 Step 216:
   program counter:   1404
@@ -1929,7 +1929,7 @@ Step 216:
   explanation:       push constant "team2"
   source code:       if (len(g->team1) == 0) and (len(g->team2) == 0):
                                                          ^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame, "team2"]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame, "team2"]
 
 Step 217:
   program counter:   1405
@@ -1937,7 +1937,7 @@ Step 217:
   explanation:       pop 2 values ("team2", ?thegame); push result (?thegame["team2"])
   source code:       if (len(g->team1) == 0) and (len(g->team2) == 0):
                                                       ^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame["team2"]]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame["team2"]]
 
 Step 218:
   program counter:   1406
@@ -1945,8 +1945,8 @@ Step 218:
   explanation:       pop address (?thegame["team2"]) and push value ({})
   start expression:  line=39 column=38
   end expression:    line=39 column=45
-  call trace:        player(1) --> game_join(?thegame, 1)
-  stack:             [{:}, [], 25378, { "self": 1 }, {}]
+  call trace:        player(3) --> game_join(?thegame, 3)
+  stack:             [{:}, [], 25378, { "self": 3 }, {}]
 
 Step 219:
   program counter:   1407
@@ -1954,7 +1954,7 @@ Step 219:
   explanation:       pop a value ({}); push result (0)
   source code:       if (len(g->team1) == 0) and (len(g->team2) == 0):
                                                   ^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, 0]
+  stack:             [{:}, [], 25378, { "self": 3 }, 0]
 
 Step 220:
   program counter:   1408
@@ -1962,7 +1962,7 @@ Step 220:
   explanation:       push constant 0
   source code:       if (len(g->team1) == 0) and (len(g->team2) == 0):
                                                                    ^
-  stack:             [{:}, [], 25378, { "self": 1 }, 0, 0]
+  stack:             [{:}, [], 25378, { "self": 3 }, 0, 0]
 
 Step 221:
   program counter:   1409
@@ -1970,7 +1970,7 @@ Step 221:
   explanation:       pop 2 values (0, 0); check if both values are the same; push result (True)
   source code:       if (len(g->team1) == 0) and (len(g->team2) == 0):
                                                   ^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, True]
+  stack:             [{:}, [], 25378, { "self": 3 }, True]
 
 Step 222:
   program counter:   1410
@@ -1985,7 +1985,7 @@ Step 223:
   explanation:       pop value (True), compare to False, and jump to 1418 if the same
   source code:       if (len(g->team1) == 0) and (len(g->team2) == 0):
                      ^^
-  stack:             [{:}, [], 25378, { "self": 1 }]
+  stack:             [{:}, [], 25378, { "self": 3 }]
 
 Step 224:
   program counter:   1413
@@ -1995,7 +1995,7 @@ Step 224:
   end statement:     line=40 column=31
   source code:       notify(?g->active_game)
                              ^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame]
 
 Step 225:
   program counter:   1414
@@ -2003,7 +2003,7 @@ Step 225:
   explanation:       push constant "active_game"
   source code:       notify(?g->active_game)
                                 ^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame, "active_game"]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame, "active_game"]
 
 Step 226:
   program counter:   1415
@@ -2011,7 +2011,7 @@ Step 226:
   explanation:       pop 2 values ("active_game", ?thegame); push result (?thegame["active_game"])
   source code:       notify(?g->active_game)
                              ^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame["active_game"]]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame["active_game"]]
 
 Step 227:
   program counter:   1416
@@ -2019,8 +2019,8 @@ Step 227:
   explanation:       pop an argument (?thegame["active_game"]) and call method (1067: "notify")
   source code:       notify(?g->active_game)
                      ^^^^^^^^^^^^^^^^^^^^^^^
-  call trace:        player(1) --> game_join(?thegame, 1) --> notify(?thegame["active_game"])
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22658, ?thegame["active_game"]]
+  call trace:        player(3) --> game_join(?thegame, 3) --> notify(?thegame["active_game"])
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22658, ?thegame["active_game"]]
 
 Step 228:
   program counter:   1067
@@ -2032,7 +2032,7 @@ Step 228:
   source code:       def notify(c):
                      ^^^^^^^^^^^^^^
   method variables:  { c: ?thegame["active_game"] }
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22658, { "g": ?thegame, "id": 1 }]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22658, { "g": ?thegame, "id": 3 }]
 
 Step 229:
   program counter:   1068
@@ -2041,7 +2041,7 @@ Step 229:
   start statement:   line=57 column=16
   end statement:     line=59 column=6
   source code:       atomically if !c != bag.empty():
-  call trace:        player(1) --> game_join(?thegame, 1) --> notify(?thegame["active_game"])
+  call trace:        player(3) --> game_join(?thegame, 3) --> notify(?thegame["active_game"])
 
 Step 230:
   program counter:   1069
@@ -2051,7 +2051,7 @@ Step 230:
   end statement:     line=57 column=36
   source code:       atomically if !c != bag.empty():
                                     ^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22658, { "g": ?thegame, "id": 1 }, ?thegame["active_game"]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22658, { "g": ?thegame, "id": 3 }, ?thegame["active_game"]]
 
 Step 231:
   program counter:   1070
@@ -2059,7 +2059,7 @@ Step 231:
   explanation:       pop address (?thegame["active_game"]) and push value ({:})
   source code:       atomically if !c != bag.empty():
                                    ^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22658, { "g": ?thegame, "id": 1 }, {:}]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22658, { "g": ?thegame, "id": 3 }, {:}]
 
 Step 232:
   program counter:   1071
@@ -2067,7 +2067,7 @@ Step 232:
   explanation:       push program counter constant 541 ()
   source code:       atomically if !c != bag.empty():
                                          ^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22658, { "g": ?thegame, "id": 1 }, {:}, PC(541)]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22658, { "g": ?thegame, "id": 3 }, {:}, PC(541)]
 
 Step 233:
   program counter:   1072
@@ -2075,7 +2075,7 @@ Step 233:
   explanation:       push constant ()
   source code:       atomically if !c != bag.empty():
                                                   ^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22658, { "g": ?thegame, "id": 1 }, {:}, PC(541), []]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22658, { "g": ?thegame, "id": 3 }, {:}, PC(541), []]
 
 Step 234:
   program counter:   1073
@@ -2083,7 +2083,7 @@ Step 234:
   explanation:       pop 2 values ([], PC(541)); push result (?PC(541)[[]])
   source code:       atomically if !c != bag.empty():
                                          ^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22658, { "g": ?thegame, "id": 1 }, {:}, ?PC(541)[[]]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22658, { "g": ?thegame, "id": 3 }, {:}, ?PC(541)[[]]]
 
 Step 235:
   program counter:   1074
@@ -2091,8 +2091,8 @@ Step 235:
   explanation:       pop an argument ([]) and call method (541: "empty")
   start expression:  line=57 column=25
   end expression:    line=57 column=35
-  call trace:        player(1) --> game_join(?thegame, 1) --> notify(?thegame["active_game"]) --> empty()
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22658, { "g": ?thegame, "id": 1 }, {:}, [], 17186, []]
+  call trace:        player(3) --> game_join(?thegame, 3) --> notify(?thegame["active_game"]) --> empty()
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22658, { "g": ?thegame, "id": 3 }, {:}, [], 17186, []]
 
 Step 236:
   program counter:   541
@@ -2104,7 +2104,7 @@ Step 236:
   source code:       def empty() returns bg:
                      ^^^^^^^^^^^^^^^^^^^^^^^
   method variables:  { }
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22658, { "g": ?thegame, "id": 1 }, {:}, [], 17186, { "c": ?thegame["active_game"] }]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22658, { "g": ?thegame, "id": 3 }, {:}, [], 17186, { "c": ?thegame["active_game"] }]
 
 Step 237:
   program counter:   542
@@ -2114,7 +2114,7 @@ Step 237:
   end statement:     line=2 column=12
   source code:       bg = {:}
                           ^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22658, { "g": ?thegame, "id": 1 }, {:}, [], 17186, { "c": ?thegame["active_game"] }, {:}]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22658, { "g": ?thegame, "id": 3 }, {:}, [], 17186, { "c": ?thegame["active_game"] }, {:}]
 
 Step 238:
   program counter:   543
@@ -2123,7 +2123,7 @@ Step 238:
   source code:       bg = {:}
                      ^^^^
   method variables:  { bg: {:} }
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22658, { "g": ?thegame, "id": 1 }, {:}, [], 17186, { "c": ?thegame["active_game"] }]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22658, { "g": ?thegame, "id": 3 }, {:}, [], 17186, { "c": ?thegame["active_game"] }]
 
 Step 239:
   program counter:   544
@@ -2134,8 +2134,8 @@ Step 239:
   source code:       def empty() returns bg:
                      ^^^^^^^^^^^^^^^^^^^^^^^
   method variables:  { c: ?thegame["active_game"] }
-  call trace:        player(1) --> game_join(?thegame, 1) --> notify(?thegame["active_game"])
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22658, { "g": ?thegame, "id": 1 }, {:}, {:}]
+  call trace:        player(3) --> game_join(?thegame, 3) --> notify(?thegame["active_game"])
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22658, { "g": ?thegame, "id": 3 }, {:}, {:}]
 
 Step 240:
   program counter:   1075
@@ -2146,7 +2146,7 @@ Step 240:
   end statement:     line=57 column=36
   source code:       atomically if !c != bag.empty():
                                    ^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22658, { "g": ?thegame, "id": 1 }, False]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22658, { "g": ?thegame, "id": 3 }, False]
 
 Step 241:
   program counter:   1076
@@ -2154,7 +2154,7 @@ Step 241:
   explanation:       pop value (False), compare to False, and jump to 1093 if the same
   source code:       atomically if !c != bag.empty():
                                 ^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 22658, { "g": ?thegame, "id": 1 }]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 22658, { "g": ?thegame, "id": 3 }]
 
 Step 242:
   program counter:   1093
@@ -2179,9 +2179,9 @@ Step 244:
   end statement:     line=56 column=14
   source code:       def notify(c):
                      ^^^^^^^^^^^^^^
-  method variables:  { g: ?thegame, id: 1 }
-  call trace:        player(1) --> game_join(?thegame, 1)
-  stack:             [{:}, [], 25378, { "self": 1 }, None]
+  method variables:  { g: ?thegame, id: 3 }
+  call trace:        player(3) --> game_join(?thegame, 3)
+  stack:             [{:}, [], 25378, { "self": 3 }, None]
 
 Step 245:
   program counter:   1417
@@ -2192,7 +2192,7 @@ Step 245:
   end statement:     line=40 column=31
   source code:       notify(?g->active_game)
                      ^^^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }]
+  stack:             [{:}, [], 25378, { "self": 3 }]
 
 Step 246:
   program counter:   1418
@@ -2202,7 +2202,7 @@ Step 246:
   end statement:     line=44 column=118
   source code:       while (len(g->team1) == 0) or (len(g->team1) != len(g->team2)) or ((id not in g->team1) and (id not in g->team2)):
                                 ^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame]
 
 Step 247:
   program counter:   1419
@@ -2210,7 +2210,7 @@ Step 247:
   explanation:       push constant "team1"
   source code:       while (len(g->team1) == 0) or (len(g->team1) != len(g->team2)) or ((id not in g->team1) and (id not in g->team2)):
                                    ^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame, "team1"]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame, "team1"]
 
 Step 248:
   program counter:   1420
@@ -2218,7 +2218,7 @@ Step 248:
   explanation:       pop 2 values ("team1", ?thegame); push result (?thegame["team1"])
   source code:       while (len(g->team1) == 0) or (len(g->team1) != len(g->team2)) or ((id not in g->team1) and (id not in g->team2)):
                                 ^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, ?thegame["team1"]]
+  stack:             [{:}, [], 25378, { "self": 3 }, ?thegame["team1"]]
 
 Step 249:
   program counter:   1421
@@ -2226,8 +2226,8 @@ Step 249:
   explanation:       pop address (?thegame["team1"]) and push value ({})
   start expression:  line=44 column=16
   end expression:    line=44 column=23
-  call trace:        player(1) --> game_join(?thegame, 1)
-  stack:             [{:}, [], 25378, { "self": 1 }, {}]
+  call trace:        player(3) --> game_join(?thegame, 3)
+  stack:             [{:}, [], 25378, { "self": 3 }, {}]
 
 Step 250:
   program counter:   1422
@@ -2235,7 +2235,7 @@ Step 250:
   explanation:       pop a value ({}); push result (0)
   source code:       while (len(g->team1) == 0) or (len(g->team1) != len(g->team2)) or ((id not in g->team1) and (id not in g->team2)):
                             ^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, 0]
+  stack:             [{:}, [], 25378, { "self": 3 }, 0]
 
 Step 251:
   program counter:   1423
@@ -2243,7 +2243,7 @@ Step 251:
   explanation:       push constant 0
   source code:       while (len(g->team1) == 0) or (len(g->team1) != len(g->team2)) or ((id not in g->team1) and (id not in g->team2)):
                                              ^
-  stack:             [{:}, [], 25378, { "self": 1 }, 0, 0]
+  stack:             [{:}, [], 25378, { "self": 3 }, 0, 0]
 
 Step 252:
   program counter:   1424
@@ -2251,7 +2251,7 @@ Step 252:
   explanation:       pop 2 values (0, 0); check if both values are the same; push result (True)
   source code:       while (len(g->team1) == 0) or (len(g->team1) != len(g->team2)) or ((id not in g->team1) and (id not in g->team2)):
                             ^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, True]
+  stack:             [{:}, [], 25378, { "self": 3 }, True]
 
 Step 253:
   program counter:   1425
@@ -2259,7 +2259,7 @@ Step 253:
   explanation:       pop value (True), compare to True, and jump to 1456 if the same
   source code:       while (len(g->team1) == 0) or (len(g->team1) != len(g->team2)) or ((id not in g->team1) and (id not in g->team2)):
                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }]
+  stack:             [{:}, [], 25378, { "self": 3 }]
 
 Step 254:
   program counter:   1456
@@ -2267,7 +2267,7 @@ Step 254:
   explanation:       push constant True
   start expression:  line=44 column=11
   end expression:    line=44 column=117
-  stack:             [{:}, [], 25378, { "self": 1 }, True]
+  stack:             [{:}, [], 25378, { "self": 3 }, True]
 
 Step 255:
   program counter:   1457
@@ -2275,7 +2275,7 @@ Step 255:
   explanation:       pop value (True), compare to False, and jump to 1470 if the same
   source code:       while (len(g->team1) == 0) or (len(g->team1) != len(g->team2)) or ((id not in g->team1) and (id not in g->team2)):
                      ^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }]
+  stack:             [{:}, [], 25378, { "self": 3 }]
 
 Step 256:
   program counter:   1458
@@ -2285,7 +2285,7 @@ Step 256:
   end statement:     line=45 column=35
   source code:       wait(?g->players, ?g->lock)
                           ^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, []]
+  stack:             [{:}, [], 25378, { "self": 3 }, []]
 
 Step 257:
   program counter:   1459
@@ -2293,7 +2293,7 @@ Step 257:
   explanation:       push value (?thegame) of variable "g"
   source code:       wait(?g->players, ?g->lock)
                            ^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], ?thegame]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], ?thegame]
 
 Step 258:
   program counter:   1460
@@ -2301,7 +2301,7 @@ Step 258:
   explanation:       push constant "players"
   source code:       wait(?g->players, ?g->lock)
                               ^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], ?thegame, "players"]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], ?thegame, "players"]
 
 Step 259:
   program counter:   1461
@@ -2309,7 +2309,7 @@ Step 259:
   explanation:       pop 2 values ("players", ?thegame); push result (?thegame["players"])
   source code:       wait(?g->players, ?g->lock)
                            ^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], ?thegame["players"]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], ?thegame["players"]]
 
 Step 260:
   program counter:   1462
@@ -2317,7 +2317,7 @@ Step 260:
   explanation:       pop 2 values (?thegame["players"], []); insert first value into the second; push result ([?thegame["players"]])
   source code:       wait(?g->players, ?g->lock)
                           ^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [ ?thegame["players"] ]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [ ?thegame["players"] ]]
 
 Step 261:
   program counter:   1463
@@ -2325,7 +2325,7 @@ Step 261:
   explanation:       push value (?thegame) of variable "g"
   source code:       wait(?g->players, ?g->lock)
                                         ^
-  stack:             [{:}, [], 25378, { "self": 1 }, [ ?thegame["players"] ], ?thegame]
+  stack:             [{:}, [], 25378, { "self": 3 }, [ ?thegame["players"] ], ?thegame]
 
 Step 262:
   program counter:   1464
@@ -2333,7 +2333,7 @@ Step 262:
   explanation:       push constant "lock"
   source code:       wait(?g->players, ?g->lock)
                                            ^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [ ?thegame["players"] ], ?thegame, "lock"]
+  stack:             [{:}, [], 25378, { "self": 3 }, [ ?thegame["players"] ], ?thegame, "lock"]
 
 Step 263:
   program counter:   1465
@@ -2341,7 +2341,7 @@ Step 263:
   explanation:       pop 2 values ("lock", ?thegame); push result (?thegame["lock"])
   source code:       wait(?g->players, ?g->lock)
                                         ^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [ ?thegame["players"] ], ?thegame["lock"]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [ ?thegame["players"] ], ?thegame["lock"]]
 
 Step 264:
   program counter:   1466
@@ -2349,7 +2349,7 @@ Step 264:
   explanation:       pop 2 values (?thegame["lock"], [?thegame["players"]]); insert first value into the second; push result ([?thegame["players"], ?thegame["lock"]])
   source code:       wait(?g->players, ?g->lock)
                           ^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [ ?thegame["players"], ?thegame["lock"] ]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [ ?thegame["players"], ?thegame["lock"] ]]
 
 Step 265:
   program counter:   1467
@@ -2357,8 +2357,8 @@ Step 265:
   explanation:       pop an argument ([?thegame["players"], ?thegame["lock"]]) and call method (998: "wait")
   source code:       wait(?g->players, ?g->lock)
                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  call trace:        player(1) --> game_join(?thegame, 1) --> wait(?thegame["players"], ?thegame["lock"])
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, [ ?thegame["players"], ?thegame["lock"] ]]
+  call trace:        player(3) --> game_join(?thegame, 3) --> wait(?thegame["players"], ?thegame["lock"])
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, [ ?thegame["players"], ?thegame["lock"] ]]
 
 Step 266:
   program counter:   998
@@ -2370,7 +2370,7 @@ Step 266:
   source code:       def wait(c, lk):
                      ^^^^^^^^^^^^^^^^
   method variables:  { c: ?thegame["players"], lk: ?thegame["lock"] }
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }]
 
 Step 267:
   program counter:   999
@@ -2380,7 +2380,7 @@ Step 267:
   end statement:     line=47 column=15
   source code:       var cnt = 0
                                ^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, 0]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, 0]
 
 Step 268:
   program counter:   1000
@@ -2389,7 +2389,7 @@ Step 268:
   source code:       var cnt = 0
                      ^^^^^^^^^^^
   method variables:  { c: ?thegame["players"], cnt: 0, lk: ?thegame["lock"] }
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }]
 
 Step 269:
   program counter:   1001
@@ -2407,7 +2407,7 @@ Step 270:
   explanation:       push constant ()
   start expression:  line=48 column=23
   end expression:    line=48 column=24
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, []]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, []]
 
 Step 271:
   program counter:   1003
@@ -2415,7 +2415,7 @@ Step 271:
   explanation:       pop a value and save context
   source code:       let (), ctx = save():
                                    ^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, [ [], CONTEXT({'type': 'pc', 'value': '1004'}) ]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, [ [], CONTEXT({'type': 'pc', 'value': '1004'}) ]]
 
 Step 272:
   program counter:   1004
@@ -2427,11 +2427,11 @@ Step 272:
 Step 273:
   program counter:   1005
   hvm code:          StoreVar ((), ctx)
-  explanation:       pop value ([[], CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }])]) and store locally in variable \"((), ctx)\"
+  explanation:       pop value ([[], CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }])]) and store locally in variable \"((), ctx)\"
   source code:       let (), ctx = save():
                      ^^^^^^^^^^^^^
   method variables:  { c: ?thegame["players"], ctx: CONTEXT({'type': 'pc', 'value': '1004'}), lk: ?thegame["lock"] }
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }]
 
 Step 274:
   program counter:   1006
@@ -2441,7 +2441,7 @@ Step 274:
   end statement:     line=49 column=19
   source code:       atomically:
                      ^^^^^^^^^^^
-  call trace:        player(1) --> game_join(?thegame, 1) --> wait(?thegame["players"], ?thegame["lock"])
+  call trace:        player(3) --> game_join(?thegame, 3) --> wait(?thegame["players"], ?thegame["lock"])
 
 Step 275:
   program counter:   1007
@@ -2451,7 +2451,7 @@ Step 275:
   end statement:     line=50 column=43
   source code:       cnt = bag.multiplicity(!c, ctx)
                            ^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, PC(605)]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, PC(605)]
 
 Step 276:
   program counter:   1008
@@ -2459,7 +2459,7 @@ Step 276:
   explanation:       building a tuple: push constant ()
   source code:       cnt = bag.multiplicity(!c, ctx)
                                             ^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, PC(605), []]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, PC(605), []]
 
 Step 277:
   program counter:   1009
@@ -2467,7 +2467,7 @@ Step 277:
   explanation:       push value (?thegame["players"]) of variable "c"
   source code:       cnt = bag.multiplicity(!c, ctx)
                                              ^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, PC(605), [], ?thegame["players"]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, PC(605), [], ?thegame["players"]]
 
 Step 278:
   program counter:   1010
@@ -2475,7 +2475,7 @@ Step 278:
   explanation:       pop address (?thegame["players"]) and push value ({:})
   source code:       cnt = bag.multiplicity(!c, ctx)
                                             ^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, PC(605), [], {:}]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, PC(605), [], {:}]
 
 Step 279:
   program counter:   1011
@@ -2483,40 +2483,40 @@ Step 279:
   explanation:       pop 2 values ({:}, []); insert first value into the second; push result ([{:}])
   source code:       cnt = bag.multiplicity(!c, ctx)
                                             ^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, PC(605), [ {:} ]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, PC(605), [ {:} ]]
 
 Step 280:
   program counter:   1012
   hvm code:          LoadVar ctx
-  explanation:       push value (CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }])) of variable "ctx"
+  explanation:       push value (CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }])) of variable "ctx"
   source code:       cnt = bag.multiplicity(!c, ctx)
                                                 ^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, PC(605), [ {:} ], CONTEXT({'type': 'pc', 'value': '1004'})]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, PC(605), [ {:} ], CONTEXT({'type': 'pc', 'value': '1004'})]
 
 Step 281:
   program counter:   1013
   hvm code:          2-ary ListAdd
-  explanation:       pop 2 values (CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]), [{:}]); insert first value into the second; push result ([{:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }])])
+  explanation:       pop 2 values (CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]), [{:}]); insert first value into the second; push result ([{:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }])])
   source code:       cnt = bag.multiplicity(!c, ctx)
                                             ^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, PC(605), [ {:}, CONTEXT({'type': 'pc', 'value': '1004'}) ]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, PC(605), [ {:}, CONTEXT({'type': 'pc', 'value': '1004'}) ]]
 
 Step 282:
   program counter:   1014
   hvm code:          2-ary Closure
-  explanation:       pop 2 values ([{:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }])], PC(605)); push result (?PC(605)[[{:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }])]])
+  explanation:       pop 2 values ([{:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }])], PC(605)); push result (?PC(605)[[{:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }])]])
   source code:       cnt = bag.multiplicity(!c, ctx)
                            ^^^^^^^^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, ?PC(605)[[ {:}, CONTEXT({'type': 'pc', 'value': '1004'}) ]]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, ?PC(605)[[ {:}, CONTEXT({'type': 'pc', 'value': '1004'}) ]]]
 
 Step 283:
   program counter:   1015
   hvm code:          Load
-  explanation:       pop an argument ([{:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }])]) and call method (605: "multiplicity")
+  explanation:       pop an argument ([{:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }])]) and call method (605: "multiplicity")
   start expression:  line=50 column=19
   end expression:    line=50 column=43
-  call trace:        player(1) --> game_join(?thegame, 1) --> wait(?thegame["players"], ?thegame["lock"]) --> multiplicity({:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]))
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, [], 16242, [ {:}, CONTEXT({'type': 'pc', 'value': '1004'}) ]]
+  call trace:        player(3) --> game_join(?thegame, 3) --> wait(?thegame["players"], ?thegame["lock"]) --> multiplicity({:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]))
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, [], 16242, [ {:}, CONTEXT({'type': 'pc', 'value': '1004'}) ]]
 
 Step 284:
   program counter:   605
@@ -2527,8 +2527,8 @@ Step 284:
   end statement:     line=16 column=40
   source code:       def multiplicity(bg, elt) returns count:
                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  call trace:        player(1) --> game_join(?thegame, 1) --> wait(?thegame["players"], ?thegame["lock"])
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, 0]
+  call trace:        player(3) --> game_join(?thegame, 3) --> wait(?thegame["players"], ?thegame["lock"])
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, 0]
 
 Step 285:
   program counter:   1016
@@ -2540,7 +2540,7 @@ Step 285:
   source code:       cnt = bag.multiplicity(!c, ctx)
                      ^^^^^
   method variables:  { c: ?thegame["players"], cnt: 0, ctx: CONTEXT({'type': 'pc', 'value': '1004'}), lk: ?thegame["lock"] }
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }]
 
 Step 286:
   program counter:   1017
@@ -2550,7 +2550,7 @@ Step 286:
   end statement:     line=51 column=33
   source code:       !c = bag.add(!c, ctx)
                       ^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, ?thegame["players"]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, ?thegame["players"]]
 
 Step 287:
   program counter:   1018
@@ -2558,7 +2558,7 @@ Step 287:
   explanation:       push constant PC(696)
   source code:       !c = bag.add(!c, ctx)
                           ^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, ?thegame["players"], PC(696)]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, ?thegame["players"], PC(696)]
 
 Step 288:
   program counter:   1019
@@ -2566,7 +2566,7 @@ Step 288:
   explanation:       building a tuple: push constant ()
   source code:       !c = bag.add(!c, ctx)
                                   ^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, ?thegame["players"], PC(696), []]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, ?thegame["players"], PC(696), []]
 
 Step 289:
   program counter:   1020
@@ -2574,7 +2574,7 @@ Step 289:
   explanation:       push value (?thegame["players"]) of variable "c"
   source code:       !c = bag.add(!c, ctx)
                                    ^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, ?thegame["players"], PC(696), [], ?thegame["players"]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, ?thegame["players"], PC(696), [], ?thegame["players"]]
 
 Step 290:
   program counter:   1021
@@ -2582,7 +2582,7 @@ Step 290:
   explanation:       pop address (?thegame["players"]) and push value ({:})
   source code:       !c = bag.add(!c, ctx)
                                   ^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, ?thegame["players"], PC(696), [], {:}]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, ?thegame["players"], PC(696), [], {:}]
 
 Step 291:
   program counter:   1022
@@ -2590,40 +2590,40 @@ Step 291:
   explanation:       pop 2 values ({:}, []); insert first value into the second; push result ([{:}])
   source code:       !c = bag.add(!c, ctx)
                                   ^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, ?thegame["players"], PC(696), [ {:} ]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, ?thegame["players"], PC(696), [ {:} ]]
 
 Step 292:
   program counter:   1023
   hvm code:          LoadVar ctx
-  explanation:       push value (CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }])) of variable "ctx"
+  explanation:       push value (CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }])) of variable "ctx"
   source code:       !c = bag.add(!c, ctx)
                                       ^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, ?thegame["players"], PC(696), [ {:} ], CONTEXT({'type': 'pc', 'value': '1004'})]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, ?thegame["players"], PC(696), [ {:} ], CONTEXT({'type': 'pc', 'value': '1004'})]
 
 Step 293:
   program counter:   1024
   hvm code:          2-ary ListAdd
-  explanation:       pop 2 values (CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]), [{:}]); insert first value into the second; push result ([{:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }])])
+  explanation:       pop 2 values (CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]), [{:}]); insert first value into the second; push result ([{:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }])])
   source code:       !c = bag.add(!c, ctx)
                                   ^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, ?thegame["players"], PC(696), [ {:}, CONTEXT({'type': 'pc', 'value': '1004'}) ]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, ?thegame["players"], PC(696), [ {:}, CONTEXT({'type': 'pc', 'value': '1004'}) ]]
 
 Step 294:
   program counter:   1025
   hvm code:          2-ary Closure
-  explanation:       pop 2 values ([{:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }])], PC(696)); push result (?PC(696)[[{:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }])]])
+  explanation:       pop 2 values ([{:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }])], PC(696)); push result (?PC(696)[[{:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }])]])
   source code:       !c = bag.add(!c, ctx)
                           ^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, ?thegame["players"], ?PC(696)[[ {:}, CONTEXT({'type': 'pc', 'value': '1004'}) ]]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, ?thegame["players"], ?PC(696)[[ {:}, CONTEXT({'type': 'pc', 'value': '1004'}) ]]]
 
 Step 295:
   program counter:   1026
   hvm code:          Load
-  explanation:       pop an argument ([{:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }])]) and call method (696: "add")
+  explanation:       pop an argument ([{:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }])]) and call method (696: "add")
   start expression:  line=51 column=18
   end expression:    line=51 column=33
-  call trace:        player(1) --> game_join(?thegame, 1) --> wait(?thegame["players"], ?thegame["lock"]) --> add({:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]))
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, ?thegame["players"], [], 16418, [ {:}, CONTEXT({'type': 'pc', 'value': '1004'}) ]]
+  call trace:        player(3) --> game_join(?thegame, 3) --> wait(?thegame["players"], ?thegame["lock"]) --> add({:}, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]))
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, ?thegame["players"], [], 16418, [ {:}, CONTEXT({'type': 'pc', 'value': '1004'}) ]]
 
 Step 296:
   program counter:   696
@@ -2634,20 +2634,20 @@ Step 296:
   end statement:     line=42 column=32
   source code:       def add(bg, elt) returns result:
                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  call trace:        player(1) --> game_join(?thegame, 1) --> wait(?thegame["players"], ?thegame["lock"])
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, ?thegame["players"], { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }]
+  call trace:        player(3) --> game_join(?thegame, 3) --> wait(?thegame["players"], ?thegame["lock"])
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, ?thegame["players"], { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }]
 
 Step 297:
   program counter:   1027
   hvm code:          Store
-  explanation:       pop value ({ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }) and address (?thegame["players"]) and store
+  explanation:       pop value ({ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }) and address (?thegame["players"]) and store
   module:            synch
   start statement:   line=51 column=13
   end statement:     line=51 column=33
   source code:       !c = bag.add(!c, ctx)
                      ^^^^
-  shared variables:  { thegame: { "active_game": {:}, "lock": True, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 1 ] } }
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }]
+  shared variables:  { thegame: { "active_game": {:}, "lock": True, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 3 ] } }
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }]
 
 Step 298:
   program counter:   1028
@@ -2657,7 +2657,7 @@ Step 298:
   end statement:     line=52 column=23
   source code:       !lk = False
                       ^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, ?thegame["lock"]]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, ?thegame["lock"]]
 
 Step 299:
   program counter:   1029
@@ -2665,7 +2665,7 @@ Step 299:
   explanation:       push constant False
   source code:       !lk = False
                            ^^^^^
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }, ?thegame["lock"], False]
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }, ?thegame["lock"], False]
 
 Step 300:
   program counter:   1030
@@ -2673,8 +2673,8 @@ Step 300:
   explanation:       pop value (False) and address (?thegame["lock"]) and store
   source code:       !lk = False
                      ^^^^^
-  shared variables:  { thegame: { "active_game": {:}, "lock": False, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 1 ] } }
-  stack:             [{:}, [], 25378, { "self": 1 }, [], 23474, { "g": ?thegame, "id": 1 }]
+  shared variables:  { thegame: { "active_game": {:}, "lock": False, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 3 ] } }
+  stack:             [{:}, [], 25378, { "self": 3 }, [], 23474, { "g": ?thegame, "id": 3 }]
 
 Step 301:
   program counter:   1031
@@ -2693,19 +2693,19 @@ other threads:
   T0: pc=1628 terminated atomic __init__()
   T1: pc=1233 runnable game_umpire(?thegame)
     about to run method game_umpire with argument ?thegame
-  T2: pc=1032 blocked player(1) --> game_join(?thegame, 1) --> wait(?thegame["players"], ?thegame["lock"])
-    about to execute synch:53:         atomically when (not !lk) and (bag.multiplicity(!c, ctx) <= cnt):
+  T2: pc=1580 runnable player(1)
+    about to run method player with argument 1
   T3: pc=1580 runnable player(2)
     about to run method player with argument 2
-  T4: pc=1580 runnable player(3)
-    about to run method player with argument 3
+  T4: pc=1032 blocked player(3) --> game_join(?thegame, 3) --> wait(?thegame["players"], ?thegame["lock"])
+    about to execute synch:53:         atomically when (not !lk) and (bag.multiplicity(!c, ctx) <= cnt):
   T5: pc=1580 runnable player(4)
     about to run method player with argument 4
   T7: pc=1580 runnable player(6)
     about to run method player with argument 6
 shared variables:
-  thegame: { "active_game": {:}, "lock": False, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 1 ] }
-state id: 2941
+  thegame: { "active_game": {:}, "lock": False, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 3 ] }
+state id: 3082
 ================================================
 
 Step 302:
@@ -2926,7 +2926,7 @@ Step 326:
   explanation:       pop value (True) and address (?thegame["lock"]) and store
   source code:       !binsema = True
                      ^^^^^^^^^^
-  shared variables:  { thegame: { "active_game": {:}, "lock": True, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 1 ] } }
+  shared variables:  { thegame: { "active_game": {:}, "lock": True, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 3 ] } }
   stack:             [{:}, [], 25378, { "self": 5 }, [], 22098, { "g": ?thegame, "id": 5 }]
 
 Step 327:
@@ -3014,11 +3014,11 @@ Step 335:
 Step 336:
   program counter:   1389
   hvm code:          Load
-  explanation:       pop address (?thegame["waiting"]) and push value ([1])
+  explanation:       pop address (?thegame["waiting"]) and push value ([3])
   start expression:  line=36 column=18
   end expression:    line=36 column=27
   call trace:        player(5) --> game_join(?thegame, 5)
-  stack:             [{:}, [], 25378, { "self": 5 }, ?thegame["waiting"], [ 1 ]]
+  stack:             [{:}, [], 25378, { "self": 5 }, ?thegame["waiting"], [ 3 ]]
 
 Step 337:
   program counter:   1390
@@ -3026,7 +3026,7 @@ Step 337:
   explanation:       building a tuple: push constant ()
   source code:       g->waiting = g->waiting + [id,]
                                                 ^^^
-  stack:             [{:}, [], 25378, { "self": 5 }, ?thegame["waiting"], [ 1 ], []]
+  stack:             [{:}, [], 25378, { "self": 5 }, ?thegame["waiting"], [ 3 ], []]
 
 Step 338:
   program counter:   1391
@@ -3034,7 +3034,7 @@ Step 338:
   explanation:       push value (5) of variable "id"
   source code:       g->waiting = g->waiting + [id,]
                                                 ^^
-  stack:             [{:}, [], 25378, { "self": 5 }, ?thegame["waiting"], [ 1 ], [], 5]
+  stack:             [{:}, [], 25378, { "self": 5 }, ?thegame["waiting"], [ 3 ], [], 5]
 
 Step 339:
   program counter:   1392
@@ -3042,23 +3042,23 @@ Step 339:
   explanation:       pop 2 values (5, []); insert first value into the second; push result ([5])
   source code:       g->waiting = g->waiting + [id,]
                                                 ^^^
-  stack:             [{:}, [], 25378, { "self": 5 }, ?thegame["waiting"], [ 1 ], [ 5 ]]
+  stack:             [{:}, [], 25378, { "self": 5 }, ?thegame["waiting"], [ 3 ], [ 5 ]]
 
 Step 340:
   program counter:   1393
   hvm code:          2-ary +
-  explanation:       pop 2 values ([5], [1]); concatenate the lists; push result ([1, 5])
+  explanation:       pop 2 values ([5], [3]); concatenate the lists; push result ([3, 5])
   source code:       g->waiting = g->waiting + [id,]
                                   ^^^^^^^^^^^^^^^^^^
-  stack:             [{:}, [], 25378, { "self": 5 }, ?thegame["waiting"], [ 1, 5 ]]
+  stack:             [{:}, [], 25378, { "self": 5 }, ?thegame["waiting"], [ 3, 5 ]]
 
 Step 341:
   program counter:   1394
   hvm code:          Store
-  explanation:       pop value ([1, 5]) and address (?thegame["waiting"]) and store
+  explanation:       pop value ([3, 5]) and address (?thegame["waiting"]) and store
   source code:       g->waiting = g->waiting + [id,]
                      ^^^^^^^^^^^^
-  shared variables:  { thegame: { "active_game": {:}, "lock": True, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 1, 5 ] } }
+  shared variables:  { thegame: { "active_game": {:}, "lock": True, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 3, 5 ] } }
   call trace:        player(5) --> game_join(?thegame, 5)
   stack:             [{:}, [], 25378, { "self": 5 }]
 
@@ -3686,7 +3686,7 @@ Step 412:
 Step 413:
   program counter:   1010
   hvm code:          Load
-  explanation:       pop address (?thegame["players"]) and push value ({ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 })
+  explanation:       pop address (?thegame["players"]) and push value ({ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 })
   source code:       cnt = bag.multiplicity(!c, ctx)
                                             ^^
   stack:             [{:}, [], 25378, { "self": 5 }, [], 23474, { "g": ?thegame, "id": 5 }, PC(605), [], { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }]
@@ -3694,7 +3694,7 @@ Step 413:
 Step 414:
   program counter:   1011
   hvm code:          2-ary ListAdd
-  explanation:       pop 2 values ({ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }, []); insert first value into the second; push result ([{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }])
+  explanation:       pop 2 values ({ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }, []); insert first value into the second; push result ([{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }])
   source code:       cnt = bag.multiplicity(!c, ctx)
                                             ^^^^^^^
   stack:             [{:}, [], 25378, { "self": 5 }, [], 23474, { "g": ?thegame, "id": 5 }, PC(605), [ { CONTEXT({'type': 'pc', 'value': '1004'}): 1 } ]]
@@ -3710,7 +3710,7 @@ Step 415:
 Step 416:
   program counter:   1013
   hvm code:          2-ary ListAdd
-  explanation:       pop 2 values (CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }]), [{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }]); insert first value into the second; push result ([{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }])])
+  explanation:       pop 2 values (CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }]), [{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }]); insert first value into the second; push result ([{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }])])
   source code:       cnt = bag.multiplicity(!c, ctx)
                                             ^^^^^^^
   stack:             [{:}, [], 25378, { "self": 5 }, [], 23474, { "g": ?thegame, "id": 5 }, PC(605), [ { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, CONTEXT({'type': 'pc', 'value': '1004'}) ]]
@@ -3718,7 +3718,7 @@ Step 416:
 Step 417:
   program counter:   1014
   hvm code:          2-ary Closure
-  explanation:       pop 2 values ([{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }])], PC(605)); push result (?PC(605)[[{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }])]])
+  explanation:       pop 2 values ([{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }])], PC(605)); push result (?PC(605)[[{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }])]])
   source code:       cnt = bag.multiplicity(!c, ctx)
                            ^^^^^^^^^^^^^^^^^^^^^^^^^
   stack:             [{:}, [], 25378, { "self": 5 }, [], 23474, { "g": ?thegame, "id": 5 }, ?PC(605)[[ { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, CONTEXT({'type': 'pc', 'value': '1004'}) ]]]
@@ -3726,10 +3726,10 @@ Step 417:
 Step 418:
   program counter:   1015
   hvm code:          Load
-  explanation:       pop an argument ([{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }])]) and call method (605: "multiplicity")
+  explanation:       pop an argument ([{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }])]) and call method (605: "multiplicity")
   start expression:  line=50 column=19
   end expression:    line=50 column=43
-  call trace:        player(5) --> game_join(?thegame, 5) --> wait(?thegame["players"], ?thegame["lock"]) --> multiplicity({ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }]))
+  call trace:        player(5) --> game_join(?thegame, 5) --> wait(?thegame["players"], ?thegame["lock"]) --> multiplicity({ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }]))
   stack:             [{:}, [], 25378, { "self": 5 }, [], 23474, { "g": ?thegame, "id": 5 }, [], 16242, [ { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, CONTEXT({'type': 'pc', 'value': '1004'}) ]]
 
 Step 419:
@@ -3793,7 +3793,7 @@ Step 424:
 Step 425:
   program counter:   1021
   hvm code:          Load
-  explanation:       pop address (?thegame["players"]) and push value ({ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 })
+  explanation:       pop address (?thegame["players"]) and push value ({ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 })
   source code:       !c = bag.add(!c, ctx)
                                   ^^
   stack:             [{:}, [], 25378, { "self": 5 }, [], 23474, { "g": ?thegame, "id": 5 }, ?thegame["players"], PC(696), [], { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }]
@@ -3801,7 +3801,7 @@ Step 425:
 Step 426:
   program counter:   1022
   hvm code:          2-ary ListAdd
-  explanation:       pop 2 values ({ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }, []); insert first value into the second; push result ([{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }])
+  explanation:       pop 2 values ({ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }, []); insert first value into the second; push result ([{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }])
   source code:       !c = bag.add(!c, ctx)
                                   ^^^^^^^
   stack:             [{:}, [], 25378, { "self": 5 }, [], 23474, { "g": ?thegame, "id": 5 }, ?thegame["players"], PC(696), [ { CONTEXT({'type': 'pc', 'value': '1004'}): 1 } ]]
@@ -3817,7 +3817,7 @@ Step 427:
 Step 428:
   program counter:   1024
   hvm code:          2-ary ListAdd
-  explanation:       pop 2 values (CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }]), [{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }]); insert first value into the second; push result ([{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }])])
+  explanation:       pop 2 values (CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }]), [{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }]); insert first value into the second; push result ([{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }])])
   source code:       !c = bag.add(!c, ctx)
                                   ^^^^^^^
   stack:             [{:}, [], 25378, { "self": 5 }, [], 23474, { "g": ?thegame, "id": 5 }, ?thegame["players"], PC(696), [ { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, CONTEXT({'type': 'pc', 'value': '1004'}) ]]
@@ -3825,7 +3825,7 @@ Step 428:
 Step 429:
   program counter:   1025
   hvm code:          2-ary Closure
-  explanation:       pop 2 values ([{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }])], PC(696)); push result (?PC(696)[[{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }])]])
+  explanation:       pop 2 values ([{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }])], PC(696)); push result (?PC(696)[[{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }])]])
   source code:       !c = bag.add(!c, ctx)
                           ^^^^^^^^^^^^^^^^
   stack:             [{:}, [], 25378, { "self": 5 }, [], 23474, { "g": ?thegame, "id": 5 }, ?thegame["players"], ?PC(696)[[ { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, CONTEXT({'type': 'pc', 'value': '1004'}) ]]]
@@ -3833,10 +3833,10 @@ Step 429:
 Step 430:
   program counter:   1026
   hvm code:          Load
-  explanation:       pop an argument ([{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }])]) and call method (696: "add")
+  explanation:       pop an argument ([{ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }])]) and call method (696: "add")
   start expression:  line=51 column=18
   end expression:    line=51 column=33
-  call trace:        player(5) --> game_join(?thegame, 5) --> wait(?thegame["players"], ?thegame["lock"]) --> add({ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }]))
+  call trace:        player(5) --> game_join(?thegame, 5) --> wait(?thegame["players"], ?thegame["lock"]) --> add({ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }]))
   stack:             [{:}, [], 25378, { "self": 5 }, [], 23474, { "g": ?thegame, "id": 5 }, ?thegame["players"], [], 16418, [ { CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, CONTEXT({'type': 'pc', 'value': '1004'}) ]]
 
 Step 431:
@@ -3854,13 +3854,13 @@ Step 431:
 Step 432:
   program counter:   1027
   hvm code:          Store
-  explanation:       pop value ({ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }]): 1, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 1 },[],23474,{ "g": ?thegame, "id": 1 }]): 1 }) and address (?thegame["players"]) and store
+  explanation:       pop value ({ CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 5 },[],23474,{ "g": ?thegame, "id": 5 }]): 1, CONTEXT(pc=1004,vars={ "c": ?thegame["players"], "lk": ?thegame["lock"] },readonly=0,atomic=0,aflag=0,il=0,stopped=1,terminated=0,eternal=0,sp=7,STACK[{:},[],25378,{ "self": 3 },[],23474,{ "g": ?thegame, "id": 3 }]): 1 }) and address (?thegame["players"]) and store
   module:            synch
   start statement:   line=51 column=13
   end statement:     line=51 column=33
   source code:       !c = bag.add(!c, ctx)
                      ^^^^
-  shared variables:  { thegame: { "active_game": {:}, "lock": True, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1, CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 1, 5 ] } }
+  shared variables:  { thegame: { "active_game": {:}, "lock": True, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1, CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 3, 5 ] } }
   stack:             [{:}, [], 25378, { "self": 5 }, [], 23474, { "g": ?thegame, "id": 5 }]
 
 Step 433:
@@ -3887,7 +3887,7 @@ Step 435:
   explanation:       pop value (False) and address (?thegame["lock"]) and store
   source code:       !lk = False
                      ^^^^^
-  shared variables:  { thegame: { "active_game": {:}, "lock": False, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1, CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 1, 5 ] } }
+  shared variables:  { thegame: { "active_game": {:}, "lock": False, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1, CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 3, 5 ] } }
   stack:             [{:}, [], 25378, { "self": 5 }, [], 23474, { "g": ?thegame, "id": 5 }]
 
 Step 436:
@@ -3905,12 +3905,12 @@ mode:  runnable
 stack: ['?thegame']
 other threads:
   T0: pc=1628 terminated atomic __init__()
-  T2: pc=1032 blocked player(1) --> game_join(?thegame, 1) --> wait(?thegame["players"], ?thegame["lock"])
-    about to execute synch:53:         atomically when (not !lk) and (bag.multiplicity(!c, ctx) <= cnt):
+  T2: pc=1580 runnable player(1)
+    about to run method player with argument 1
   T3: pc=1580 runnable player(2)
     about to run method player with argument 2
-  T4: pc=1580 runnable player(3)
-    about to run method player with argument 3
+  T4: pc=1032 blocked player(3) --> game_join(?thegame, 3) --> wait(?thegame["players"], ?thegame["lock"])
+    about to execute synch:53:         atomically when (not !lk) and (bag.multiplicity(!c, ctx) <= cnt):
   T5: pc=1580 runnable player(4)
     about to run method player with argument 4
   T6: pc=1032 blocked player(5) --> game_join(?thegame, 5) --> wait(?thegame["players"], ?thegame["lock"])
@@ -3918,8 +3918,8 @@ other threads:
   T7: pc=1580 runnable player(6)
     about to run method player with argument 6
 shared variables:
-  thegame: { "active_game": {:}, "lock": False, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1, CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 1, 5 ] }
-state id: 12484
+  thegame: { "active_game": {:}, "lock": False, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1, CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 3, 5 ] }
+state id: 13618
 ================================================
 
 Step 437:
@@ -4077,7 +4077,7 @@ Step 454:
   explanation:       pop value (True) and address (?thegame["lock"]) and store
   source code:       !binsema = True
                      ^^^^^^^^^^
-  shared variables:  { thegame: { "active_game": {:}, "lock": True, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1, CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 1, 5 ] } }
+  shared variables:  { thegame: { "active_game": {:}, "lock": True, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1, CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 3, 5 ] } }
   stack:             [{:}, [], 19794, { "g": ?thegame }]
 
 Step 455:
@@ -4159,16 +4159,16 @@ Step 462:
 Step 463:
   program counter:   1244
   hvm code:          Load
-  explanation:       pop address (?thegame["waiting"]) and push value ([1, 5])
+  explanation:       pop address (?thegame["waiting"]) and push value ([3, 5])
   start expression:  line=13 column=20
   end expression:    line=13 column=29
   call trace:        game_umpire(?thegame)
-  stack:             [{:}, [ 1, 5 ]]
+  stack:             [{:}, [ 3, 5 ]]
 
 Step 464:
   program counter:   1245
   hvm code:          1-ary len
-  explanation:       pop a value ([1, 5]); compute the length of the list; push result (2)
+  explanation:       pop a value ([3, 5]); compute the length of the list; push result (2)
   source code:       while (len(g->waiting) < 2) or (len(g->team1) != 0) or (len(g->team2) != 0):
                             ^^^^^^^^^^^^^^^
   stack:             [{:}, 2]
@@ -4363,16 +4363,16 @@ Step 487:
 Step 488:
   program counter:   1282
   hvm code:          Load
-  explanation:       pop address (?thegame["waiting"]) and push value ([1, 5])
+  explanation:       pop address (?thegame["waiting"]) and push value ([3, 5])
   start expression:  line=17 column=33
   end expression:    line=17 column=42
   call trace:        game_umpire(?thegame)
-  stack:             [{:}, [ 1, 5 ]]
+  stack:             [{:}, [ 3, 5 ]]
 
 Step 489:
   program counter:   1283
   hvm code:          1-ary len
-  explanation:       pop a value ([1, 5]); compute the length of the list; push result (2)
+  explanation:       pop a value ([3, 5]); compute the length of the list; push result (2)
   source code:       let pairedplayers = len(g->waiting) - (len(g->waiting) % 2):
                                          ^^^^^^^^^^^^^^^
   stack:             [{:}, 2]
@@ -4404,16 +4404,16 @@ Step 492:
 Step 493:
   program counter:   1287
   hvm code:          Load
-  explanation:       pop address (?thegame["waiting"]) and push value ([1, 5])
+  explanation:       pop address (?thegame["waiting"]) and push value ([3, 5])
   start expression:  line=17 column=52
   end expression:    line=17 column=61
   call trace:        game_umpire(?thegame)
-  stack:             [{:}, 2, [ 1, 5 ]]
+  stack:             [{:}, 2, [ 3, 5 ]]
 
 Step 494:
   program counter:   1288
   hvm code:          1-ary len
-  explanation:       pop a value ([1, 5]); compute the length of the list; push result (2)
+  explanation:       pop a value ([3, 5]); compute the length of the list; push result (2)
   source code:       let pairedplayers = len(g->waiting) - (len(g->waiting) % 2):
                                                             ^^^^^^^^^^^^^^^
   stack:             [{:}, 2, 2]
@@ -4456,41 +4456,41 @@ Step 499:
   hvm code:          Push ?game$range
   explanation:       push constant ?game$range
   start statement:   line=18 column=13
-  end statement:     line=18 column=44
-  source code:       for i in range(pairedplayers//2):
-                              ^^^^^^^^^^^^^^^^^^^^^^^
+  end statement:     line=18 column=48
+  source code:       for i in range((pairedplayers // 2)):
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
   stack:             [{:}, ?game$range]
 
 Step 500:
   program counter:   1294
   hvm code:          LoadVar pairedplayers
   explanation:       push value (2) of variable "pairedplayers"
-  source code:       for i in range(pairedplayers//2):
-                                    ^^^^^^^^^^^^^
+  source code:       for i in range((pairedplayers // 2)):
+                                     ^^^^^^^^^^^^^
   stack:             [{:}, ?game$range, 2]
 
 Step 501:
   program counter:   1295
   hvm code:          Push 2
   explanation:       push constant 2
-  source code:       for i in range(pairedplayers//2):
-                                                   ^
+  source code:       for i in range((pairedplayers // 2)):
+                                                      ^
   stack:             [{:}, ?game$range, 2, 2]
 
 Step 502:
   program counter:   1296
   hvm code:          2-ary //
   explanation:       pop 2 values (2, 2); integer divide; push result (1)
-  source code:       for i in range(pairedplayers//2):
-                                    ^^^^^^^^^^^^^^^^
+  source code:       for i in range((pairedplayers // 2)):
+                                     ^^^^^^^^^^^^^^^^^^
   stack:             [{:}, ?game$range, 1]
 
 Step 503:
   program counter:   1297
   hvm code:          2-ary AddArg
   explanation:       pop 2 values (1, ?game$range); push result (?game$range[1])
-  source code:       for i in range(pairedplayers//2):
-                              ^^^^^^^^^^^^^^^^^^^^^^^
+  source code:       for i in range((pairedplayers // 2)):
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
   stack:             [{:}, ?game$range[1]]
 
 Step 504:
@@ -4498,7 +4498,7 @@ Step 504:
   hvm code:          Load
   explanation:       pop an address and push the value at the address
   start expression:  line=18 column=22
-  end expression:    line=18 column=44
+  end expression:    line=18 column=48
   call trace:        game_umpire(?thegame)
   new mode:          failed
   stack:             [{:}]
@@ -4510,12 +4510,12 @@ Final state
 Threads:
   T0: pc=1628 terminated atomic __init__()
   T1: pc=1298 failed game_umpire(?thegame)
-  T2: pc=1032 runnable player(1) --> game_join(?thegame, 1) --> wait(?thegame["players"], ?thegame["lock"])
-    about to execute synch:53:         atomically when (not !lk) and (bag.multiplicity(!c, ctx) <= cnt):
+  T2: pc=1580 runnable player(1)
+    about to run method player with argument 1
   T3: pc=1580 runnable player(2)
     about to run method player with argument 2
-  T4: pc=1580 runnable player(3)
-    about to run method player with argument 3
+  T4: pc=1032 runnable player(3) --> game_join(?thegame, 3) --> wait(?thegame["players"], ?thegame["lock"])
+    about to execute synch:53:         atomically when (not !lk) and (bag.multiplicity(!c, ctx) <= cnt):
   T5: pc=1580 runnable player(4)
     about to run method player with argument 4
   T6: pc=1032 runnable player(5) --> game_join(?thegame, 5) --> wait(?thegame["players"], ?thegame["lock"])
@@ -4523,4 +4523,4 @@ Threads:
   T7: pc=1580 runnable player(6)
     about to run method player with argument 6
 Variables:
-  thegame: { "active_game": {:}, "lock": True, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1, CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 1, 5 ] }
+  thegame: { "active_game": {:}, "lock": True, "players": { CONTEXT({'type': 'pc', 'value': '1004'}): 1, CONTEXT({'type': 'pc', 'value': '1004'}): 1 }, "team1": {}, "team2": {}, "waiting": [ 3, 5 ] }

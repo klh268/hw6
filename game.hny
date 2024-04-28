@@ -15,7 +15,7 @@ def game_umpire(g):
        
        #let gives me an error here on the next line
         let pairedplayers = len(g->waiting) - (len(g->waiting) % 2):
-            for i in range(pairedplayers//2):
+            for i in range((pairedplayers // 2)):
                 g->team1 = add(g->team1, g->waiting[i])
                 g->team2 = add(g->team2, g->waiting[i + 1])
 
