@@ -16,8 +16,8 @@ def player(id):
         # Assert the teams are disjoint
         assert (len(team1 & team2) == 0)
         
-        # Assert no player is duplicated within the same team
-        # assert (len(g->team1 | g->team2) == len(g->team1) + len(g->team2))
+        # Assert same length
+        assert (len(team1) == len(team2))
 
     # game plays  
 

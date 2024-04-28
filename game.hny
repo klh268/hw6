@@ -1,5 +1,5 @@
 from synch import *
-
+from set import *
 
 def Game() returns game:
     game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
@@ -15,14 +15,16 @@ def game_umpire(g):
        
        #let gives me an error here on the next line
         let pairedplayers = len(g->waiting) - (len(g->waiting) % 2):
-            for i in range((pairedplayers // 2)):
+            var i = 0
+            while i < pairedplayers:
                 g->team1 = add(g->team1, g->waiting[i])
-                g->team2 = add(g->team2, g->waiting[i + 1])
+                g->team2 = add(g->team2, g->waiting[i+1])
+                i += 2
 
-            # Create a new waiting list excluding the players who have been paired
-            #harmony gives me errors 
-            for i in range(pairedplayers):
+            var j = 0
+            while j < pairedplayers:
                 del g->waiting[0]
+                j += 1
 
         # Signal players to start the game
         # assert (len(g->waiting) <= 1)
