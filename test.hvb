@@ -1,0 +1,761 @@
+Issue: Safety violation
+
+Modules:
+  bag: C:\Python310\Lib\site-packages\harmony_model_checker\modules\bag.hny
+  game: c:\Users\leeev\OneDrive\Desktop\Folders\SCHOOL\CS4410\hw6\game.hny
+  __main__: c:\Users\leeev\OneDrive\Desktop\Folders\SCHOOL\CS4410\hw6\test.hny
+  synch: C:\Python310\Lib\site-packages\harmony_model_checker\modules\synch.hny
+  list: C:\Python310\Lib\site-packages\harmony_model_checker\modules\list.hny
+
+================================================
+Running thread T0: __init__()
+mode:  runnable atomic
+stack: ['[]']
+state id: 1
+================================================
+
+Step 1:
+  program counter:   0
+  hvm code:          Frame __init__()
+  explanation:       pop argument () and run method "__init__"
+  module:            __main__
+  start statement:   line=1 column=1
+  end statement:     line=19 column=26
+  source code:       from game import *
+  call trace:        __init__()
+  stack:             [{:}]
+
+Step 2:
+  program counter:   1
+  hvm code:          Jump 54
+  explanation:       jump over method definition: set program counter to 54
+  module:            list
+  start statement:   line=2 column=1
+  end statement:     line=2 column=35
+  source code:       def subseq(s, b, e) returns result:
+                     ^^^
+
+Step 3:
+  program counter:   54
+  hvm code:          Push PC(57)
+  explanation:       push constant PC(57)
+  start statement:   line=11 column=1
+  end statement:     line=11 column=24
+  source code:       builtin tail "list$tail"
+                             ^^^^
+  stack:             [{:}, PC(57)]
+
+Step 4:
+  program counter:   55
+  hvm code:          Builtin(list$tail)
+  explanation:       pop pc () and bind to built-in method list$tail
+  source code:       builtin tail "list$tail"
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}]
+
+Step 5:
+  program counter:   56
+  hvm code:          Jump 602
+  explanation:       jump over method definition: set program counter to 602
+  start statement:   line=12 column=1
+  end statement:     line=12 column=27
+  source code:       def tail(s) returns result:
+                     ^^^
+
+Step 6:
+  program counter:   602
+  hvm code:          Push PC(605)
+  explanation:       push constant PC(605)
+  module:            bag
+  start statement:   line=15 column=1
+  end statement:     line=15 column=39
+  source code:       builtin multiplicity "bag$multiplicity"
+                             ^^^^^^^^^^^^
+  stack:             [{:}, PC(605)]
+
+Step 7:
+  program counter:   603
+  hvm code:          Builtin(bag$multiplicity)
+  explanation:       pop pc () and bind to built-in method bag$multiplicity
+  source code:       builtin multiplicity "bag$multiplicity"
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}]
+
+Step 8:
+  program counter:   604
+  hvm code:          Jump 624
+  explanation:       jump over method definition: set program counter to 624
+  start statement:   line=16 column=1
+  end statement:     line=16 column=40
+  source code:       def multiplicity(bg, elt) returns count:
+                     ^^^
+
+Step 9:
+  program counter:   624
+  hvm code:          Push PC(627)
+  explanation:       push constant PC(627)
+  start statement:   line=22 column=1
+  end statement:     line=22 column=23
+  source code:       builtin size "bag$size"
+                             ^^^^
+  stack:             [{:}, PC(627)]
+
+Step 10:
+  program counter:   625
+  hvm code:          Builtin(bag$size)
+  explanation:       pop pc () and bind to built-in method bag$size
+  source code:       builtin size "bag$size"
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}]
+
+Step 11:
+  program counter:   626
+  hvm code:          Jump 646
+  explanation:       jump over method definition: set program counter to 646
+  start statement:   line=23 column=1
+  end statement:     line=23 column=27
+  source code:       def size(bg) returns count:
+                     ^^^
+
+Step 12:
+  program counter:   646
+  hvm code:          Push PC(649)
+  explanation:       push constant PC(649)
+  start statement:   line=28 column=1
+  end statement:     line=28 column=23
+  source code:       builtin bmin "bag$bmin"
+                             ^^^^
+  stack:             [{:}, PC(649)]
+
+Step 13:
+  program counter:   647
+  hvm code:          Builtin(bag$bmin)
+  explanation:       pop pc () and bind to built-in method bag$bmin
+  source code:       builtin bmin "bag$bmin"
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}]
+
+Step 14:
+  program counter:   648
+  hvm code:          Jump 665
+  explanation:       jump over method definition: set program counter to 665
+  start statement:   line=29 column=1
+  end statement:     line=29 column=27
+  source code:       def bmin(bg) returns count:
+                     ^^^
+
+Step 15:
+  program counter:   665
+  hvm code:          Push PC(668)
+  explanation:       push constant PC(668)
+  start statement:   line=33 column=1
+  end statement:     line=33 column=23
+  source code:       builtin bmax "bag$bmax"
+                             ^^^^
+  stack:             [{:}, PC(668)]
+
+Step 16:
+  program counter:   666
+  hvm code:          Builtin(bag$bmax)
+  explanation:       pop pc () and bind to built-in method bag$bmax
+  source code:       builtin bmax "bag$bmax"
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}]
+
+Step 17:
+  program counter:   667
+  hvm code:          Jump 693
+  explanation:       jump over method definition: set program counter to 693
+  start statement:   line=34 column=1
+  end statement:     line=34 column=27
+  source code:       def bmax(bg) returns count:
+                     ^^^
+
+Step 18:
+  program counter:   693
+  hvm code:          Push PC(696)
+  explanation:       push constant PC(696)
+  start statement:   line=41 column=1
+  end statement:     line=41 column=21
+  source code:       builtin add "bag$add"
+                             ^^^
+  stack:             [{:}, PC(696)]
+
+Step 19:
+  program counter:   694
+  hvm code:          Builtin(bag$add)
+  explanation:       pop pc () and bind to built-in method bag$add
+  source code:       builtin add "bag$add"
+                     ^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}]
+
+Step 20:
+  program counter:   695
+  hvm code:          Jump 722
+  explanation:       jump over method definition: set program counter to 722
+  start statement:   line=42 column=1
+  end statement:     line=42 column=32
+  source code:       def add(bg, elt) returns result:
+                     ^^^
+
+Step 21:
+  program counter:   722
+  hvm code:          Push PC(725)
+  explanation:       push constant PC(725)
+  start statement:   line=49 column=1
+  end statement:     line=49 column=27
+  source code:       builtin remove "bag$remove"
+                             ^^^^^^
+  stack:             [{:}, PC(725)]
+
+Step 22:
+  program counter:   723
+  hvm code:          Builtin(bag$remove)
+  explanation:       pop pc () and bind to built-in method bag$remove
+  source code:       builtin remove "bag$remove"
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}]
+
+Step 23:
+  program counter:   724
+  hvm code:          Jump 1546
+  explanation:       jump over method definition: set program counter to 1546
+  start statement:   line=50 column=1
+  end statement:     line=50 column=35
+  source code:       def remove(bg, elt) returns result:
+                     ^^^
+
+Step 24:
+  program counter:   1546
+  hvm code:          Push ()
+  explanation:       push constant ()
+  module:            __main__
+  start statement:   line=4 column=1
+  end statement:     line=4 column=16
+  source code:       thegame = Game()
+                                   ^^
+  stack:             [{:}, []]
+
+Step 25:
+  program counter:   1547
+  hvm code:          Apply PC(1206)
+  explanation:       pop an argument ([]) and call method (1206: "Game")
+  source code:       thegame = Game()
+                               ^^^^^^
+  call trace:        __init__() --> Game()
+  stack:             [{:}, [], 24754, []]
+
+Step 26:
+  program counter:   1206
+  hvm code:          Frame Game()
+  explanation:       pop argument () and run method "Game"
+  module:            game
+  start statement:   line=4 column=1
+  end statement:     line=4 column=24
+  source code:       def Game() returns game:
+                     ^^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}, [], 24754, {:}]
+
+Step 27:
+  program counter:   1207
+  hvm code:          Push {:}
+  explanation:       push constant {:}
+  start statement:   line=5 column=5
+  end statement:     line=6 column=61
+  source code:       game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
+  stack:             [{:}, [], 24754, {:}, {:}]
+
+Step 28:
+  program counter:   1208
+  hvm code:          Push "waiting"
+  explanation:       push constant "waiting"
+  source code:       game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
+  stack:             [{:}, [], 24754, {:}, {:}, "waiting"]
+
+Step 29:
+  program counter:   1209
+  hvm code:          Push ()
+  explanation:       push constant ()
+  source code:       game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
+  stack:             [{:}, [], 24754, {:}, {:}, "waiting", []]
+
+Step 30:
+  program counter:   1210
+  hvm code:          3-ary DictAdd
+  explanation:       pop 3 values ([], "waiting", {:}); add key/value pair to dictionary; push result ({ "waiting": [] })
+  source code:       game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
+  stack:             [{:}, [], 24754, {:}, { "waiting": [] }]
+
+Step 31:
+  program counter:   1211
+  hvm code:          Push "team1"
+  explanation:       push constant "team1"
+  source code:       game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
+  stack:             [{:}, [], 24754, {:}, { "waiting": [] }, "team1"]
+
+Step 32:
+  program counter:   1212
+  hvm code:          Push {}
+  explanation:       push constant {}
+  source code:       game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
+  stack:             [{:}, [], 24754, {:}, { "waiting": [] }, "team1", {}]
+
+Step 33:
+  program counter:   1213
+  hvm code:          3-ary DictAdd
+  explanation:       pop 3 values ({}, "team1", { "waiting": [] }); add key/value pair to dictionary; push result ({ "team1": {}, "waiting": [] })
+  source code:       game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "waiting": [] }]
+
+Step 34:
+  program counter:   1214
+  hvm code:          Push "team2"
+  explanation:       push constant "team2"
+  source code:       game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "waiting": [] }, "team2"]
+
+Step 35:
+  program counter:   1215
+  hvm code:          Push {}
+  explanation:       push constant {}
+  source code:       game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "waiting": [] }, "team2", {}]
+
+Step 36:
+  program counter:   1216
+  hvm code:          3-ary DictAdd
+  explanation:       pop 3 values ({}, "team2", { "team1": {}, "waiting": [] }); add key/value pair to dictionary; push result ({ "team1": {}, "team2": {}, "waiting": [] })
+  source code:       game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }]
+
+Step 37:
+  program counter:   1217
+  hvm code:          Push "lock"
+  explanation:       push constant "lock"
+  source code:       game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock"]
+
+Step 38:
+  program counter:   1218
+  hvm code:          Push ()
+  explanation:       push constant ()
+  source code:       game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", []]
+
+Step 39:
+  program counter:   1219
+  hvm code:          Apply PC(931)
+  explanation:       pop an argument ([]) and call method (931: "Lock")
+  source code:       game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
+  call trace:        __init__() --> Game() --> Lock()
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, []]
+
+Step 40:
+  program counter:   931
+  hvm code:          Frame Lock()
+  explanation:       pop argument () and run method "Lock"
+  module:            synch
+  start statement:   line=25 column=1
+  end statement:     line=25 column=26
+  source code:       def Lock() returns result:
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, {:}]
+
+Step 41:
+  program counter:   932
+  hvm code:          DelVar result
+  explanation:       delete method variable result
+  start statement:   line=26 column=5
+  end statement:     line=26 column=27
+  source code:       result = BinSema(False)
+                                      ^^^^^
+
+Step 42:
+  program counter:   933
+  hvm code:          Push False
+  explanation:       push constant False
+  start expression:  line=26 column=22
+  end expression:    line=26 column=26
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, {:}, False]
+
+Step 43:
+  program counter:   934
+  hvm code:          Apply PC(912)
+  explanation:       pop an argument (False) and call method (912: "BinSema")
+  source code:       result = BinSema(False)
+                              ^^^^^^^^^^^^^^
+  call trace:        __init__() --> Game() --> Lock() --> BinSema(False)
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, {:}, [], 14946, False]
+
+Step 44:
+  program counter:   912
+  hvm code:          Frame BinSema(initial)
+  explanation:       pop argument (False), assign to initial, and run method "BinSema"
+  start statement:   line=21 column=1
+  end statement:     line=21 column=34
+  source code:       def BinSema(initial) returns sema:
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  method variables:  { initial: False }
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, {:}, [], 14946, {:}]
+
+Step 45:
+  program counter:   913
+  hvm code:          AtomicInc(lazy)
+  explanation:       increment atomic counter from 1 to 2: remains atomic
+  start statement:   line=22 column=5
+  end statement:     line=22 column=37
+  source code:       assert initial in { False, True }
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Step 46:
+  program counter:   914
+  hvm code:          ReadonlyInc
+  explanation:       increment readonly counter from 0 to 1: becomes readonly
+  start expression:  line=22 column=5
+  end expression:    line=22 column=37
+
+Step 47:
+  program counter:   915
+  hvm code:          LoadVar initial
+  explanation:       push value (False) of variable "initial"
+  source code:       assert initial in { False, True }
+                            ^^^^^^^
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, {:}, [], 14946, {:}, False]
+
+Step 48:
+  program counter:   916
+  hvm code:          Push {}
+  explanation:       push constant {}
+  source code:       assert initial in { False, True }
+                                         ^^^^^^^^^^^
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, {:}, [], 14946, {:}, False, {}]
+
+Step 49:
+  program counter:   917
+  hvm code:          Push False
+  explanation:       push constant False
+  source code:       assert initial in { False, True }
+                                         ^^^^^
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, {:}, [], 14946, {:}, False, {}, False]
+
+Step 50:
+  program counter:   918
+  hvm code:          2-ary SetAdd
+  explanation:       pop 2 values (False, {}); insert first value into the second; push result ({ False })
+  source code:       assert initial in { False, True }
+                                         ^^^^^^^^^^^
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, {:}, [], 14946, {:}, False, { False }]
+
+Step 51:
+  program counter:   919
+  hvm code:          Push True
+  explanation:       push constant True
+  source code:       assert initial in { False, True }
+                                                ^^^^
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, {:}, [], 14946, {:}, False, { False }, True]
+
+Step 52:
+  program counter:   920
+  hvm code:          2-ary SetAdd
+  explanation:       pop 2 values (True, { False }); insert first value into the second; push result ({ False, True })
+  source code:       assert initial in { False, True }
+                                         ^^^^^^^^^^^
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, {:}, [], 14946, {:}, False, { False, True }]
+
+Step 53:
+  program counter:   921
+  hvm code:          2-ary in
+  explanation:       pop 2 values ({ False, True }, False); check if the second value is a member of the first; push result (True)
+  source code:       assert initial in { False, True }
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, {:}, [], 14946, {:}, True]
+
+Step 54:
+  program counter:   922
+  hvm code:          Assert
+  explanation:       pop a value (True); do not raise exception
+  source code:       assert initial in { False, True }
+                     ^^^^^^
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, {:}, [], 14946, {:}]
+
+Step 55:
+  program counter:   923
+  hvm code:          ReadonlyDec
+  explanation:       decrement readonly counter from 1 to 0: no longer readonly
+  source code:       assert initial in { False, True }
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Step 56:
+  program counter:   924
+  hvm code:          AtomicDec
+  explanation:       decrement atomic counter from 2 to 1: remains atomic
+  start expression:  line=22 column=5
+  end expression:    line=22 column=37
+
+Step 57:
+  program counter:   925
+  hvm code:          LoadVar initial
+  explanation:       push value (False) of variable "initial"
+  start statement:   line=23 column=5
+  end statement:     line=23 column=18
+  source code:       sema = initial
+                            ^^^^^^^
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, {:}, [], 14946, {:}, False]
+
+Step 58:
+  program counter:   926
+  hvm code:          DelVar initial
+  explanation:       delete method variable initial
+  start expression:  line=23 column=12
+  end expression:    line=23 column=18
+  method variables:  { }
+
+Step 59:
+  program counter:   927
+  hvm code:          StoreVar sema
+  explanation:       pop value (False) and store locally in variable \"sema\"
+  source code:       sema = initial
+                     ^^^^^^
+  method variables:  { sema: False }
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, {:}, [], 14946, {:}]
+
+Step 60:
+  program counter:   928
+  hvm code:          ReturnOp(sema)
+  explanation:       pop caller's method variables and pc and push result (), or terminate if no caller
+  start statement:   line=21 column=1
+  end statement:     line=21 column=34
+  source code:       def BinSema(initial) returns sema:
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  method variables:  { }
+  call trace:        __init__() --> Game() --> Lock()
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, {:}, False]
+
+Step 61:
+  program counter:   935
+  hvm code:          StoreVar result
+  explanation:       pop value (False) and store locally in variable \"result\"
+  start statement:   line=26 column=5
+  end statement:     line=26 column=27
+  source code:       result = BinSema(False)
+                     ^^^^^^^^
+  method variables:  { result: False }
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", [], 19506, {:}]
+
+Step 62:
+  program counter:   936
+  hvm code:          ReturnOp(result)
+  explanation:       pop caller's method variables and pc and push result (), or terminate if no caller
+  start statement:   line=25 column=1
+  end statement:     line=25 column=26
+  source code:       def Lock() returns result:
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  method variables:  { }
+  call trace:        __init__() --> Game()
+  stack:             [{:}, [], 24754, {:}, { "team1": {}, "team2": {}, "waiting": [] }, "lock", False]
+
+Step 63:
+  program counter:   1220
+  hvm code:          3-ary DictAdd
+  explanation:       pop 3 values (False, "lock", { "team1": {}, "team2": {}, "waiting": [] }); add key/value pair to dictionary; push result ({ "lock": False, "team1": {}, "team2": {}, "waiting": [] })
+  module:            game
+  start statement:   line=5 column=5
+  end statement:     line=6 column=61
+  source code:       game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
+  stack:             [{:}, [], 24754, {:}, { "lock": False, "team1": {}, "team2": {}, "waiting": [] }]
+
+Step 64:
+  program counter:   1221
+  hvm code:          Push "active_game"
+  explanation:       push constant "active_game"
+  source code:       .active_game: Condition(), .players: condition()}
+  stack:             [{:}, [], 24754, {:}, { "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "active_game"]
+
+Step 65:
+  program counter:   1222
+  hvm code:          Push ()
+  explanation:       push constant ()
+  source code:       .active_game: Condition(), .players: condition()}
+  stack:             [{:}, [], 24754, {:}, { "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "active_game", []]
+
+Step 66:
+  program counter:   1223
+  hvm code:          Apply PC(989)
+  explanation:       pop an argument ([]) and call method (989: "Condition")
+  source code:       .active_game: Condition(), .players: condition()}
+  call trace:        __init__() --> Game() --> Condition()
+  stack:             [{:}, [], 24754, {:}, { "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "active_game", [], 19570, []]
+
+Step 67:
+  program counter:   989
+  hvm code:          Frame Condition()
+  explanation:       pop argument () and run method "Condition"
+  module:            synch
+  start statement:   line=43 column=1
+  end statement:     line=43 column=31
+  source code:       def Condition() returns result:
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}, [], 24754, {:}, { "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "active_game", [], 19570, {:}]
+
+Step 68:
+  program counter:   990
+  hvm code:          DelVar result
+  explanation:       delete method variable result
+  start statement:   line=44 column=5
+  end statement:     line=44 column=24
+  source code:       result = bag.empty()
+                              ^^^^^^^^^
+
+Step 69:
+  program counter:   991
+  hvm code:          Push PC(541)
+  explanation:       push program counter constant 541 ()
+  start expression:  line=44 column=14
+  end expression:    line=44 column=22
+  stack:             [{:}, [], 24754, {:}, { "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "active_game", [], 19570, {:}, PC(541)]
+
+Step 70:
+  program counter:   992
+  hvm code:          Push ()
+  explanation:       push constant ()
+  source code:       result = bag.empty()
+                                       ^^
+  stack:             [{:}, [], 24754, {:}, { "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "active_game", [], 19570, {:}, PC(541), []]
+
+Step 71:
+  program counter:   993
+  hvm code:          2-ary Closure
+  explanation:       pop 2 values ([], PC(541)); push result (?PC(541)[[]])
+  source code:       result = bag.empty()
+                              ^^^^^^^^^^^
+  stack:             [{:}, [], 24754, {:}, { "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "active_game", [], 19570, {:}, ?PC(541)[[]]]
+
+Step 72:
+  program counter:   994
+  hvm code:          Load
+  explanation:       pop an argument ([]) and call method (541: "empty")
+  start expression:  line=44 column=14
+  end expression:    line=44 column=24
+  call trace:        __init__() --> Game() --> Condition() --> empty()
+  stack:             [{:}, [], 24754, {:}, { "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "active_game", [], 19570, {:}, [], 15906, []]
+
+Step 73:
+  program counter:   541
+  hvm code:          Frame empty()
+  explanation:       pop argument () and run method "empty"
+  module:            bag
+  start statement:   line=1 column=1
+  end statement:     line=1 column=23
+  source code:       def empty() returns bg:
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  stack:             [{:}, [], 24754, {:}, { "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "active_game", [], 19570, {:}, [], 15906, {:}]
+
+Step 74:
+  program counter:   542
+  hvm code:          Push {:}
+  explanation:       push constant {:}
+  start statement:   line=2 column=5
+  end statement:     line=2 column=12
+  source code:       bg = {:}
+                          ^^^
+  stack:             [{:}, [], 24754, {:}, { "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "active_game", [], 19570, {:}, [], 15906, {:}, {:}]
+
+Step 75:
+  program counter:   543
+  hvm code:          StoreVar bg
+  explanation:       pop value ({:}) and store locally in variable \"bg\"
+  source code:       bg = {:}
+                     ^^^^
+  method variables:  { bg: {:} }
+  stack:             [{:}, [], 24754, {:}, { "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "active_game", [], 19570, {:}, [], 15906, {:}]
+
+Step 76:
+  program counter:   544
+  hvm code:          ReturnOp(bg)
+  explanation:       pop caller's method variables and pc and push result (), or terminate if no caller
+  start statement:   line=1 column=1
+  end statement:     line=1 column=23
+  source code:       def empty() returns bg:
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  method variables:  { }
+  call trace:        __init__() --> Game() --> Condition()
+  stack:             [{:}, [], 24754, {:}, { "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "active_game", [], 19570, {:}, {:}]
+
+Step 77:
+  program counter:   995
+  hvm code:          StoreVar result
+  explanation:       pop value ({:}) and store locally in variable \"result\"
+  module:            synch
+  start statement:   line=44 column=5
+  end statement:     line=44 column=24
+  source code:       result = bag.empty()
+                     ^^^^^^^^
+  method variables:  { result: {:} }
+  stack:             [{:}, [], 24754, {:}, { "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "active_game", [], 19570, {:}]
+
+Step 78:
+  program counter:   996
+  hvm code:          ReturnOp(result)
+  explanation:       pop caller's method variables and pc and push result (), or terminate if no caller
+  start statement:   line=43 column=1
+  end statement:     line=43 column=31
+  source code:       def Condition() returns result:
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  method variables:  { }
+  call trace:        __init__() --> Game()
+  stack:             [{:}, [], 24754, {:}, { "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "active_game", {:}]
+
+Step 79:
+  program counter:   1224
+  hvm code:          3-ary DictAdd
+  explanation:       pop 3 values ({:}, "active_game", { "lock": False, "team1": {}, "team2": {}, "waiting": [] }); add key/value pair to dictionary; push result ({ "active_game": {:}, "lock": False, "team1": {}, "team2": {}, "waiting": [] })
+  module:            game
+  start statement:   line=5 column=5
+  end statement:     line=6 column=61
+  source code:       game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
+  stack:             [{:}, [], 24754, {:}, { "active_game": {:}, "lock": False, "team1": {}, "team2": {}, "waiting": [] }]
+
+Step 80:
+  program counter:   1225
+  hvm code:          Push "players"
+  explanation:       push constant "players"
+  source code:       .active_game: Condition(), .players: condition()}
+  stack:             [{:}, [], 24754, {:}, { "active_game": {:}, "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "players"]
+
+Step 81:
+  program counter:   1226
+  hvm code:          Push ?game$condition
+  explanation:       push constant ?game$condition
+  source code:       .active_game: Condition(), .players: condition()}
+  stack:             [{:}, [], 24754, {:}, { "active_game": {:}, "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "players", ?game$condition]
+
+Step 82:
+  program counter:   1227
+  hvm code:          Push ()
+  explanation:       push constant ()
+  source code:       .active_game: Condition(), .players: condition()}
+  stack:             [{:}, [], 24754, {:}, { "active_game": {:}, "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "players", ?game$condition, []]
+
+Step 83:
+  program counter:   1228
+  hvm code:          2-ary AddArg
+  explanation:       pop 2 values ([], ?game$condition); push result (?game$condition[[]])
+  source code:       .active_game: Condition(), .players: condition()}
+  stack:             [{:}, [], 24754, {:}, { "active_game": {:}, "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "players", ?game$condition[[]]]
+
+Step 84:
+  program counter:   1229
+  hvm code:          Load
+  explanation:       pop an address and push the value at the address
+  start expression:  line=6 column=50
+  end expression:    line=6 column=60
+  new mode:          failed
+  stack:             [{:}, [], 24754, {:}, { "active_game": {:}, "lock": False, "team1": {}, "team2": {}, "waiting": [] }, "players"]
+  operation failed:  Load ?game$condition[[]]: can't load
+
+================================================
+Final state
+================================================
+Threads:
+  T0: pc=1229 failed atomic __init__() --> Game()
+Variables:

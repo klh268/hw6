@@ -3,9 +3,9 @@ from game import *
 const NPLAYERS = 6
 thegame = Game()
 
-def player(self ):
-# Join a game
-    let (team1, team2) = game join(?thegame, self):
+def player(self):
+    # Join a game
+    let (team1, team2) = game_join(?thegame, self):
         assert self in (team1 | team2)
 
     # Play
@@ -16,4 +16,4 @@ def player(self ):
 spawn eternal game_umpire(?thegame)
 
 for id in { 1 .. NPLAYERS }:
-    spayn player(id)
+    spawn player(id)

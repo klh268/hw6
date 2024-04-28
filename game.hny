@@ -1,0 +1,61 @@
+from synch import *
+
+
+def Game() returns game:
+    game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
+            .active_game: Condition(), .players: condition()}
+
+def game_umpire(g):
+    acquire(?g->lock)
+    while True:
+        # If there's an active game, wait for it to finish
+        while (len(g->waiting) < 2) or (len(g->team1) != 0) or (len(g->team2) != 0):
+            wait(?g->active_game, ?g->lock)
+        
+        # Start a new game by moving players from waiting to teams
+        for i in range(len(g->waiting) // 2):
+            g->team1 = g->team1 + g->waiting[i]
+            g->team2 = g->team2 + g->waiting[i + 1]
+        
+        # Remove players from waiting list (better way to round this to an even number?)
+        for i in range((len(g->waiting) // 2)*2):
+            del g->waiting[0]
+
+        # Signal players to start the game
+        notifyAll(?g->players)
+    release(?g->lock)
+
+
+def game_join(g, id):
+    acquire(?g->lock)
+    # Add player to waiting list
+    g->waiting = g->waiting + [id,]
+
+    # If teams are empty (game complete), signal umpire to make new teams
+    if (len(g->team1) == 0) and (len(g->team2) == 0):
+        notify(?g->active_game)
+    
+    # Wait for the game to start, don't enter unless one team has no players, team sizes uneven,
+    # or player is not on either team yet
+    while (len(g->team1) == 0) or (len(g->team1) != len(g->team2)) or ((id not in g->team1) and (id not in g->team2)):
+        wait(?g->players, ?g->lock)
+
+    # Return tuple of teams (no return statement)?
+    teams = (g->team1, g->team2)
+
+    release(?g->lock)
+
+def game_leave(g, id):
+    acquire(?g->lock)
+    
+    # Remove player from team
+    if id in g->team1:
+        del g->team1[id]
+    elif id in g->team2:
+        del g->team2[id]
+    
+    # If teams are empty (game complete), signal umpire to make new teams
+    if (len(g->team1) == 0) and (len(g->team2) == 0):
+        notify(?g->active_game)
+
+    release(?g->lock)
