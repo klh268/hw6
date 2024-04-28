@@ -7,6 +7,9 @@ thegame = Game()
 def player(id):
     # Attempt to join a game
     let (team1, team2) = game_join(?thegame, id):
+        # Assert same length
+        assert (len(team1) == len(team2))
+
         # Assert the player is in one of the teams
         assert id in (team1 | team2)
 
@@ -15,10 +18,6 @@ def player(id):
         
         # Assert the teams are disjoint
         assert (len(team1 & team2) == 0)
-        
-        # Assert same length
-        assert (len(team1) == len(team2))
-
     # game plays  
 
     # Player leaves the game
