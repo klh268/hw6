@@ -25,11 +25,12 @@ def game_umpire(g):
                 del g->waiting[0]
 
         # Signal players to start the game
+        # assert (len(g->waiting) <= 1)
         notifyAll(?g->players)
     release(?g->lock)
 
 
-def game_join(g, id):
+def game_join(g, id) returns teams:
     acquire(?g->lock)
     # Add player to waiting list
     g->waiting = g->waiting + [id,]
@@ -43,7 +44,7 @@ def game_join(g, id):
     while (len(g->team1) == 0) or (len(g->team1) != len(g->team2)) or ((id not in g->team1) and (id not in g->team2)):
         wait(?g->players, ?g->lock)
 
-    # Return tuple of teams (no return statement)?
+    # Return tuple of teams
     teams = (g->team1, g->team2)
 
     release(?g->lock)
