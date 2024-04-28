@@ -19,7 +19,7 @@ def player(id):
         # Assert no player is duplicated within the same team
         assert (len(g->team1 | g->team2) == len(g->team1) + len(g->team2))
 
-    # Simulate game play (no operation)
+    # game plays  
 
     # Player leaves the game
     game_leave(?thegame, id)
