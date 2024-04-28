@@ -14,25 +14,15 @@ def game_umpire(g):
             wait(?g->active_game, ?g->lock)
        
        #let gives me an error here on the next line
-        let number_to_pair = len(g->waiting) - (len(g->waiting) % 2):
-
-            g -> team1 = []
-            g -> team2 = []
-
-
-            for i in range(0, number_to_pair, 2):
-                if i < number_to_pair:
-                    g->team1.append(g->waiting[i])
-                if (i + 1) < number_to_pair:
-                    g->team2.append(g->waiting[i + 1])
+        let pairedplayers = len(g->waiting) - (len(g->waiting) % 2):
+            for i in range(pairedplayers//2):
+                g->team1 = add(g->team1, g->waiting[i])
+                g->team2 = add(g->team2, g->waiting[i + 1])
 
             # Create a new waiting list excluding the players who have been paired
             #harmony gives me errors 
-            let new_waiting = []:
-                for i in range(number_to_pair, len(g->waiting)):
-                    new_waiting.append(g->waiting[i])
-
-                g->waiting = new_waiting
+            for i in range(pairedplayers):
+                del g->waiting[0]
 
         # Signal players to start the game
         notifyAll(?g->players)
@@ -63,9 +53,9 @@ def game_leave(g, id):
     
     # Remove player from team
     if id in g->team1:
-        del g->team1[id]
+        g->team1 = remove(g->team1, id)
     elif id in g->team2:
-        del g->team2[id]
+        g->team2 = remove(g->team2, id)
     
     # If teams are empty (game complete), signal umpire to make new teams
     if (len(g->team1) == 0) and (len(g->team2) == 0):
