@@ -1,0 +1,30 @@
+from game import *
+
+const NPLAYERS = 6
+
+thegame = Game()
+
+def player(id):
+    # Attempt to join a game
+    let (team1, team2) = game_join(?thegame, id):
+        # Assert the player is in one of the teams
+        assert id in (team1 | team2)
+
+        # Assert that teams are of equal size or within one player difference
+        assert abs(len(team1) - len(team2)) <= 1
+        
+        # Assert the teams are disjoint
+        assert (len(team1 & team2) == 0)
+        
+        # Assert no player is duplicated within the same team
+        assert (len(g->team1 | g->team2) == len(g->team1) + len(g->team2))
+
+    # Simulate game play (no operation)
+
+    # Player leaves the game
+    game_leave(?thegame, id)
+  
+spawn eternal game_umpire(?thegame)
+
+for id in {1 .. NPLAYERS}:
+    spawn player(id)
