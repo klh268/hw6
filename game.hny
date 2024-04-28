@@ -3,23 +3,36 @@ from synch import *
 
 def Game() returns game:
     game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
-            .active_game: Condition(), .players: condition()}
+            .active_game: Condition(), .players: Condition()}
 
 def game_umpire(g):
     acquire(?g->lock)
     while True:
+        
         # If there's an active game, wait for it to finish
         while (len(g->waiting) < 2) or (len(g->team1) != 0) or (len(g->team2) != 0):
             wait(?g->active_game, ?g->lock)
-        
-        # Start a new game by moving players from waiting to teams
-        for i in range(len(g->waiting) // 2):
-            g->team1 = g->team1 + g->waiting[i]
-            g->team2 = g->team2 + g->waiting[i + 1]
-        
-        # Remove players from waiting list (better way to round this to an even number?)
-        for i in range((len(g->waiting) // 2)*2):
-            del g->waiting[0]
+       
+       #let gives me an error here on the next line
+        let number_to_pair = len(g->waiting) - (len(g->waiting) % 2):
+
+            g -> team1 = []
+            g -> team2 = []
+
+
+            for i in range(0, number_to_pair, 2):
+                if i < number_to_pair:
+                    g->team1.append(g->waiting[i])
+                if (i + 1) < number_to_pair:
+                    g->team2.append(g->waiting[i + 1])
+
+            # Create a new waiting list excluding the players who have been paired
+            #harmony gives me errors 
+            let new_waiting = []:
+                for i in range(number_to_pair, len(g->waiting)):
+                    new_waiting.append(g->waiting[i])
+
+                g->waiting = new_waiting
 
         # Signal players to start the game
         notifyAll(?g->players)
