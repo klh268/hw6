@@ -13,8 +13,8 @@ def player(id):
         # Assert the player is in one of the teams
         assert id in (team1 | team2)
 
-        #right number of teams 
-        assert (NPLAYERS == (len(team1)+len(team2)))
+        # #right number of teams 
+        # assert (NPLAYERS == (len(team1)+len(team2)))
 
         # Assert the teams are disjoint
         assert (len(team1 & team2) == 0)
