@@ -3,7 +3,7 @@ from game import *
 const NPLAYERS = 6
 thegame = Game()
 def player(self):
-    let (team1, team2) = game.join(?thegame, self):
+    let (team1, team2) = game_join(?thegame, self):
         assert self in (team1 | team2)
 
     game_leave(?thegame, self)
