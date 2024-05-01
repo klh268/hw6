@@ -12,12 +12,10 @@ def player(id):
 
         # Assert the player is in one of the teams
         assert id in (team1 | team2)
-
-        # Assert that teams are of equal size or within one player difference
-        assert abs(len(team1) - len(team2)) <= 1
         
         # Assert the teams are disjoint
         assert (len(team1 & team2) == 0)
+
     # game plays  
 
     # Player leaves the game

@@ -43,7 +43,7 @@ def game_join(g, id) returns teams:
     
     # Wait for the game to start, don't enter unless one team has no players, team sizes uneven,
     # or player is not on either team yet
-    while (len(g->team1) == 0) or (len(g->team1) != len(g->team2)) or ((id not in g->team1) and (id not in g->team2)):
+    while (len(g->team1) != len(g->team2)) or (len(g->team1) == 0) or ((id not in g->team1) and (id not in g->team2)):
         wait(?g->players, ?g->lock)
 
     # Return tuple of teams
