@@ -13,3 +13,4 @@ spawn eternal game_umpire(?thegame)
 
 for id in { 1 .. NPLAYERS}:
     spawn player(id)
+    
