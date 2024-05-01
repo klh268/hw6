@@ -14,7 +14,7 @@ def player(id):
         assert id in (team1 | team2)
 
         #right number of teams 
-        asset (NPLAYERS == (len(team1)+len(team2)))
+        assert (NPLAYERS == (len(team1)+len(team2)))
 
         # Assert the teams are disjoint
         assert (len(team1 & team2) == 0)
