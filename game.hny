@@ -3,7 +3,8 @@ from set import *
 
 def Game() returns game:
     game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
-            .active_game: Condition(), .players: Condition()}
+            .active_game: Condition(), .players: Condition(), 
+            .complete_game: Condition(), .ingame_count: 0, .leftgame_count: 0}
 
 def game_umpire(g):
     acquire(?g->lock)
@@ -12,7 +13,7 @@ def game_umpire(g):
         # If there's an active game, wait for it to finish
         while (len(g->waiting) < 2) or (len(g->team1) != 0) or (len(g->team2) != 0):
             wait(?g->active_game, ?g->lock)
-       
+        
        #let gives me an error here on the next line
         let pairedplayers = len(g->waiting) - (len(g->waiting) % 2):
             var i = 0
@@ -25,7 +26,8 @@ def game_umpire(g):
             while j < pairedplayers:
                 del g->waiting[0]
                 j += 1
-
+        g->ingame_count = len(g->team1) + len(g->team2)
+        g->leftgame_count = 0
         # Signal players to start the game
         # assert (len(g->waiting) <= 1)
         notifyAll(?g->players)
@@ -48,11 +50,15 @@ def game_join(g, id) returns teams:
 
     # Return tuple of teams
     teams = (g->team1, g->team2)
+    g->leftgame_count += 1
+    notifyAll(?g->complete_game)
 
     release(?g->lock)
 
 def game_leave(g, id):
     acquire(?g->lock)
+    while (g->leftgame_count != g->ingame_count):
+        wait(?g->complete_game, ?g->lock)
     
     # Remove player from team
     if id in g->team1:
