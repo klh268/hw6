@@ -1,5 +1,5 @@
 {
-  "nstates": 212508,
+  "nstates": 562748,
   "issue": "No issues",
   "hvm": {
     "modules": {
@@ -113,8 +113,8 @@
                 "",
                 "def Game() returns game:",
                 "    game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), ",
-                "            .active_game: Condition(), .players: Condition(), ",
-                "            .complete_game: Condition(), .ingame_count: 0, .leftgame_count: 0}",
+                "            .active_game: Condition(), .players: Condition(), .complete_game: Condition(), ",
+                "            .game_headcount: 0, .exited: []}",
                 "",
                 "def game_umpire(g):",
                 "    acquire(?g->lock)",
@@ -136,8 +136,8 @@
                 "            while j < pairedplayers:",
                 "                del g->waiting[0]",
                 "                j += 1",
-                "        g->ingame_count = len(g->team1) + len(g->team2)",
-                "        g->leftgame_count = 0",
+                "            g->game_headcount = pairedplayers",
+                "        g->exited = []",
                 "        # Signal players to start the game",
                 "        # assert (len(g->waiting) <= 1)",
                 "        notifyAll(?g->players)",
@@ -160,14 +160,17 @@
                 "",
                 "    # Return tuple of teams",
                 "    teams = (g->team1, g->team2)",
-                "    g->leftgame_count += 1",
+                "",
+                "    # Complete game",
+                "    g->exited = g->exited + [id,]",
                 "    notifyAll(?g->complete_game)",
                 "",
                 "    release(?g->lock)",
                 "",
                 "def game_leave(g, id):",
                 "    acquire(?g->lock)",
-                "    while (g->leftgame_count != g->ingame_count):",
+                "    # Wait for game to finish",
+                "    while (len(g->exited) != g->game_headcount):",
                 "        wait(?g->complete_game, ?g->lock)",
                 "    ",
                 "    # Remove player from team",
@@ -670,7 +673,7 @@
           }
       },
     "labels": {
-        "__end__": 2123
+        "__end__": 2118
       },
     "pretty": [
         [
@@ -3570,8 +3573,8 @@
             "top of stack is a built-in operation called bag$remove"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame remove(bg, elt)",
@@ -3742,8 +3745,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame combinations(bg, k)",
@@ -4102,8 +4105,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame atomic_load(p)",
@@ -4142,8 +4145,8 @@
             "delete method variable current"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame atomic_store(p, v)",
@@ -4182,8 +4185,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame tas(lk)",
@@ -4234,8 +4237,8 @@
             "delete method variable oldvalue"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame cas(p, old, new)",
@@ -4318,8 +4321,8 @@
             "delete method variable success"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame BinSema(initial)",
@@ -4394,8 +4397,8 @@
             "delete method variable sema"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame Lock()",
@@ -4422,8 +4425,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame acquired(binsema)",
@@ -4454,8 +4457,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame held(binsema)",
@@ -4486,8 +4489,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame acquire(binsema)",
@@ -4562,8 +4565,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame release(binsema)",
@@ -4626,8 +4629,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame Condition()",
@@ -4662,8 +4665,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame wait(c, lk)",
@@ -4938,8 +4941,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame notify(c)",
@@ -5058,8 +5061,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame notifyAll(c)",
@@ -5106,8 +5109,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame Semaphore(cnt)",
@@ -5134,8 +5137,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame P(sema)",
@@ -5226,8 +5229,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame V(sema)",
@@ -5274,8 +5277,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame Queue()",
@@ -5298,8 +5301,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame get(q)",
@@ -5422,8 +5425,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame put(q, item)",
@@ -5494,8 +5497,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame issubset(s, t)",
@@ -5542,8 +5545,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame issubseteq(s, t)",
@@ -5590,8 +5593,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame issubsetstrict(s, t)",
@@ -5670,8 +5673,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame issuperset(s, t)",
@@ -5718,8 +5721,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame issuperseteq(s, t)",
@@ -5766,8 +5769,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame issupersetstrict(s, t)",
@@ -5846,8 +5849,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame add(s, elt)",
@@ -5894,8 +5897,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame remove(s, elt)",
@@ -5942,8 +5945,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame subsets(s)",
@@ -6070,8 +6073,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame union(s)",
@@ -6146,8 +6149,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame cartesian(d)",
@@ -6342,8 +6345,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame combinations(s, k)",
@@ -6694,8 +6697,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame reduce(f, d, z)",
@@ -6798,8 +6801,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame filter(cond, s)",
@@ -6914,8 +6917,8 @@
             "delete method variable t"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame map(f, s)",
@@ -7018,8 +7021,8 @@
             "delete method variable t"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame Game()",
@@ -7130,8 +7133,8 @@
             "pop 3 values and push the result of applying DictAdd"
           ],
         [
-            "Push \"ingame_count\"",
-            "push constant \"ingame_count\""
+            "Push \"game_headcount\"",
+            "push constant \"game_headcount\""
           ],
         [
             "Push 0",
@@ -7142,12 +7145,12 @@
             "pop 3 values and push the result of applying DictAdd"
           ],
         [
-            "Push \"leftgame_count\"",
-            "push constant \"leftgame_count\""
+            "Push \"exited\"",
+            "push constant \"exited\""
           ],
         [
-            "Push 0",
-            "push constant 0"
+            "Push ()",
+            "push constant ()"
           ],
         [
             "3-ary DictAdd",
@@ -7166,8 +7169,8 @@
             "delete method variable game"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame game_umpire(g)",
@@ -7198,8 +7201,8 @@
             "push constant True"
           ],
         [
-            "JumpCond False 1781",
-            "pop a value and jump to 1781 if the value is False"
+            "JumpCond False 1771",
+            "pop a value and jump to 1771 if the value is False"
           ],
         [
             "LoadVar g",
@@ -7690,64 +7693,24 @@
             "delete method variable j"
           ],
         [
+            "LoadVar g",
+            "push the value of g"
+          ],
+        [
+            "Push \"game_headcount\"",
+            "push constant \"game_headcount\""
+          ],
+        [
+            "2-ary AddArg",
+            "pop 2 values and push the result of applying AddArg"
+          ],
+        [
+            "LoadVar pairedplayers",
+            "push the value of pairedplayers"
+          ],
+        [
             "DelVar pairedplayers",
             "delete method variable pairedplayers"
-          ],
-        [
-            "LoadVar g",
-            "push the value of g"
-          ],
-        [
-            "Push \"ingame_count\"",
-            "push constant \"ingame_count\""
-          ],
-        [
-            "2-ary AddArg",
-            "pop 2 values and push the result of applying AddArg"
-          ],
-        [
-            "LoadVar g",
-            "push the value of g"
-          ],
-        [
-            "Push \"team1\"",
-            "push constant \"team1\""
-          ],
-        [
-            "2-ary AddArg",
-            "pop 2 values and push the result of applying AddArg"
-          ],
-        [
-            "Load",
-            "pop an address and push the value at the address"
-          ],
-        [
-            "1-ary len",
-            "pop 1 value and push the result of applying len"
-          ],
-        [
-            "LoadVar g",
-            "push the value of g"
-          ],
-        [
-            "Push \"team2\"",
-            "push constant \"team2\""
-          ],
-        [
-            "2-ary AddArg",
-            "pop 2 values and push the result of applying AddArg"
-          ],
-        [
-            "Load",
-            "pop an address and push the value at the address"
-          ],
-        [
-            "1-ary len",
-            "pop 1 value and push the result of applying len"
-          ],
-        [
-            "2-ary +",
-            "pop 2 values and push the result of applying +"
           ],
         [
             "Store",
@@ -7758,16 +7721,16 @@
             "push the value of g"
           ],
         [
-            "Push \"leftgame_count\"",
-            "push constant \"leftgame_count\""
+            "Push \"exited\"",
+            "push constant \"exited\""
           ],
         [
             "2-ary AddArg",
             "pop 2 values and push the result of applying AddArg"
           ],
         [
-            "Push 0",
-            "push constant 0"
+            "Push ()",
+            "push constant ()"
           ],
         [
             "Store",
@@ -7826,8 +7789,8 @@
             "restore caller method state and push result"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame game_join(g, id)",
@@ -7930,8 +7893,8 @@
             "pop 2 values and push the result of applying =="
           ],
         [
-            "JumpCond False 1823",
-            "pop a value and jump to 1823 if the value is False"
+            "JumpCond False 1813",
+            "pop a value and jump to 1813 if the value is False"
           ],
         [
             "LoadVar g",
@@ -7962,16 +7925,16 @@
             "pop 2 values and push the result of applying =="
           ],
         [
-            "Jump 1824",
-            "set program counter to 1824"
+            "Jump 1814",
+            "set program counter to 1814"
           ],
         [
             "Push False",
             "push constant False"
           ],
         [
-            "JumpCond False 1830",
-            "pop a value and jump to 1830 if the value is False"
+            "JumpCond False 1820",
+            "pop a value and jump to 1820 if the value is False"
           ],
         [
             "LoadVar g",
@@ -8038,8 +8001,8 @@
             "pop 2 values and push the result of applying !="
           ],
         [
-            "JumpCond True 1868",
-            "pop a value and jump to 1868 if the value is True"
+            "JumpCond True 1858",
+            "pop a value and jump to 1858 if the value is True"
           ],
         [
             "LoadVar g",
@@ -8070,8 +8033,8 @@
             "pop 2 values and push the result of applying =="
           ],
         [
-            "JumpCond True 1868",
-            "pop a value and jump to 1868 if the value is True"
+            "JumpCond True 1858",
+            "pop a value and jump to 1858 if the value is True"
           ],
         [
             "LoadVar id",
@@ -8102,8 +8065,8 @@
             "pop 1 value and push the result of applying not"
           ],
         [
-            "JumpCond False 1866",
-            "pop a value and jump to 1866 if the value is False"
+            "JumpCond False 1856",
+            "pop a value and jump to 1856 if the value is False"
           ],
         [
             "LoadVar id",
@@ -8134,24 +8097,24 @@
             "pop 1 value and push the result of applying not"
           ],
         [
-            "Jump 1869",
-            "set program counter to 1869"
+            "Jump 1859",
+            "set program counter to 1859"
           ],
         [
             "Push False",
             "push constant False"
           ],
         [
-            "Jump 1869",
-            "set program counter to 1869"
+            "Jump 1859",
+            "set program counter to 1859"
           ],
         [
             "Push True",
             "push constant True"
           ],
         [
-            "JumpCond False 1882",
-            "pop a value and jump to 1882 if the value is False"
+            "JumpCond False 1872",
+            "pop a value and jump to 1872 if the value is False"
           ],
         [
             "Push ()",
@@ -8198,12 +8161,8 @@
             "discard the top value on the stack"
           ],
         [
-            "Jump 1830",
-            "set program counter to 1830"
-          ],
-        [
-            "DelVar id",
-            "delete method variable id"
+            "Jump 1820",
+            "set program counter to 1820"
           ],
         [
             "Push ()",
@@ -8258,24 +8217,44 @@
             "push the value of g"
           ],
         [
-            "Push \"leftgame_count\"",
-            "push constant \"leftgame_count\""
+            "Push \"exited\"",
+            "push constant \"exited\""
           ],
         [
             "2-ary AddArg",
             "pop 2 values and push the result of applying AddArg"
           ],
         [
-            "Dup",
-            "push a copy of the top value on the stack"
+            "LoadVar g",
+            "push the value of g"
+          ],
+        [
+            "Push \"exited\"",
+            "push constant \"exited\""
+          ],
+        [
+            "2-ary AddArg",
+            "pop 2 values and push the result of applying AddArg"
           ],
         [
             "Load",
             "pop an address and push the value at the address"
           ],
         [
-            "Push 1",
-            "push constant 1"
+            "Push ()",
+            "building a tuple: push constant ()"
+          ],
+        [
+            "LoadVar id",
+            "push the value of id"
+          ],
+        [
+            "DelVar id",
+            "delete method variable id"
+          ],
+        [
+            "2-ary ListAdd",
+            "pop 2 values and push the result of applying ListAdd"
           ],
         [
             "2-ary +",
@@ -8338,8 +8317,8 @@
             "delete method variable teams"
           ],
         [
-            "Jump 2019",
-            "jump over method definition: set program counter to 2019"
+            "Jump 2014",
+            "jump over method definition: set program counter to 2014"
           ],
         [
             "Frame game_leave(g, id)",
@@ -8370,8 +8349,8 @@
             "push the value of g"
           ],
         [
-            "Push \"leftgame_count\"",
-            "push constant \"leftgame_count\""
+            "Push \"exited\"",
+            "push constant \"exited\""
           ],
         [
             "2-ary AddArg",
@@ -8382,12 +8361,16 @@
             "pop an address and push the value at the address"
           ],
         [
+            "1-ary len",
+            "pop 1 value and push the result of applying len"
+          ],
+        [
             "LoadVar g",
             "push the value of g"
           ],
         [
-            "Push \"ingame_count\"",
-            "push constant \"ingame_count\""
+            "Push \"game_headcount\"",
+            "push constant \"game_headcount\""
           ],
         [
             "2-ary AddArg",
@@ -8402,8 +8385,8 @@
             "pop 2 values and push the result of applying !="
           ],
         [
-            "JumpCond False 1945",
-            "pop a value and jump to 1945 if the value is False"
+            "JumpCond False 1940",
+            "pop a value and jump to 1940 if the value is False"
           ],
         [
             "Push ()",
@@ -8450,8 +8433,8 @@
             "discard the top value on the stack"
           ],
         [
-            "Jump 1923",
-            "set program counter to 1923"
+            "Jump 1917",
+            "set program counter to 1917"
           ],
         [
             "LoadVar id",
@@ -8478,8 +8461,8 @@
             "pop 2 values and push the result of applying in"
           ],
         [
-            "JumpCond False 1967",
-            "pop a value and jump to 1967 if the value is False"
+            "JumpCond False 1962",
+            "pop a value and jump to 1962 if the value is False"
           ],
         [
             "LoadVar g",
@@ -8538,8 +8521,8 @@
             "pop a value and an address and store the value at the address"
           ],
         [
-            "Jump 1988",
-            "set program counter to 1988"
+            "Jump 1983",
+            "set program counter to 1983"
           ],
         [
             "LoadVar id",
@@ -8566,8 +8549,8 @@
             "pop 2 values and push the result of applying in"
           ],
         [
-            "JumpCond False 1988",
-            "pop a value and jump to 1988 if the value is False"
+            "JumpCond False 1983",
+            "pop a value and jump to 1983 if the value is False"
           ],
         [
             "LoadVar g",
@@ -8658,8 +8641,8 @@
             "pop 2 values and push the result of applying =="
           ],
         [
-            "JumpCond False 2005",
-            "pop a value and jump to 2005 if the value is False"
+            "JumpCond False 2000",
+            "pop a value and jump to 2000 if the value is False"
           ],
         [
             "LoadVar g",
@@ -8690,16 +8673,16 @@
             "pop 2 values and push the result of applying =="
           ],
         [
-            "Jump 2006",
-            "set program counter to 2006"
+            "Jump 2001",
+            "set program counter to 2001"
           ],
         [
             "Push False",
             "push constant False"
           ],
         [
-            "JumpCond False 2012",
-            "pop a value and jump to 2012 if the value is False"
+            "JumpCond False 2007",
+            "pop a value and jump to 2007 if the value is False"
           ],
         [
             "LoadVar g",
@@ -8778,8 +8761,8 @@
             "pop a value and store it in shared variable nstarted"
           ],
         [
-            "Jump 2102",
-            "jump over method definition: set program counter to 2102"
+            "Jump 2097",
+            "jump over method definition: set program counter to 2097"
           ],
         [
             "Frame again()",
@@ -8818,8 +8801,8 @@
             "pop 2 values and push the result of applying =="
           ],
         [
-            "JumpCond False 2042",
-            "pop a value and jump to 2042 if the value is False"
+            "JumpCond False 2037",
+            "pop a value and jump to 2037 if the value is False"
           ],
         [
             "Load nstarted",
@@ -8838,8 +8821,8 @@
             "pop a value and store in success"
           ],
         [
-            "Jump 2049",
-            "set program counter to 2049"
+            "Jump 2044",
+            "set program counter to 2044"
           ],
         [
             "Push {}",
@@ -8874,8 +8857,8 @@
             "push the value of success"
           ],
         [
-            "JumpCond False 2055",
-            "pop a value and jump to 2055 if the value is False"
+            "JumpCond False 2050",
+            "pop a value and jump to 2050 if the value is False"
           ],
         [
             "Load nstarted",
@@ -8906,8 +8889,8 @@
             "delete method variable success"
           ],
         [
-            "Jump 2102",
-            "jump over method definition: set program counter to 2102"
+            "Jump 2097",
+            "jump over method definition: set program counter to 2097"
           ],
         [
             "Frame player(self)",
@@ -8918,12 +8901,12 @@
             "push constant ()"
           ],
         [
-            "Apply PC(2027)",
-            "call method PC(2027)"
+            "Apply PC(2022)",
+            "call method PC(2022)"
           ],
         [
-            "JumpCond False 2100",
-            "pop a value and jump to 2100 if the value is False"
+            "JumpCond False 2095",
+            "pop a value and jump to 2095 if the value is False"
           ],
         [
             "Push ()",
@@ -8946,8 +8929,8 @@
             "pop 2 values and push the result of applying ListAdd"
           ],
         [
-            "Apply PC(1789)",
-            "call method PC(1789)"
+            "Apply PC(1779)",
+            "call method PC(1779)"
           ],
         [
             "StoreVar (team1, team2)",
@@ -9062,16 +9045,16 @@
             "pop 2 values and push the result of applying ListAdd"
           ],
         [
-            "Apply PC(1917)",
-            "call method PC(1917)"
+            "Apply PC(1911)",
+            "call method PC(1911)"
           ],
         [
             "Pop",
             "discard the top value on the stack"
           ],
         [
-            "Jump 2060",
-            "set program counter to 2060"
+            "Jump 2055",
+            "set program counter to 2055"
           ],
         [
             "DelVar self",
@@ -9122,12 +9105,12 @@
             "get next element and assign to id; push False or True depending on success"
           ],
         [
-            "JumpCond False 2120",
-            "check if loop is done: pop a value and jump to 2120 if the value is False"
+            "JumpCond False 2115",
+            "check if loop is done: pop a value and jump to 2115 if the value is False"
           ],
         [
-            "Push ?PC(2059)",
-            "push constant ?PC(2059)"
+            "Push ?PC(2054)",
+            "push constant ?PC(2054)"
           ],
         [
             "LoadVar id",
@@ -9150,8 +9133,8 @@
             "pop thread-local state, argument, and pc and spawn a new thread"
           ],
         [
-            "Jump 2111",
-            "set program counter to 2111"
+            "Jump 2106",
+            "set program counter to 2106"
           ],
         [
             "DelVar id",
@@ -29818,10 +29801,10 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
-            "endcolumn": 77,
+            "endcolumn": 43,
             "column": 14
           },
         {
@@ -29831,7 +29814,7 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
             "endcolumn": 21,
@@ -29844,7 +29827,7 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
             "endcolumn": 25,
@@ -29857,10 +29840,10 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
-            "endcolumn": 77,
+            "endcolumn": 43,
             "column": 14
           },
         {
@@ -29870,7 +29853,7 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
             "endcolumn": 33,
@@ -29883,7 +29866,7 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
             "endcolumn": 37,
@@ -29896,10 +29879,10 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
-            "endcolumn": 77,
+            "endcolumn": 43,
             "column": 14
           },
         {
@@ -29909,7 +29892,7 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
             "endcolumn": 45,
@@ -29922,7 +29905,7 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
             "endcolumn": 49,
@@ -29935,10 +29918,10 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
-            "endcolumn": 77,
+            "endcolumn": 43,
             "column": 14
           },
         {
@@ -29948,7 +29931,7 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
             "endcolumn": 56,
@@ -29961,7 +29944,7 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
             "endcolumn": 64,
@@ -29974,7 +29957,7 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
             "endcolumn": 64,
@@ -29987,10 +29970,10 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
-            "endcolumn": 77,
+            "endcolumn": 43,
             "column": 14
           },
         {
@@ -30000,7 +29983,7 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 6,
             "endcolumn": 24,
@@ -30013,7 +29996,7 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 6,
             "endcolumn": 37,
@@ -30026,7 +30009,7 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 6,
             "endcolumn": 37,
@@ -30039,10 +30022,10 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
-            "endcolumn": 77,
+            "endcolumn": 43,
             "column": 14
           },
         {
@@ -30052,7 +30035,7 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 6,
             "endcolumn": 47,
@@ -30065,7 +30048,7 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 6,
             "endcolumn": 60,
@@ -30078,7 +30061,7 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 6,
             "endcolumn": 60,
@@ -30091,10 +30074,62 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
-            "endcolumn": 77,
+            "endcolumn": 43,
+            "column": 14
+          },
+        {
+            "module": "game",
+            "endline": 6,
+            "stmt": [
+                5,
+                5,
+                7,
+                44
+              ],
+            "line": 6,
+            "endcolumn": 76,
+            "column": 63
+          },
+        {
+            "module": "game",
+            "endline": 6,
+            "stmt": [
+                5,
+                5,
+                7,
+                44
+              ],
+            "line": 6,
+            "endcolumn": 89,
+            "column": 88
+          },
+        {
+            "module": "game",
+            "endline": 6,
+            "stmt": [
+                5,
+                5,
+                7,
+                44
+              ],
+            "line": 6,
+            "endcolumn": 89,
+            "column": 79
+          },
+        {
+            "module": "game",
+            "endline": 7,
+            "stmt": [
+                5,
+                5,
+                7,
+                44
+              ],
+            "line": 5,
+            "endcolumn": 43,
             "column": 14
           },
         {
@@ -30104,10 +30139,10 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 7,
-            "endcolumn": 26,
+            "endcolumn": 27,
             "column": 13
           },
         {
@@ -30117,11 +30152,11 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 7,
-            "endcolumn": 39,
-            "column": 38
+            "endcolumn": 30,
+            "column": 30
           },
         {
             "module": "game",
@@ -30130,23 +30165,10 @@
                 5,
                 5,
                 7,
-                78
-              ],
-            "line": 7,
-            "endcolumn": 39,
-            "column": 29
-          },
-        {
-            "module": "game",
-            "endline": 7,
-            "stmt": [
-                5,
-                5,
-                7,
-                78
+                44
               ],
             "line": 5,
-            "endcolumn": 77,
+            "endcolumn": 43,
             "column": 14
           },
         {
@@ -30156,10 +30178,23 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 7,
-            "endcolumn": 54,
+            "endcolumn": 39,
+            "column": 33
+          },
+        {
+            "module": "game",
+            "endline": 7,
+            "stmt": [
+                5,
+                5,
+                7,
+                44
+              ],
+            "line": 7,
+            "endcolumn": 43,
             "column": 42
           },
         {
@@ -30169,62 +30204,10 @@
                 5,
                 5,
                 7,
-                78
-              ],
-            "line": 7,
-            "endcolumn": 57,
-            "column": 57
-          },
-        {
-            "module": "game",
-            "endline": 7,
-            "stmt": [
-                5,
-                5,
-                7,
-                78
+                44
               ],
             "line": 5,
-            "endcolumn": 77,
-            "column": 14
-          },
-        {
-            "module": "game",
-            "endline": 7,
-            "stmt": [
-                5,
-                5,
-                7,
-                78
-              ],
-            "line": 7,
-            "endcolumn": 74,
-            "column": 60
-          },
-        {
-            "module": "game",
-            "endline": 7,
-            "stmt": [
-                5,
-                5,
-                7,
-                78
-              ],
-            "line": 7,
-            "endcolumn": 77,
-            "column": 77
-          },
-        {
-            "module": "game",
-            "endline": 7,
-            "stmt": [
-                5,
-                5,
-                7,
-                78
-              ],
-            "line": 5,
-            "endcolumn": 77,
+            "endcolumn": 43,
             "column": 14
           },
         {
@@ -30234,7 +30217,7 @@
                 5,
                 5,
                 7,
-                78
+                44
               ],
             "line": 5,
             "endcolumn": 10,
@@ -31961,221 +31944,91 @@
             "endline": 29,
             "stmt": [
                 29,
-                9,
+                13,
                 29,
-                55
+                45
               ],
             "line": 29,
-            "endcolumn": 9,
-            "column": 9
+            "endcolumn": 13,
+            "column": 13
           },
         {
             "module": "game",
             "endline": 29,
             "stmt": [
                 29,
-                9,
+                13,
                 29,
-                55
+                45
               ],
             "line": 29,
-            "endcolumn": 9,
-            "column": 9
+            "endcolumn": 13,
+            "column": 13
           },
         {
             "module": "game",
             "endline": 29,
             "stmt": [
                 29,
-                9,
+                13,
                 29,
-                55
+                45
               ],
             "line": 29,
-            "endcolumn": 9,
-            "column": 9
+            "endcolumn": 29,
+            "column": 16
           },
         {
             "module": "game",
             "endline": 29,
             "stmt": [
                 29,
-                9,
+                13,
                 29,
-                55
+                45
               ],
             "line": 29,
-            "endcolumn": 23,
-            "column": 12
+            "endcolumn": 29,
+            "column": 13
           },
         {
             "module": "game",
             "endline": 29,
             "stmt": [
                 29,
-                9,
+                13,
                 29,
-                55
+                45
               ],
             "line": 29,
-            "endcolumn": 23,
-            "column": 9
+            "endcolumn": 45,
+            "column": 33
           },
         {
             "module": "game",
             "endline": 29,
             "stmt": [
                 29,
-                9,
+                13,
                 29,
-                55
+                45
+              ],
+            "line": 29,
+            "endcolumn": 45,
+            "column": 33
+          },
+        {
+            "module": "game",
+            "endline": 29,
+            "stmt": [
+                29,
+                13,
+                29,
+                45
               ],
             "line": 29,
             "endcolumn": 31,
-            "column": 31
-          },
-        {
-            "module": "game",
-            "endline": 29,
-            "stmt": [
-                29,
-                9,
-                29,
-                55
-              ],
-            "line": 29,
-            "endcolumn": 38,
-            "column": 34
-          },
-        {
-            "module": "game",
-            "endline": 29,
-            "stmt": [
-                29,
-                9,
-                29,
-                55
-              ],
-            "line": 29,
-            "endcolumn": 38,
-            "column": 31
-          },
-        {
-            "module": "game",
-            "endline": 29,
-            "stmt": [
-                29,
-                9,
-                29,
-                55
-              ],
-            "line": 29,
-            "endcolumn": 38,
-            "column": 31
-          },
-        {
-            "module": "game",
-            "endline": 29,
-            "stmt": [
-                29,
-                9,
-                29,
-                55
-              ],
-            "line": 29,
-            "endcolumn": 39,
-            "column": 27
-          },
-        {
-            "module": "game",
-            "endline": 29,
-            "stmt": [
-                29,
-                9,
-                29,
-                55
-              ],
-            "line": 29,
-            "endcolumn": 47,
-            "column": 47
-          },
-        {
-            "module": "game",
-            "endline": 29,
-            "stmt": [
-                29,
-                9,
-                29,
-                55
-              ],
-            "line": 29,
-            "endcolumn": 54,
-            "column": 50
-          },
-        {
-            "module": "game",
-            "endline": 29,
-            "stmt": [
-                29,
-                9,
-                29,
-                55
-              ],
-            "line": 29,
-            "endcolumn": 54,
-            "column": 47
-          },
-        {
-            "module": "game",
-            "endline": 29,
-            "stmt": [
-                29,
-                9,
-                29,
-                55
-              ],
-            "line": 29,
-            "endcolumn": 54,
-            "column": 47
-          },
-        {
-            "module": "game",
-            "endline": 29,
-            "stmt": [
-                29,
-                9,
-                29,
-                55
-              ],
-            "line": 29,
-            "endcolumn": 55,
-            "column": 43
-          },
-        {
-            "module": "game",
-            "endline": 29,
-            "stmt": [
-                29,
-                9,
-                29,
-                55
-              ],
-            "line": 29,
-            "endcolumn": 55,
-            "column": 27
-          },
-        {
-            "module": "game",
-            "endline": 29,
-            "stmt": [
-                29,
-                9,
-                29,
-                55
-              ],
-            "line": 29,
-            "endcolumn": 25,
-            "column": 9
+            "column": 13
           },
         {
             "module": "game",
@@ -32184,7 +32037,7 @@
                 30,
                 9,
                 30,
-                29
+                22
               ],
             "line": 30,
             "endcolumn": 9,
@@ -32197,10 +32050,10 @@
                 30,
                 9,
                 30,
-                29
+                22
               ],
             "line": 30,
-            "endcolumn": 25,
+            "endcolumn": 17,
             "column": 12
           },
         {
@@ -32210,10 +32063,10 @@
                 30,
                 9,
                 30,
-                29
+                22
               ],
             "line": 30,
-            "endcolumn": 25,
+            "endcolumn": 17,
             "column": 9
           },
         {
@@ -32223,11 +32076,11 @@
                 30,
                 9,
                 30,
-                29
+                22
               ],
             "line": 30,
-            "endcolumn": 29,
-            "column": 29
+            "endcolumn": 22,
+            "column": 21
           },
         {
             "module": "game",
@@ -32236,10 +32089,10 @@
                 30,
                 9,
                 30,
-                29
+                22
               ],
             "line": 30,
-            "endcolumn": 27,
+            "endcolumn": 19,
             "column": 9
           },
         {
@@ -33656,19 +33509,6 @@
                 32
               ],
             "line": 52,
-            "endcolumn": 31,
-            "column": 14
-          },
-        {
-            "module": "game",
-            "endline": 52,
-            "stmt": [
-                52,
-                5,
-                52,
-                32
-              ],
-            "line": 52,
             "endcolumn": 14,
             "column": 14
           },
@@ -33804,1600 +33644,300 @@
           },
         {
             "module": "game",
-            "endline": 53,
+            "endline": 55,
             "stmt": [
-                53,
+                55,
                 5,
-                53,
-                26
+                55,
+                33
               ],
-            "line": 53,
+            "line": 55,
             "endcolumn": 5,
             "column": 5
           },
         {
             "module": "game",
-            "endline": 53,
+            "endline": 55,
             "stmt": [
-                53,
+                55,
                 5,
-                53,
-                26
+                55,
+                33
               ],
-            "line": 53,
-            "endcolumn": 21,
-            "column": 8
-          },
-        {
-            "module": "game",
-            "endline": 53,
-            "stmt": [
-                53,
-                5,
-                53,
-                26
-              ],
-            "line": 53,
-            "endcolumn": 21,
-            "column": 5
-          },
-        {
-            "module": "game",
-            "endline": 53,
-            "stmt": [
-                53,
-                5,
-                53,
-                26
-              ],
-            "line": 53,
-            "endcolumn": 26,
-            "column": 5
-          },
-        {
-            "module": "game",
-            "endline": 53,
-            "stmt": [
-                53,
-                5,
-                53,
-                26
-              ],
-            "line": 53,
-            "endcolumn": 26,
-            "column": 5
-          },
-        {
-            "module": "game",
-            "endline": 53,
-            "stmt": [
-                53,
-                5,
-                53,
-                26
-              ],
-            "line": 53,
-            "endcolumn": 26,
-            "column": 26
-          },
-        {
-            "module": "game",
-            "endline": 53,
-            "stmt": [
-                53,
-                5,
-                53,
-                26
-              ],
-            "line": 53,
-            "endcolumn": 26,
-            "column": 5
-          },
-        {
-            "module": "game",
-            "endline": 53,
-            "stmt": [
-                53,
-                5,
-                53,
-                26
-              ],
-            "line": 53,
-            "endcolumn": 24,
-            "column": 5
-          },
-        {
-            "module": "game",
-            "endline": 54,
-            "stmt": [
-                54,
-                5,
-                54,
-                32
-              ],
-            "line": 54,
-            "endcolumn": 16,
-            "column": 16
-          },
-        {
-            "module": "game",
-            "endline": 54,
-            "stmt": [
-                54,
-                5,
-                54,
-                32
-              ],
-            "line": 54,
-            "endcolumn": 31,
-            "column": 19
-          },
-        {
-            "module": "game",
-            "endline": 54,
-            "stmt": [
-                54,
-                5,
-                54,
-                32
-              ],
-            "line": 54,
-            "endcolumn": 31,
-            "column": 16
-          },
-        {
-            "module": "game",
-            "endline": 54,
-            "stmt": [
-                54,
-                5,
-                54,
-                32
-              ],
-            "line": 54,
-            "endcolumn": 32,
-            "column": 5
-          },
-        {
-            "module": "game",
-            "endline": 54,
-            "stmt": [
-                54,
-                5,
-                54,
-                32
-              ],
-            "line": 54,
-            "endcolumn": 32,
-            "column": 5
-          },
-        {
-            "module": "game",
-            "endline": 56,
-            "stmt": [
-                56,
-                5,
-                56,
-                21
-              ],
-            "line": 56,
-            "endcolumn": 14,
-            "column": 14
-          },
-        {
-            "module": "game",
-            "endline": 56,
-            "stmt": [
-                56,
-                5,
-                56,
-                21
-              ],
-            "line": 56,
-            "endcolumn": 14,
-            "column": 14
-          },
-        {
-            "module": "game",
-            "endline": 56,
-            "stmt": [
-                56,
-                5,
-                56,
-                21
-              ],
-            "line": 56,
-            "endcolumn": 20,
-            "column": 17
-          },
-        {
-            "module": "game",
-            "endline": 56,
-            "stmt": [
-                56,
-                5,
-                56,
-                21
-              ],
-            "line": 56,
-            "endcolumn": 20,
-            "column": 14
-          },
-        {
-            "module": "game",
-            "endline": 56,
-            "stmt": [
-                56,
-                5,
-                56,
-                21
-              ],
-            "line": 56,
-            "endcolumn": 21,
-            "column": 5
-          },
-        {
-            "module": "game",
-            "endline": 56,
-            "stmt": [
-                56,
-                5,
-                56,
-                21
-              ],
-            "line": 56,
-            "endcolumn": 21,
-            "column": 5
-          },
-        {
-            "module": "game",
-            "endline": 37,
-            "stmt": [
-                37,
-                1,
-                37,
-                35
-              ],
-            "line": 37,
-            "endcolumn": 35,
-            "column": 1
-          },
-        {
-            "module": "game",
-            "endline": 37,
-            "stmt": [
-                37,
-                1,
-                37,
-                35
-              ],
-            "line": 37,
-            "endcolumn": 35,
-            "column": 1
-          },
-        {
-            "module": "game",
-            "endline": 58,
-            "stmt": [
-                58,
-                1,
-                58,
-                22
-              ],
-            "line": 58,
-            "endcolumn": 3,
-            "column": 1
-          },
-        {
-            "module": "game",
-            "endline": 58,
-            "stmt": [
-                58,
-                1,
-                58,
-                22
-              ],
-            "line": 58,
-            "endcolumn": 22,
-            "column": 1
-          },
-        {
-            "module": "game",
-            "endline": 59,
-            "stmt": [
-                59,
-                5,
-                59,
-                21
-              ],
-            "line": 59,
-            "endcolumn": 14,
-            "column": 14
-          },
-        {
-            "module": "game",
-            "endline": 59,
-            "stmt": [
-                59,
-                5,
-                59,
-                21
-              ],
-            "line": 59,
-            "endcolumn": 20,
-            "column": 17
-          },
-        {
-            "module": "game",
-            "endline": 59,
-            "stmt": [
-                59,
-                5,
-                59,
-                21
-              ],
-            "line": 59,
-            "endcolumn": 20,
-            "column": 14
-          },
-        {
-            "module": "game",
-            "endline": 59,
-            "stmt": [
-                59,
-                5,
-                59,
-                21
-              ],
-            "line": 59,
-            "endcolumn": 21,
-            "column": 5
-          },
-        {
-            "module": "game",
-            "endline": 59,
-            "stmt": [
-                59,
-                5,
-                59,
-                21
-              ],
-            "line": 59,
-            "endcolumn": 21,
-            "column": 5
-          },
-        {
-            "module": "game",
-            "endline": 60,
-            "stmt": [
-                60,
-                5,
-                60,
-                49
-              ],
-            "line": 60,
-            "endcolumn": 12,
-            "column": 12
-          },
-        {
-            "module": "game",
-            "endline": 60,
-            "stmt": [
-                60,
-                5,
-                60,
-                49
-              ],
-            "line": 60,
-            "endcolumn": 28,
-            "column": 15
-          },
-        {
-            "module": "game",
-            "endline": 60,
-            "stmt": [
-                60,
-                5,
-                60,
-                49
-              ],
-            "line": 60,
-            "endcolumn": 28,
-            "column": 12
-          },
-        {
-            "module": "game",
-            "endline": 60,
-            "stmt": [
-                60,
-                5,
-                60,
-                49
-              ],
-            "line": 60,
-            "endcolumn": 28,
-            "column": 12
-          },
-        {
-            "module": "game",
-            "endline": 60,
-            "stmt": [
-                60,
-                5,
-                60,
-                49
-              ],
-            "line": 60,
-            "endcolumn": 33,
-            "column": 33
-          },
-        {
-            "module": "game",
-            "endline": 60,
-            "stmt": [
-                60,
-                5,
-                60,
-                49
-              ],
-            "line": 60,
-            "endcolumn": 47,
-            "column": 36
-          },
-        {
-            "module": "game",
-            "endline": 60,
-            "stmt": [
-                60,
-                5,
-                60,
-                49
-              ],
-            "line": 60,
-            "endcolumn": 47,
-            "column": 33
-          },
-        {
-            "module": "game",
-            "endline": 60,
-            "stmt": [
-                60,
-                5,
-                60,
-                49
-              ],
-            "line": 60,
-            "endcolumn": 47,
-            "column": 33
-          },
-        {
-            "module": "game",
-            "endline": 60,
-            "stmt": [
-                60,
-                5,
-                60,
-                49
-              ],
-            "line": 60,
-            "endcolumn": 47,
-            "column": 12
-          },
-        {
-            "module": "game",
-            "endline": 60,
-            "stmt": [
-                60,
-                5,
-                60,
-                49
-              ],
-            "line": 60,
-            "endcolumn": 9,
-            "column": 5
-          },
-        {
-            "module": "game",
-            "endline": 61,
-            "stmt": [
-                61,
-                9,
-                61,
-                41
-              ],
-            "line": 61,
-            "endcolumn": 40,
-            "column": 14
-          },
-        {
-            "module": "game",
-            "endline": 61,
-            "stmt": [
-                61,
-                9,
-                61,
-                41
-              ],
-            "line": 61,
-            "endcolumn": 15,
-            "column": 15
-          },
-        {
-            "module": "game",
-            "endline": 61,
-            "stmt": [
-                61,
-                9,
-                61,
-                41
-              ],
-            "line": 61,
-            "endcolumn": 30,
-            "column": 18
-          },
-        {
-            "module": "game",
-            "endline": 61,
-            "stmt": [
-                61,
-                9,
-                61,
-                41
-              ],
-            "line": 61,
-            "endcolumn": 30,
-            "column": 15
-          },
-        {
-            "module": "game",
-            "endline": 61,
-            "stmt": [
-                61,
-                9,
-                61,
-                41
-              ],
-            "line": 61,
-            "endcolumn": 40,
-            "column": 14
-          },
-        {
-            "module": "game",
-            "endline": 61,
-            "stmt": [
-                61,
-                9,
-                61,
-                41
-              ],
-            "line": 61,
-            "endcolumn": 34,
-            "column": 34
-          },
-        {
-            "module": "game",
-            "endline": 61,
-            "stmt": [
-                61,
-                9,
-                61,
-                41
-              ],
-            "line": 61,
-            "endcolumn": 40,
-            "column": 37
-          },
-        {
-            "module": "game",
-            "endline": 61,
-            "stmt": [
-                61,
-                9,
-                61,
-                41
-              ],
-            "line": 61,
-            "endcolumn": 40,
-            "column": 34
-          },
-        {
-            "module": "game",
-            "endline": 61,
-            "stmt": [
-                61,
-                9,
-                61,
-                41
-              ],
-            "line": 61,
-            "endcolumn": 40,
-            "column": 14
-          },
-        {
-            "module": "game",
-            "endline": 61,
-            "stmt": [
-                61,
-                9,
-                61,
-                41
-              ],
-            "line": 61,
-            "endcolumn": 41,
-            "column": 9
-          },
-        {
-            "module": "game",
-            "endline": 61,
-            "stmt": [
-                61,
-                9,
-                61,
-                41
-              ],
-            "line": 61,
-            "endcolumn": 41,
-            "column": 9
-          },
-        {
-            "module": "game",
-            "endline": 60,
-            "stmt": [
-                60,
-                5,
-                60,
-                49
-              ],
-            "line": 60,
-            "endcolumn": 49,
-            "column": 5
-          },
-        {
-            "module": "game",
-            "endline": 64,
-            "stmt": [
-                64,
-                5,
-                64,
-                22
-              ],
-            "line": 64,
-            "endcolumn": 9,
-            "column": 8
-          },
-        {
-            "module": "game",
-            "endline": 64,
-            "stmt": [
-                64,
-                5,
-                64,
-                22
-              ],
-            "line": 64,
-            "endcolumn": 14,
-            "column": 14
-          },
-        {
-            "module": "game",
-            "endline": 64,
-            "stmt": [
-                64,
-                5,
-                64,
-                22
-              ],
-            "line": 64,
-            "endcolumn": 21,
-            "column": 17
-          },
-        {
-            "module": "game",
-            "endline": 64,
-            "stmt": [
-                64,
-                5,
-                64,
-                22
-              ],
-            "line": 64,
-            "endcolumn": 21,
-            "column": 14
-          },
-        {
-            "module": "game",
-            "endline": 64,
-            "stmt": [
-                64,
-                5,
-                64,
-                22
-              ],
-            "line": 64,
-            "endcolumn": 21,
-            "column": 14
-          },
-        {
-            "module": "game",
-            "endline": 64,
-            "stmt": [
-                64,
-                5,
-                64,
-                22
-              ],
-            "line": 64,
-            "endcolumn": 21,
-            "column": 8
-          },
-        {
-            "module": "game",
-            "endline": 64,
-            "stmt": [
-                64,
-                5,
-                64,
-                22
-              ],
-            "line": 64,
-            "endcolumn": 6,
-            "column": 5
-          },
-        {
-            "module": "game",
-            "endline": 65,
-            "stmt": [
-                65,
-                9,
-                65,
-                39
-              ],
-            "line": 65,
-            "endcolumn": 9,
-            "column": 9
-          },
-        {
-            "module": "game",
-            "endline": 65,
-            "stmt": [
-                65,
-                9,
-                65,
-                39
-              ],
-            "line": 65,
-            "endcolumn": 16,
-            "column": 12
-          },
-        {
-            "module": "game",
-            "endline": 65,
-            "stmt": [
-                65,
-                9,
-                65,
-                39
-              ],
-            "line": 65,
-            "endcolumn": 16,
-            "column": 9
-          },
-        {
-            "module": "game",
-            "endline": 65,
-            "stmt": [
-                65,
-                9,
-                65,
-                39
-              ],
-            "line": 65,
-            "endcolumn": 38,
-            "column": 27
-          },
-        {
-            "module": "game",
-            "endline": 65,
-            "stmt": [
-                65,
-                9,
-                65,
-                39
-              ],
-            "line": 65,
-            "endcolumn": 27,
-            "column": 27
-          },
-        {
-            "module": "game",
-            "endline": 65,
-            "stmt": [
-                65,
-                9,
-                65,
-                39
-              ],
-            "line": 65,
-            "endcolumn": 34,
-            "column": 30
-          },
-        {
-            "module": "game",
-            "endline": 65,
-            "stmt": [
-                65,
-                9,
-                65,
-                39
-              ],
-            "line": 65,
-            "endcolumn": 34,
-            "column": 27
-          },
-        {
-            "module": "game",
-            "endline": 65,
-            "stmt": [
-                65,
-                9,
-                65,
-                39
-              ],
-            "line": 65,
-            "endcolumn": 34,
-            "column": 27
-          },
-        {
-            "module": "game",
-            "endline": 65,
-            "stmt": [
-                65,
-                9,
-                65,
-                39
-              ],
-            "line": 65,
-            "endcolumn": 38,
-            "column": 27
-          },
-        {
-            "module": "game",
-            "endline": 65,
-            "stmt": [
-                65,
-                9,
-                65,
-                39
-              ],
-            "line": 65,
-            "endcolumn": 38,
-            "column": 37
-          },
-        {
-            "module": "game",
-            "endline": 65,
-            "stmt": [
-                65,
-                9,
-                65,
-                39
-              ],
-            "line": 65,
-            "endcolumn": 38,
-            "column": 37
-          },
-        {
-            "module": "game",
-            "endline": 65,
-            "stmt": [
-                65,
-                9,
-                65,
-                39
-              ],
-            "line": 65,
-            "endcolumn": 38,
-            "column": 27
-          },
-        {
-            "module": "game",
-            "endline": 65,
-            "stmt": [
-                65,
-                9,
-                65,
-                39
-              ],
-            "line": 65,
-            "endcolumn": 39,
-            "column": 20
-          },
-        {
-            "module": "game",
-            "endline": 65,
-            "stmt": [
-                65,
-                9,
-                65,
-                39
-              ],
-            "line": 65,
-            "endcolumn": 18,
-            "column": 9
-          },
-        {
-            "module": "game",
-            "endline": 64,
-            "stmt": [
-                64,
-                5,
-                64,
-                22
-              ],
-            "line": 64,
-            "endcolumn": 22,
-            "column": 5
-          },
-        {
-            "module": "game",
-            "endline": 66,
-            "stmt": [
-                66,
-                5,
-                66,
-                24
-              ],
-            "line": 66,
-            "endcolumn": 11,
-            "column": 10
-          },
-        {
-            "module": "game",
-            "endline": 66,
-            "stmt": [
-                66,
-                5,
-                66,
-                24
-              ],
-            "line": 66,
-            "endcolumn": 16,
-            "column": 16
-          },
-        {
-            "module": "game",
-            "endline": 66,
-            "stmt": [
-                66,
-                5,
-                66,
-                24
-              ],
-            "line": 66,
-            "endcolumn": 23,
-            "column": 19
-          },
-        {
-            "module": "game",
-            "endline": 66,
-            "stmt": [
-                66,
-                5,
-                66,
-                24
-              ],
-            "line": 66,
-            "endcolumn": 23,
-            "column": 16
-          },
-        {
-            "module": "game",
-            "endline": 66,
-            "stmt": [
-                66,
-                5,
-                66,
-                24
-              ],
-            "line": 66,
-            "endcolumn": 23,
-            "column": 16
-          },
-        {
-            "module": "game",
-            "endline": 66,
-            "stmt": [
-                66,
-                5,
-                66,
-                24
-              ],
-            "line": 66,
-            "endcolumn": 23,
-            "column": 10
-          },
-        {
-            "module": "game",
-            "endline": 66,
-            "stmt": [
-                66,
-                5,
-                66,
-                24
-              ],
-            "line": 66,
-            "endcolumn": 8,
-            "column": 5
-          },
-        {
-            "module": "game",
-            "endline": 67,
-            "stmt": [
-                67,
-                9,
-                67,
-                39
-              ],
-            "line": 67,
-            "endcolumn": 9,
-            "column": 9
-          },
-        {
-            "module": "game",
-            "endline": 67,
-            "stmt": [
-                67,
-                9,
-                67,
-                39
-              ],
-            "line": 67,
-            "endcolumn": 16,
-            "column": 12
-          },
-        {
-            "module": "game",
-            "endline": 67,
-            "stmt": [
-                67,
-                9,
-                67,
-                39
-              ],
-            "line": 67,
-            "endcolumn": 16,
-            "column": 9
-          },
-        {
-            "module": "game",
-            "endline": 67,
-            "stmt": [
-                67,
-                9,
-                67,
-                39
-              ],
-            "line": 67,
-            "endcolumn": 38,
-            "column": 27
-          },
-        {
-            "module": "game",
-            "endline": 67,
-            "stmt": [
-                67,
-                9,
-                67,
-                39
-              ],
-            "line": 67,
-            "endcolumn": 27,
-            "column": 27
-          },
-        {
-            "module": "game",
-            "endline": 67,
-            "stmt": [
-                67,
-                9,
-                67,
-                39
-              ],
-            "line": 67,
-            "endcolumn": 34,
-            "column": 30
-          },
-        {
-            "module": "game",
-            "endline": 67,
-            "stmt": [
-                67,
-                9,
-                67,
-                39
-              ],
-            "line": 67,
-            "endcolumn": 34,
-            "column": 27
-          },
-        {
-            "module": "game",
-            "endline": 67,
-            "stmt": [
-                67,
-                9,
-                67,
-                39
-              ],
-            "line": 67,
-            "endcolumn": 34,
-            "column": 27
-          },
-        {
-            "module": "game",
-            "endline": 67,
-            "stmt": [
-                67,
-                9,
-                67,
-                39
-              ],
-            "line": 67,
-            "endcolumn": 38,
-            "column": 27
-          },
-        {
-            "module": "game",
-            "endline": 67,
-            "stmt": [
-                67,
-                9,
-                67,
-                39
-              ],
-            "line": 67,
-            "endcolumn": 38,
-            "column": 37
-          },
-        {
-            "module": "game",
-            "endline": 67,
-            "stmt": [
-                67,
-                9,
-                67,
-                39
-              ],
-            "line": 67,
-            "endcolumn": 38,
-            "column": 37
-          },
-        {
-            "module": "game",
-            "endline": 67,
-            "stmt": [
-                67,
-                9,
-                67,
-                39
-              ],
-            "line": 67,
-            "endcolumn": 38,
-            "column": 27
-          },
-        {
-            "module": "game",
-            "endline": 67,
-            "stmt": [
-                67,
-                9,
-                67,
-                39
-              ],
-            "line": 67,
-            "endcolumn": 39,
-            "column": 20
-          },
-        {
-            "module": "game",
-            "endline": 67,
-            "stmt": [
-                67,
-                9,
-                67,
-                39
-              ],
-            "line": 67,
-            "endcolumn": 18,
-            "column": 9
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
+            "line": 55,
             "endcolumn": 13,
-            "column": 13
+            "column": 8
           },
         {
             "module": "game",
-            "endline": 70,
+            "endline": 55,
             "stmt": [
-                70,
+                55,
                 5,
-                70,
-                53
+                55,
+                33
               ],
-            "line": 70,
+            "line": 55,
             "endcolumn": 13,
-            "column": 13
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 20,
-            "column": 16
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 20,
-            "column": 13
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 20,
-            "column": 13
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 21,
-            "column": 9
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 26,
-            "column": 26
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 26,
-            "column": 9
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 52,
-            "column": 8
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 38,
-            "column": 38
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 45,
-            "column": 41
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 45,
-            "column": 38
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 45,
-            "column": 38
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 46,
-            "column": 34
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 51,
-            "column": 51
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 51,
-            "column": 34
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 31,
-            "column": 29
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 52,
-            "column": 8
-          },
-        {
-            "module": "game",
-            "endline": 70,
-            "stmt": [
-                70,
-                5,
-                70,
-                53
-              ],
-            "line": 70,
-            "endcolumn": 6,
             "column": 5
           },
         {
             "module": "game",
-            "endline": 71,
+            "endline": 55,
             "stmt": [
-                71,
-                9,
-                71,
-                31
+                55,
+                5,
+                55,
+                33
               ],
-            "line": 71,
+            "line": 55,
             "endcolumn": 17,
             "column": 17
           },
         {
             "module": "game",
-            "endline": 71,
+            "endline": 55,
             "stmt": [
-                71,
-                9,
-                71,
-                31
+                55,
+                5,
+                55,
+                33
               ],
-            "line": 71,
-            "endcolumn": 30,
+            "line": 55,
+            "endcolumn": 25,
             "column": 20
           },
         {
             "module": "game",
-            "endline": 71,
+            "endline": 55,
             "stmt": [
-                71,
-                9,
-                71,
-                31
+                55,
+                5,
+                55,
+                33
               ],
-            "line": 71,
-            "endcolumn": 30,
+            "line": 55,
+            "endcolumn": 25,
             "column": 17
           },
         {
             "module": "game",
-            "endline": 71,
+            "endline": 55,
             "stmt": [
-                71,
-                9,
-                71,
-                31
-              ],
-            "line": 71,
-            "endcolumn": 31,
-            "column": 9
-          },
-        {
-            "module": "game",
-            "endline": 71,
-            "stmt": [
-                71,
-                9,
-                71,
-                31
-              ],
-            "line": 71,
-            "endcolumn": 31,
-            "column": 9
-          },
-        {
-            "module": "game",
-            "endline": 73,
-            "stmt": [
-                73,
+                55,
                 5,
-                73,
-                21
+                55,
+                33
               ],
-            "line": 73,
-            "endcolumn": 14,
-            "column": 14
-          },
-        {
-            "module": "game",
-            "endline": 73,
-            "stmt": [
-                73,
-                5,
-                73,
-                21
-              ],
-            "line": 73,
-            "endcolumn": 14,
-            "column": 14
-          },
-        {
-            "module": "game",
-            "endline": 73,
-            "stmt": [
-                73,
-                5,
-                73,
-                21
-              ],
-            "line": 73,
-            "endcolumn": 20,
+            "line": 55,
+            "endcolumn": 25,
             "column": 17
           },
         {
             "module": "game",
-            "endline": 73,
+            "endline": 55,
             "stmt": [
-                73,
+                55,
                 5,
-                73,
-                21
+                55,
+                33
               ],
-            "line": 73,
-            "endcolumn": 20,
-            "column": 14
+            "line": 55,
+            "endcolumn": 32,
+            "column": 30
           },
         {
             "module": "game",
-            "endline": 73,
+            "endline": 55,
             "stmt": [
-                73,
+                55,
                 5,
-                73,
-                21
+                55,
+                33
               ],
-            "line": 73,
-            "endcolumn": 21,
+            "line": 55,
+            "endcolumn": 31,
+            "column": 30
+          },
+        {
+            "module": "game",
+            "endline": 55,
+            "stmt": [
+                55,
+                5,
+                55,
+                33
+              ],
+            "line": 55,
+            "endcolumn": 31,
+            "column": 30
+          },
+        {
+            "module": "game",
+            "endline": 55,
+            "stmt": [
+                55,
+                5,
+                55,
+                33
+              ],
+            "line": 55,
+            "endcolumn": 32,
+            "column": 30
+          },
+        {
+            "module": "game",
+            "endline": 55,
+            "stmt": [
+                55,
+                5,
+                55,
+                33
+              ],
+            "line": 55,
+            "endcolumn": 33,
+            "column": 17
+          },
+        {
+            "module": "game",
+            "endline": 55,
+            "stmt": [
+                55,
+                5,
+                55,
+                33
+              ],
+            "line": 55,
+            "endcolumn": 15,
             "column": 5
           },
         {
             "module": "game",
-            "endline": 73,
+            "endline": 56,
             "stmt": [
-                73,
+                56,
                 5,
-                73,
+                56,
+                32
+              ],
+            "line": 56,
+            "endcolumn": 16,
+            "column": 16
+          },
+        {
+            "module": "game",
+            "endline": 56,
+            "stmt": [
+                56,
+                5,
+                56,
+                32
+              ],
+            "line": 56,
+            "endcolumn": 31,
+            "column": 19
+          },
+        {
+            "module": "game",
+            "endline": 56,
+            "stmt": [
+                56,
+                5,
+                56,
+                32
+              ],
+            "line": 56,
+            "endcolumn": 31,
+            "column": 16
+          },
+        {
+            "module": "game",
+            "endline": 56,
+            "stmt": [
+                56,
+                5,
+                56,
+                32
+              ],
+            "line": 56,
+            "endcolumn": 32,
+            "column": 5
+          },
+        {
+            "module": "game",
+            "endline": 56,
+            "stmt": [
+                56,
+                5,
+                56,
+                32
+              ],
+            "line": 56,
+            "endcolumn": 32,
+            "column": 5
+          },
+        {
+            "module": "game",
+            "endline": 58,
+            "stmt": [
+                58,
+                5,
+                58,
                 21
               ],
-            "line": 73,
+            "line": 58,
+            "endcolumn": 14,
+            "column": 14
+          },
+        {
+            "module": "game",
+            "endline": 58,
+            "stmt": [
+                58,
+                5,
+                58,
+                21
+              ],
+            "line": 58,
+            "endcolumn": 14,
+            "column": 14
+          },
+        {
+            "module": "game",
+            "endline": 58,
+            "stmt": [
+                58,
+                5,
+                58,
+                21
+              ],
+            "line": 58,
+            "endcolumn": 20,
+            "column": 17
+          },
+        {
+            "module": "game",
+            "endline": 58,
+            "stmt": [
+                58,
+                5,
+                58,
+                21
+              ],
+            "line": 58,
+            "endcolumn": 20,
+            "column": 14
+          },
+        {
+            "module": "game",
+            "endline": 58,
+            "stmt": [
+                58,
+                5,
+                58,
+                21
+              ],
+            "line": 58,
             "endcolumn": 21,
             "column": 5
           },
@@ -35406,11 +33946,1389 @@
             "endline": 58,
             "stmt": [
                 58,
-                1,
+                5,
                 58,
-                22
+                21
               ],
             "line": 58,
+            "endcolumn": 21,
+            "column": 5
+          },
+        {
+            "module": "game",
+            "endline": 37,
+            "stmt": [
+                37,
+                1,
+                37,
+                35
+              ],
+            "line": 37,
+            "endcolumn": 35,
+            "column": 1
+          },
+        {
+            "module": "game",
+            "endline": 37,
+            "stmt": [
+                37,
+                1,
+                37,
+                35
+              ],
+            "line": 37,
+            "endcolumn": 35,
+            "column": 1
+          },
+        {
+            "module": "game",
+            "endline": 60,
+            "stmt": [
+                60,
+                1,
+                60,
+                22
+              ],
+            "line": 60,
+            "endcolumn": 3,
+            "column": 1
+          },
+        {
+            "module": "game",
+            "endline": 60,
+            "stmt": [
+                60,
+                1,
+                60,
+                22
+              ],
+            "line": 60,
+            "endcolumn": 22,
+            "column": 1
+          },
+        {
+            "module": "game",
+            "endline": 61,
+            "stmt": [
+                61,
+                5,
+                61,
+                21
+              ],
+            "line": 61,
+            "endcolumn": 14,
+            "column": 14
+          },
+        {
+            "module": "game",
+            "endline": 61,
+            "stmt": [
+                61,
+                5,
+                61,
+                21
+              ],
+            "line": 61,
+            "endcolumn": 20,
+            "column": 17
+          },
+        {
+            "module": "game",
+            "endline": 61,
+            "stmt": [
+                61,
+                5,
+                61,
+                21
+              ],
+            "line": 61,
+            "endcolumn": 20,
+            "column": 14
+          },
+        {
+            "module": "game",
+            "endline": 61,
+            "stmt": [
+                61,
+                5,
+                61,
+                21
+              ],
+            "line": 61,
+            "endcolumn": 21,
+            "column": 5
+          },
+        {
+            "module": "game",
+            "endline": 61,
+            "stmt": [
+                61,
+                5,
+                61,
+                21
+              ],
+            "line": 61,
+            "endcolumn": 21,
+            "column": 5
+          },
+        {
+            "module": "game",
+            "endline": 63,
+            "stmt": [
+                63,
+                5,
+                63,
+                48
+              ],
+            "line": 63,
+            "endcolumn": 16,
+            "column": 16
+          },
+        {
+            "module": "game",
+            "endline": 63,
+            "stmt": [
+                63,
+                5,
+                63,
+                48
+              ],
+            "line": 63,
+            "endcolumn": 24,
+            "column": 19
+          },
+        {
+            "module": "game",
+            "endline": 63,
+            "stmt": [
+                63,
+                5,
+                63,
+                48
+              ],
+            "line": 63,
+            "endcolumn": 24,
+            "column": 16
+          },
+        {
+            "module": "game",
+            "endline": 63,
+            "stmt": [
+                63,
+                5,
+                63,
+                48
+              ],
+            "line": 63,
+            "endcolumn": 24,
+            "column": 16
+          },
+        {
+            "module": "game",
+            "endline": 63,
+            "stmt": [
+                63,
+                5,
+                63,
+                48
+              ],
+            "line": 63,
+            "endcolumn": 25,
+            "column": 12
+          },
+        {
+            "module": "game",
+            "endline": 63,
+            "stmt": [
+                63,
+                5,
+                63,
+                48
+              ],
+            "line": 63,
+            "endcolumn": 30,
+            "column": 30
+          },
+        {
+            "module": "game",
+            "endline": 63,
+            "stmt": [
+                63,
+                5,
+                63,
+                48
+              ],
+            "line": 63,
+            "endcolumn": 46,
+            "column": 33
+          },
+        {
+            "module": "game",
+            "endline": 63,
+            "stmt": [
+                63,
+                5,
+                63,
+                48
+              ],
+            "line": 63,
+            "endcolumn": 46,
+            "column": 30
+          },
+        {
+            "module": "game",
+            "endline": 63,
+            "stmt": [
+                63,
+                5,
+                63,
+                48
+              ],
+            "line": 63,
+            "endcolumn": 46,
+            "column": 30
+          },
+        {
+            "module": "game",
+            "endline": 63,
+            "stmt": [
+                63,
+                5,
+                63,
+                48
+              ],
+            "line": 63,
+            "endcolumn": 46,
+            "column": 12
+          },
+        {
+            "module": "game",
+            "endline": 63,
+            "stmt": [
+                63,
+                5,
+                63,
+                48
+              ],
+            "line": 63,
+            "endcolumn": 9,
+            "column": 5
+          },
+        {
+            "module": "game",
+            "endline": 64,
+            "stmt": [
+                64,
+                9,
+                64,
+                41
+              ],
+            "line": 64,
+            "endcolumn": 40,
+            "column": 14
+          },
+        {
+            "module": "game",
+            "endline": 64,
+            "stmt": [
+                64,
+                9,
+                64,
+                41
+              ],
+            "line": 64,
+            "endcolumn": 15,
+            "column": 15
+          },
+        {
+            "module": "game",
+            "endline": 64,
+            "stmt": [
+                64,
+                9,
+                64,
+                41
+              ],
+            "line": 64,
+            "endcolumn": 30,
+            "column": 18
+          },
+        {
+            "module": "game",
+            "endline": 64,
+            "stmt": [
+                64,
+                9,
+                64,
+                41
+              ],
+            "line": 64,
+            "endcolumn": 30,
+            "column": 15
+          },
+        {
+            "module": "game",
+            "endline": 64,
+            "stmt": [
+                64,
+                9,
+                64,
+                41
+              ],
+            "line": 64,
+            "endcolumn": 40,
+            "column": 14
+          },
+        {
+            "module": "game",
+            "endline": 64,
+            "stmt": [
+                64,
+                9,
+                64,
+                41
+              ],
+            "line": 64,
+            "endcolumn": 34,
+            "column": 34
+          },
+        {
+            "module": "game",
+            "endline": 64,
+            "stmt": [
+                64,
+                9,
+                64,
+                41
+              ],
+            "line": 64,
+            "endcolumn": 40,
+            "column": 37
+          },
+        {
+            "module": "game",
+            "endline": 64,
+            "stmt": [
+                64,
+                9,
+                64,
+                41
+              ],
+            "line": 64,
+            "endcolumn": 40,
+            "column": 34
+          },
+        {
+            "module": "game",
+            "endline": 64,
+            "stmt": [
+                64,
+                9,
+                64,
+                41
+              ],
+            "line": 64,
+            "endcolumn": 40,
+            "column": 14
+          },
+        {
+            "module": "game",
+            "endline": 64,
+            "stmt": [
+                64,
+                9,
+                64,
+                41
+              ],
+            "line": 64,
+            "endcolumn": 41,
+            "column": 9
+          },
+        {
+            "module": "game",
+            "endline": 64,
+            "stmt": [
+                64,
+                9,
+                64,
+                41
+              ],
+            "line": 64,
+            "endcolumn": 41,
+            "column": 9
+          },
+        {
+            "module": "game",
+            "endline": 63,
+            "stmt": [
+                63,
+                5,
+                63,
+                48
+              ],
+            "line": 63,
+            "endcolumn": 48,
+            "column": 5
+          },
+        {
+            "module": "game",
+            "endline": 67,
+            "stmt": [
+                67,
+                5,
+                67,
+                22
+              ],
+            "line": 67,
+            "endcolumn": 9,
+            "column": 8
+          },
+        {
+            "module": "game",
+            "endline": 67,
+            "stmt": [
+                67,
+                5,
+                67,
+                22
+              ],
+            "line": 67,
+            "endcolumn": 14,
+            "column": 14
+          },
+        {
+            "module": "game",
+            "endline": 67,
+            "stmt": [
+                67,
+                5,
+                67,
+                22
+              ],
+            "line": 67,
+            "endcolumn": 21,
+            "column": 17
+          },
+        {
+            "module": "game",
+            "endline": 67,
+            "stmt": [
+                67,
+                5,
+                67,
+                22
+              ],
+            "line": 67,
+            "endcolumn": 21,
+            "column": 14
+          },
+        {
+            "module": "game",
+            "endline": 67,
+            "stmt": [
+                67,
+                5,
+                67,
+                22
+              ],
+            "line": 67,
+            "endcolumn": 21,
+            "column": 14
+          },
+        {
+            "module": "game",
+            "endline": 67,
+            "stmt": [
+                67,
+                5,
+                67,
+                22
+              ],
+            "line": 67,
+            "endcolumn": 21,
+            "column": 8
+          },
+        {
+            "module": "game",
+            "endline": 67,
+            "stmt": [
+                67,
+                5,
+                67,
+                22
+              ],
+            "line": 67,
+            "endcolumn": 6,
+            "column": 5
+          },
+        {
+            "module": "game",
+            "endline": 68,
+            "stmt": [
+                68,
+                9,
+                68,
+                39
+              ],
+            "line": 68,
+            "endcolumn": 9,
+            "column": 9
+          },
+        {
+            "module": "game",
+            "endline": 68,
+            "stmt": [
+                68,
+                9,
+                68,
+                39
+              ],
+            "line": 68,
+            "endcolumn": 16,
+            "column": 12
+          },
+        {
+            "module": "game",
+            "endline": 68,
+            "stmt": [
+                68,
+                9,
+                68,
+                39
+              ],
+            "line": 68,
+            "endcolumn": 16,
+            "column": 9
+          },
+        {
+            "module": "game",
+            "endline": 68,
+            "stmt": [
+                68,
+                9,
+                68,
+                39
+              ],
+            "line": 68,
+            "endcolumn": 38,
+            "column": 27
+          },
+        {
+            "module": "game",
+            "endline": 68,
+            "stmt": [
+                68,
+                9,
+                68,
+                39
+              ],
+            "line": 68,
+            "endcolumn": 27,
+            "column": 27
+          },
+        {
+            "module": "game",
+            "endline": 68,
+            "stmt": [
+                68,
+                9,
+                68,
+                39
+              ],
+            "line": 68,
+            "endcolumn": 34,
+            "column": 30
+          },
+        {
+            "module": "game",
+            "endline": 68,
+            "stmt": [
+                68,
+                9,
+                68,
+                39
+              ],
+            "line": 68,
+            "endcolumn": 34,
+            "column": 27
+          },
+        {
+            "module": "game",
+            "endline": 68,
+            "stmt": [
+                68,
+                9,
+                68,
+                39
+              ],
+            "line": 68,
+            "endcolumn": 34,
+            "column": 27
+          },
+        {
+            "module": "game",
+            "endline": 68,
+            "stmt": [
+                68,
+                9,
+                68,
+                39
+              ],
+            "line": 68,
+            "endcolumn": 38,
+            "column": 27
+          },
+        {
+            "module": "game",
+            "endline": 68,
+            "stmt": [
+                68,
+                9,
+                68,
+                39
+              ],
+            "line": 68,
+            "endcolumn": 38,
+            "column": 37
+          },
+        {
+            "module": "game",
+            "endline": 68,
+            "stmt": [
+                68,
+                9,
+                68,
+                39
+              ],
+            "line": 68,
+            "endcolumn": 38,
+            "column": 37
+          },
+        {
+            "module": "game",
+            "endline": 68,
+            "stmt": [
+                68,
+                9,
+                68,
+                39
+              ],
+            "line": 68,
+            "endcolumn": 38,
+            "column": 27
+          },
+        {
+            "module": "game",
+            "endline": 68,
+            "stmt": [
+                68,
+                9,
+                68,
+                39
+              ],
+            "line": 68,
+            "endcolumn": 39,
+            "column": 20
+          },
+        {
+            "module": "game",
+            "endline": 68,
+            "stmt": [
+                68,
+                9,
+                68,
+                39
+              ],
+            "line": 68,
+            "endcolumn": 18,
+            "column": 9
+          },
+        {
+            "module": "game",
+            "endline": 67,
+            "stmt": [
+                67,
+                5,
+                67,
+                22
+              ],
+            "line": 67,
+            "endcolumn": 22,
+            "column": 5
+          },
+        {
+            "module": "game",
+            "endline": 69,
+            "stmt": [
+                69,
+                5,
+                69,
+                24
+              ],
+            "line": 69,
+            "endcolumn": 11,
+            "column": 10
+          },
+        {
+            "module": "game",
+            "endline": 69,
+            "stmt": [
+                69,
+                5,
+                69,
+                24
+              ],
+            "line": 69,
+            "endcolumn": 16,
+            "column": 16
+          },
+        {
+            "module": "game",
+            "endline": 69,
+            "stmt": [
+                69,
+                5,
+                69,
+                24
+              ],
+            "line": 69,
+            "endcolumn": 23,
+            "column": 19
+          },
+        {
+            "module": "game",
+            "endline": 69,
+            "stmt": [
+                69,
+                5,
+                69,
+                24
+              ],
+            "line": 69,
+            "endcolumn": 23,
+            "column": 16
+          },
+        {
+            "module": "game",
+            "endline": 69,
+            "stmt": [
+                69,
+                5,
+                69,
+                24
+              ],
+            "line": 69,
+            "endcolumn": 23,
+            "column": 16
+          },
+        {
+            "module": "game",
+            "endline": 69,
+            "stmt": [
+                69,
+                5,
+                69,
+                24
+              ],
+            "line": 69,
+            "endcolumn": 23,
+            "column": 10
+          },
+        {
+            "module": "game",
+            "endline": 69,
+            "stmt": [
+                69,
+                5,
+                69,
+                24
+              ],
+            "line": 69,
+            "endcolumn": 8,
+            "column": 5
+          },
+        {
+            "module": "game",
+            "endline": 70,
+            "stmt": [
+                70,
+                9,
+                70,
+                39
+              ],
+            "line": 70,
+            "endcolumn": 9,
+            "column": 9
+          },
+        {
+            "module": "game",
+            "endline": 70,
+            "stmt": [
+                70,
+                9,
+                70,
+                39
+              ],
+            "line": 70,
+            "endcolumn": 16,
+            "column": 12
+          },
+        {
+            "module": "game",
+            "endline": 70,
+            "stmt": [
+                70,
+                9,
+                70,
+                39
+              ],
+            "line": 70,
+            "endcolumn": 16,
+            "column": 9
+          },
+        {
+            "module": "game",
+            "endline": 70,
+            "stmt": [
+                70,
+                9,
+                70,
+                39
+              ],
+            "line": 70,
+            "endcolumn": 38,
+            "column": 27
+          },
+        {
+            "module": "game",
+            "endline": 70,
+            "stmt": [
+                70,
+                9,
+                70,
+                39
+              ],
+            "line": 70,
+            "endcolumn": 27,
+            "column": 27
+          },
+        {
+            "module": "game",
+            "endline": 70,
+            "stmt": [
+                70,
+                9,
+                70,
+                39
+              ],
+            "line": 70,
+            "endcolumn": 34,
+            "column": 30
+          },
+        {
+            "module": "game",
+            "endline": 70,
+            "stmt": [
+                70,
+                9,
+                70,
+                39
+              ],
+            "line": 70,
+            "endcolumn": 34,
+            "column": 27
+          },
+        {
+            "module": "game",
+            "endline": 70,
+            "stmt": [
+                70,
+                9,
+                70,
+                39
+              ],
+            "line": 70,
+            "endcolumn": 34,
+            "column": 27
+          },
+        {
+            "module": "game",
+            "endline": 70,
+            "stmt": [
+                70,
+                9,
+                70,
+                39
+              ],
+            "line": 70,
+            "endcolumn": 38,
+            "column": 27
+          },
+        {
+            "module": "game",
+            "endline": 70,
+            "stmt": [
+                70,
+                9,
+                70,
+                39
+              ],
+            "line": 70,
+            "endcolumn": 38,
+            "column": 37
+          },
+        {
+            "module": "game",
+            "endline": 70,
+            "stmt": [
+                70,
+                9,
+                70,
+                39
+              ],
+            "line": 70,
+            "endcolumn": 38,
+            "column": 37
+          },
+        {
+            "module": "game",
+            "endline": 70,
+            "stmt": [
+                70,
+                9,
+                70,
+                39
+              ],
+            "line": 70,
+            "endcolumn": 38,
+            "column": 27
+          },
+        {
+            "module": "game",
+            "endline": 70,
+            "stmt": [
+                70,
+                9,
+                70,
+                39
+              ],
+            "line": 70,
+            "endcolumn": 39,
+            "column": 20
+          },
+        {
+            "module": "game",
+            "endline": 70,
+            "stmt": [
+                70,
+                9,
+                70,
+                39
+              ],
+            "line": 70,
+            "endcolumn": 18,
+            "column": 9
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 13,
+            "column": 13
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 13,
+            "column": 13
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 20,
+            "column": 16
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 20,
+            "column": 13
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 20,
+            "column": 13
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 21,
+            "column": 9
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 26,
+            "column": 26
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 26,
+            "column": 9
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 52,
+            "column": 8
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 38,
+            "column": 38
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 45,
+            "column": 41
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 45,
+            "column": 38
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 45,
+            "column": 38
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 46,
+            "column": 34
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 51,
+            "column": 51
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 51,
+            "column": 34
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 31,
+            "column": 29
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 52,
+            "column": 8
+          },
+        {
+            "module": "game",
+            "endline": 73,
+            "stmt": [
+                73,
+                5,
+                73,
+                53
+              ],
+            "line": 73,
+            "endcolumn": 6,
+            "column": 5
+          },
+        {
+            "module": "game",
+            "endline": 74,
+            "stmt": [
+                74,
+                9,
+                74,
+                31
+              ],
+            "line": 74,
+            "endcolumn": 17,
+            "column": 17
+          },
+        {
+            "module": "game",
+            "endline": 74,
+            "stmt": [
+                74,
+                9,
+                74,
+                31
+              ],
+            "line": 74,
+            "endcolumn": 30,
+            "column": 20
+          },
+        {
+            "module": "game",
+            "endline": 74,
+            "stmt": [
+                74,
+                9,
+                74,
+                31
+              ],
+            "line": 74,
+            "endcolumn": 30,
+            "column": 17
+          },
+        {
+            "module": "game",
+            "endline": 74,
+            "stmt": [
+                74,
+                9,
+                74,
+                31
+              ],
+            "line": 74,
+            "endcolumn": 31,
+            "column": 9
+          },
+        {
+            "module": "game",
+            "endline": 74,
+            "stmt": [
+                74,
+                9,
+                74,
+                31
+              ],
+            "line": 74,
+            "endcolumn": 31,
+            "column": 9
+          },
+        {
+            "module": "game",
+            "endline": 76,
+            "stmt": [
+                76,
+                5,
+                76,
+                21
+              ],
+            "line": 76,
+            "endcolumn": 14,
+            "column": 14
+          },
+        {
+            "module": "game",
+            "endline": 76,
+            "stmt": [
+                76,
+                5,
+                76,
+                21
+              ],
+            "line": 76,
+            "endcolumn": 14,
+            "column": 14
+          },
+        {
+            "module": "game",
+            "endline": 76,
+            "stmt": [
+                76,
+                5,
+                76,
+                21
+              ],
+            "line": 76,
+            "endcolumn": 20,
+            "column": 17
+          },
+        {
+            "module": "game",
+            "endline": 76,
+            "stmt": [
+                76,
+                5,
+                76,
+                21
+              ],
+            "line": 76,
+            "endcolumn": 20,
+            "column": 14
+          },
+        {
+            "module": "game",
+            "endline": 76,
+            "stmt": [
+                76,
+                5,
+                76,
+                21
+              ],
+            "line": 76,
+            "endcolumn": 21,
+            "column": 5
+          },
+        {
+            "module": "game",
+            "endline": 76,
+            "stmt": [
+                76,
+                5,
+                76,
+                21
+              ],
+            "line": 76,
+            "endcolumn": 21,
+            "column": 5
+          },
+        {
+            "module": "game",
+            "endline": 60,
+            "stmt": [
+                60,
+                1,
+                60,
+                22
+              ],
+            "line": 60,
             "endcolumn": 22,
             "column": 1
           },
@@ -40224,7 +40142,7 @@
             "op": "Builtin"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -40436,7 +40354,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -40901,7 +40819,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -40940,7 +40858,7 @@
             "op": "DelVar"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -40982,7 +40900,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -41035,7 +40953,7 @@
             "op": "DelVar"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -41122,7 +41040,7 @@
             "op": "DelVar"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -41209,7 +41127,7 @@
             "op": "DelVar"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -41244,7 +41162,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -41276,7 +41194,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -41308,7 +41226,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -41389,7 +41307,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -41453,7 +41371,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -41498,7 +41416,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -41820,7 +41738,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -41965,7 +41883,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -42023,7 +41941,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -42052,7 +41970,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -42151,7 +42069,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -42203,7 +42121,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -42233,7 +42151,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -42365,7 +42283,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -42448,7 +42366,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -42499,7 +42417,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -42550,7 +42468,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -42641,7 +42559,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -42692,7 +42610,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -42743,7 +42661,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -42834,7 +42752,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -42890,7 +42808,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -42946,7 +42864,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -43108,7 +43026,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -43198,7 +43116,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -43452,7 +43370,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -43899,7 +43817,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -44018,7 +43936,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -44152,7 +44070,7 @@
             "op": "DelVar"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -44270,7 +44188,7 @@
             "op": "DelVar"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -44465,7 +44383,7 @@
         {
             "value": {
                 "type": "atom",
-                "value": "ingame_count"
+                "value": "game_headcount"
               },
             "op": "Push"
           },
@@ -44484,14 +44402,16 @@
         {
             "value": {
                 "type": "atom",
-                "value": "leftgame_count"
+                "value": "exited"
               },
             "op": "Push"
           },
         {
             "value": {
-                "type": "int",
-                "value": 0
+                "type": "list",
+                "value": [
+
+                  ]
               },
             "op": "Push"
           },
@@ -44513,7 +44433,7 @@
             "op": "DelVar"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -44555,7 +44475,7 @@
             "op": "Push"
           },
         {
-            "pc": "1781",
+            "pc": "1771",
             "cond": {
                 "type": "bool",
                 "value": "False"
@@ -45195,77 +45115,28 @@
             "op": "DelVar"
           },
         {
+            "value": "g",
+            "op": "LoadVar"
+          },
+        {
+            "value": {
+                "type": "atom",
+                "value": "game_headcount"
+              },
+            "op": "Push"
+          },
+        {
+            "arity": 2,
+            "value": "AddArg",
+            "op": "Nary"
+          },
+        {
+            "value": "pairedplayers",
+            "op": "LoadVar"
+          },
+        {
             "value": "pairedplayers",
             "op": "DelVar"
-          },
-        {
-            "value": "g",
-            "op": "LoadVar"
-          },
-        {
-            "value": {
-                "type": "atom",
-                "value": "ingame_count"
-              },
-            "op": "Push"
-          },
-        {
-            "arity": 2,
-            "value": "AddArg",
-            "op": "Nary"
-          },
-        {
-            "value": "g",
-            "op": "LoadVar"
-          },
-        {
-            "value": {
-                "type": "atom",
-                "value": "team1"
-              },
-            "op": "Push"
-          },
-        {
-            "arity": 2,
-            "value": "AddArg",
-            "op": "Nary"
-          },
-        {
-            "op": "Load"
-          },
-        {
-            "arity": 1,
-            "value": "len",
-            "op": "Nary"
-          },
-        {
-            "value": "g",
-            "op": "LoadVar"
-          },
-        {
-            "value": {
-                "type": "atom",
-                "value": "team2"
-              },
-            "op": "Push"
-          },
-        {
-            "arity": 2,
-            "value": "AddArg",
-            "op": "Nary"
-          },
-        {
-            "op": "Load"
-          },
-        {
-            "arity": 1,
-            "value": "len",
-            "op": "Nary"
-          },
-        {
-            "arity": 2,
-            "value": "+",
-            "op": "Nary"
           },
         {
             "op": "Store"
@@ -45277,7 +45148,7 @@
         {
             "value": {
                 "type": "atom",
-                "value": "leftgame_count"
+                "value": "exited"
               },
             "op": "Push"
           },
@@ -45288,8 +45159,10 @@
           },
         {
             "value": {
-                "type": "int",
-                "value": 0
+                "type": "list",
+                "value": [
+
+                  ]
               },
             "op": "Push"
           },
@@ -45364,7 +45237,7 @@
             "op": "Return"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -45496,7 +45369,7 @@
             "op": "Nary"
           },
         {
-            "pc": "1823",
+            "pc": "1813",
             "cond": {
                 "type": "bool",
                 "value": "False"
@@ -45540,7 +45413,7 @@
             "op": "Nary"
           },
         {
-            "pc": "1824",
+            "pc": "1814",
             "op": "Jump"
           },
         {
@@ -45551,7 +45424,7 @@
             "op": "Push"
           },
         {
-            "pc": "1830",
+            "pc": "1820",
             "cond": {
                 "type": "bool",
                 "value": "False"
@@ -45638,7 +45511,7 @@
             "op": "Nary"
           },
         {
-            "pc": "1868",
+            "pc": "1858",
             "cond": {
                 "type": "bool",
                 "value": "True"
@@ -45682,7 +45555,7 @@
             "op": "Nary"
           },
         {
-            "pc": "1868",
+            "pc": "1858",
             "cond": {
                 "type": "bool",
                 "value": "True"
@@ -45723,7 +45596,7 @@
             "op": "Nary"
           },
         {
-            "pc": "1866",
+            "pc": "1856",
             "cond": {
                 "type": "bool",
                 "value": "False"
@@ -45764,7 +45637,7 @@
             "op": "Nary"
           },
         {
-            "pc": "1869",
+            "pc": "1859",
             "op": "Jump"
           },
         {
@@ -45775,7 +45648,7 @@
             "op": "Push"
           },
         {
-            "pc": "1869",
+            "pc": "1859",
             "op": "Jump"
           },
         {
@@ -45786,7 +45659,7 @@
             "op": "Push"
           },
         {
-            "pc": "1882",
+            "pc": "1872",
             "cond": {
                 "type": "bool",
                 "value": "False"
@@ -45855,12 +45728,8 @@
             "op": "Pop"
           },
         {
-            "pc": "1830",
+            "pc": "1820",
             "op": "Jump"
-          },
-        {
-            "value": "id",
-            "op": "DelVar"
           },
         {
             "value": {
@@ -45930,7 +45799,7 @@
         {
             "value": {
                 "type": "atom",
-                "value": "leftgame_count"
+                "value": "exited"
               },
             "op": "Push"
           },
@@ -45940,17 +45809,45 @@
             "op": "Nary"
           },
         {
-            "op": "Dup"
+            "value": "g",
+            "op": "LoadVar"
+          },
+        {
+            "value": {
+                "type": "atom",
+                "value": "exited"
+              },
+            "op": "Push"
+          },
+        {
+            "arity": 2,
+            "value": "AddArg",
+            "op": "Nary"
           },
         {
             "op": "Load"
           },
         {
             "value": {
-                "type": "int",
-                "value": 1
+                "type": "list",
+                "value": [
+
+                  ]
               },
             "op": "Push"
+          },
+        {
+            "value": "id",
+            "op": "LoadVar"
+          },
+        {
+            "value": "id",
+            "op": "DelVar"
+          },
+        {
+            "arity": 2,
+            "value": "ListAdd",
+            "op": "Nary"
           },
         {
             "arity": 2,
@@ -46025,7 +45922,7 @@
             "op": "DelVar"
           },
         {
-            "pc": "2019",
+            "pc": "2014",
             "op": "Jump"
           },
         {
@@ -46066,7 +45963,7 @@
         {
             "value": {
                 "type": "atom",
-                "value": "leftgame_count"
+                "value": "exited"
               },
             "op": "Push"
           },
@@ -46079,13 +45976,18 @@
             "op": "Load"
           },
         {
+            "arity": 1,
+            "value": "len",
+            "op": "Nary"
+          },
+        {
             "value": "g",
             "op": "LoadVar"
           },
         {
             "value": {
                 "type": "atom",
-                "value": "ingame_count"
+                "value": "game_headcount"
               },
             "op": "Push"
           },
@@ -46103,7 +46005,7 @@
             "op": "Nary"
           },
         {
-            "pc": "1945",
+            "pc": "1940",
             "cond": {
                 "type": "bool",
                 "value": "False"
@@ -46172,7 +46074,7 @@
             "op": "Pop"
           },
         {
-            "pc": "1923",
+            "pc": "1917",
             "op": "Jump"
           },
         {
@@ -46204,7 +46106,7 @@
             "op": "Nary"
           },
         {
-            "pc": "1967",
+            "pc": "1962",
             "cond": {
                 "type": "bool",
                 "value": "False"
@@ -46284,7 +46186,7 @@
             "op": "Store"
           },
         {
-            "pc": "1988",
+            "pc": "1983",
             "op": "Jump"
           },
         {
@@ -46316,7 +46218,7 @@
             "op": "Nary"
           },
         {
-            "pc": "1988",
+            "pc": "1983",
             "cond": {
                 "type": "bool",
                 "value": "False"
@@ -46436,7 +46338,7 @@
             "op": "Nary"
           },
         {
-            "pc": "2005",
+            "pc": "2000",
             "cond": {
                 "type": "bool",
                 "value": "False"
@@ -46480,7 +46382,7 @@
             "op": "Nary"
           },
         {
-            "pc": "2006",
+            "pc": "2001",
             "op": "Jump"
           },
         {
@@ -46491,7 +46393,7 @@
             "op": "Push"
           },
         {
-            "pc": "2012",
+            "pc": "2007",
             "cond": {
                 "type": "bool",
                 "value": "False"
@@ -46619,7 +46521,7 @@
             "op": "Store"
           },
         {
-            "pc": "2102",
+            "pc": "2097",
             "op": "Jump"
           },
         {
@@ -46683,7 +46585,7 @@
             "op": "Nary"
           },
         {
-            "pc": "2042",
+            "pc": "2037",
             "cond": {
                 "type": "bool",
                 "value": "False"
@@ -46716,7 +46618,7 @@
             "op": "StoreVar"
           },
         {
-            "pc": "2049",
+            "pc": "2044",
             "op": "Jump"
           },
         {
@@ -46764,7 +46666,7 @@
             "op": "LoadVar"
           },
         {
-            "pc": "2055",
+            "pc": "2050",
             "cond": {
                 "type": "bool",
                 "value": "False"
@@ -46813,7 +46715,7 @@
             "op": "DelVar"
           },
         {
-            "pc": "2102",
+            "pc": "2097",
             "op": "Jump"
           },
         {
@@ -46833,12 +46735,12 @@
         {
             "value": {
                 "type": "pc",
-                "value": "2027"
+                "value": "2022"
               },
             "op": "Apply"
           },
         {
-            "pc": "2100",
+            "pc": "2095",
             "cond": {
                 "type": "bool",
                 "value": "False"
@@ -46887,7 +46789,7 @@
         {
             "value": {
                 "type": "pc",
-                "value": "1789"
+                "value": "1779"
               },
             "op": "Apply"
           },
@@ -47050,7 +46952,7 @@
         {
             "value": {
                 "type": "pc",
-                "value": "1917"
+                "value": "1911"
               },
             "op": "Apply"
           },
@@ -47058,7 +46960,7 @@
             "op": "Pop"
           },
         {
-            "pc": "2060",
+            "pc": "2055",
             "op": "Jump"
           },
         {
@@ -47150,7 +47052,7 @@
             "op": "Cut"
           },
         {
-            "pc": "2120",
+            "pc": "2115",
             "cond": {
                 "type": "bool",
                 "value": "False"
@@ -47165,7 +47067,7 @@
                   ],
                 "func": {
                     "type": "pc",
-                    "value": "2059"
+                    "value": "2054"
                   }
               },
             "op": "Push"
@@ -47197,7 +47099,7 @@
             "op": "Spawn"
           },
         {
-            "pc": "2111",
+            "pc": "2106",
             "op": "Jump"
           },
         {
@@ -47223,7 +47125,7 @@
   "nodes": [
     {
       "idx": 0,
-      "component": 51340,
+      "component": 161296,
       "transitions": [
 
       ],
@@ -47772,10 +47674,10 @@
     0,
     0,
     0,
-    2739,
-    2739,
-    2739,
-    2739,
+    7675,
+    7675,
+    7675,
+    7675,
     0,
     0,
     0,
@@ -47836,7 +47738,7 @@
     1,
     1,
     1,
-    13489,
+    41750,
     0,
     0,
     0,
@@ -47916,208 +47818,18 @@
     0,
     0,
     0,
-    620,
-    620,
-    620,
-    620,
-    620,
-    620,
-    620,
+    3476,
+    3476,
+    3476,
+    3476,
+    3476,
+    3476,
+    3476,
     0,
     1,
     1,
     1,
-    2990,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    1,
-    1,
-    1,
-    620,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
+    10481,
     0,
     0,
     0,
@@ -48146,6 +47858,196 @@
     1,
     1,
     1,
+    3476,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
     1,
     1,
     1,
@@ -48185,40 +48087,40 @@
     0,
     0,
     0,
-    7669,
-    10557,
-    10557,
-    10557,
-    10557,
-    10557,
-    10557,
-    4297,
-    6260,
-    6260,
-    6260,
-    4297,
-    4297,
-    4297,
-    4297,
-    4297,
-    4297,
-    4297,
+    27433,
+    38537,
+    38537,
+    38537,
+    38537,
+    38537,
+    38537,
+    14929,
+    23608,
+    23608,
+    23608,
+    14929,
+    14929,
+    14929,
+    14929,
+    14929,
+    14929,
+    14929,
     0,
-    2776,
-    2248,
-    2248,
-    2248,
-    2248,
-    2248,
-    2248,
-    2248,
-    2248,
-    2248,
-    2248,
-    2248,
-    2248,
-    2248,
-    2248,
+    5208,
+    4680,
+    4680,
+    4680,
+    4680,
+    4680,
+    4680,
+    4680,
+    4680,
+    4680,
+    4680,
+    4680,
+    4680,
+    4680,
+    4680,
     0,
     3,
     3,
@@ -48229,106 +48131,106 @@
     3,
     3,
     0,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    2990,
-    29747,
-    29747,
-    29747,
-    29747,
-    29747,
-    29747,
-    10499,
-    10499,
-    10499,
-    10499,
-    10499,
-    10499,
-    10499,
-    10499,
-    10499,
-    10499,
-    10499,
-    10499,
-    19248,
-    29747,
-    4741,
-    4741,
-    4741,
-    4741,
-    25006,
-    25006,
-    25006,
-    4741,
-    4741,
-    4741,
-    4741,
-    4741,
-    4741,
-    4741,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    10481,
+    100421,
+    100421,
+    100421,
+    100421,
+    100421,
+    100421,
+    31269,
+    31269,
+    31269,
+    31269,
+    31269,
+    31269,
+    31269,
+    31269,
+    31269,
+    31269,
+    31269,
+    31269,
+    69152,
+    100421,
+    10760,
+    10760,
+    10760,
+    10760,
+    89661,
+    89661,
+    89661,
+    10760,
+    10760,
+    10760,
+    10760,
+    10760,
+    10760,
+    10760,
     0,
-    1008,
-    1008,
-    1008,
-    1008,
-    1008,
-    1008,
-    1008,
-    1008,
-    1008,
-    1008,
-    620,
-    620,
-    620,
-    620,
-    620,
-    620,
-    620,
-    620,
-    620,
-    620,
-    620,
-    620,
-    620,
-    620,
-    620,
-    620,
-    1008,
-    1008,
-    1008,
+    5944,
+    5944,
+    5944,
+    5944,
+    5944,
+    5944,
+    5944,
+    5944,
+    5944,
+    5944,
+    3476,
+    3476,
+    3476,
+    3476,
+    3476,
+    3476,
+    3476,
+    3476,
+    3476,
+    3476,
+    3476,
+    3476,
+    3476,
+    3476,
+    3476,
+    3476,
+    5944,
+    5944,
+    5944,
     0,
-    1836,
+    3564,
     1728,
     1728,
     1728,
@@ -48525,29 +48427,29 @@
     0,
     0,
     0,
-    648,
-    648,
-    648,
-    648,
-    648,
-    648,
-    648,
-    648,
-    648,
-    648,
-    648,
+    4104,
+    4104,
+    4104,
+    4104,
+    4104,
+    4104,
+    4104,
+    4104,
+    4104,
+    4104,
+    4104,
     0,
-    1640,
-    1640,
-    1640,
-    1640,
-    1640,
-    1640,
-    1640,
-    1640,
-    1640,
-    1640,
-    1640,
+    5616,
+    5616,
+    5616,
+    5616,
+    5616,
+    5616,
+    5616,
+    5616,
+    5616,
+    5616,
+    5616,
     0,
     0,
     0,
@@ -48863,153 +48765,143 @@
     153,
     369,
     369,
-    802,
-    802,
-    802,
-    554,
-    554,
-    554,
-    554,
-    554,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    230,
-    554,
-    230,
-    230,
-    230,
-    230,
-    230,
-    230,
-    230,
-    230,
-    230,
-    230,
-    433,
-    433,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    648,
-    648,
-    648,
-    648,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    972,
-    972,
-    972,
-    972,
-    648,
-    648,
-    648,
-    648,
-    648,
-    648,
-    648,
-    648,
-    648,
-    648,
-    648,
-    648,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
-    324,
+    3185,
+    3185,
+    3185,
+    2937,
+    2937,
+    2937,
+    2937,
+    2937,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    885,
+    2937,
+    885,
+    885,
+    885,
+    885,
+    885,
+    885,
+    885,
+    885,
+    885,
+    885,
+    2816,
+    2816,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    4104,
+    4104,
+    4104,
+    4104,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    6156,
+    6156,
+    6156,
+    6156,
+    4104,
+    4104,
+    4104,
+    4104,
+    4104,
+    4104,
+    4104,
+    4104,
+    4104,
+    4104,
+    4104,
+    4104,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
+    2052,
     216,
     216,
     0,
@@ -49020,99 +48912,103 @@
     0,
     0,
     0,
-    4148,
-    4148,
-    4148,
-    4148,
-    4148,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    1976,
-    968,
-    968,
-    968,
-    968,
-    968,
-    968,
-    968,
-    968,
-    1008,
-    1976,
-    632,
-    632,
-    632,
-    632,
-    632,
-    4644,
-    4644,
-    4644,
-    3744,
-    3744,
-    3744,
-    3744,
-    3744,
-    3744,
-    3744,
-    3744,
-    3744,
+    18088,
+    18088,
+    18088,
+    18088,
+    18088,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    8632,
+    5800,
+    5800,
+    5800,
+    5800,
+    5800,
+    5800,
+    5800,
+    5800,
     2832,
-    2832,
-    2832,
-    2832,
-    2832,
-    2832,
-    2832,
-    2832,
-    2304,
-    2304,
-    2304,
-    2304,
-    2304,
-    2304,
-    2304,
-    2304,
-    1548,
-    1548,
-    1548,
-    1548,
-    1548,
-    1548,
-    1548,
-    1548,
+    8632,
+    4024,
+    4024,
+    4024,
+    4024,
+    4024,
+    13768,
+    13768,
+    13768,
+    10580,
+    10580,
+    10580,
+    10580,
+    10580,
+    10580,
+    10580,
+    10580,
+    10580,
+    6068,
+    6068,
+    6068,
+    6068,
+    6068,
+    6068,
+    6068,
+    6068,
+    2760,
+    2760,
+    2760,
+    2760,
+    2760,
+    2760,
+    2760,
+    2760,
+    2004,
+    2004,
+    2004,
+    2004,
+    2004,
+    2004,
+    2004,
+    2004,
     756,
     756,
-    1440,
-    3744,
-    2232,
-    2232,
-    2232,
-    2232,
-    2232,
-    2232,
-    2232,
-    2232,
-    2232,
-    2232,
-    2668,
-    2668,
+    7820,
+    10580,
+    9068,
+    9068,
+    9068,
+    9068,
+    9068,
+    9068,
+    9068,
+    9068,
+    9068,
+    9068,
+    5136,
+    5136,
+    1512,
+    1512,
+    1512,
+    1512,
     1512,
     1512,
     1512,
@@ -49148,22 +49044,23 @@
     984,
     0,
     0,
-    3176,
-    3176,
-    3176,
-    3176,
-    3176,
-    2168,
-    3808,
-    3808,
-    3808,
-    2168,
-    2168,
-    2168,
-    2168,
-    2168,
-    2168,
-    2168,
+    9000,
+    9000,
+    9000,
+    9000,
+    9000,
+    6144,
+    8952,
+    8952,
+    8952,
+    6144,
+    6144,
+    6144,
+    6144,
+    6144,
+    6144,
+    6144,
+    6144,
     528,
     528,
     528,
@@ -49174,82 +49071,82 @@
     528,
     528,
     528,
-    1640,
-    1640,
-    1640,
-    1640,
-    1640,
-    1640,
-    1640,
-    1640,
-    1640,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    1640,
-    1640,
-    1640,
-    1640,
-    1264,
-    1264,
-    1264,
-    1264,
-    1264,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    820,
-    444,
-    1264,
-    376,
-    376,
-    376,
-    376,
-    376,
-    1264,
-    1264,
-    1264,
-    1264,
-    1264,
-    1264,
-    1264,
+    2808,
+    2808,
+    5616,
+    5616,
+    5616,
+    5616,
+    5616,
+    5616,
+    5616,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    5616,
+    5616,
+    5616,
+    5616,
+    3696,
+    3696,
+    3696,
+    3696,
+    3696,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    2808,
+    888,
+    3696,
+    1920,
+    1920,
+    1920,
+    1920,
+    1920,
+    3696,
+    3696,
+    3696,
+    3696,
+    3696,
+    3696,
+    3696,
     1,
     1,
     1,
@@ -49258,48 +49155,48 @@
     1,
     1,
     1,
-    8956,
-    7692,
-    7692,
-    7692,
-    7692,
-    7692,
-    7692,
-    7692,
-    7692,
-    7692,
-    3744,
-    3744,
-    3744,
-    3744,
-    3744,
-    3948,
-    3948,
-    3948,
-    3948,
-    3948,
-    7896,
-    7896,
-    11640,
-    11640,
-    4148,
-    4148,
-    4148,
-    4148,
-    11640,
-    11640,
+    24516,
+    36036,
+    36036,
+    36036,
+    36036,
+    36036,
+    36036,
+    36036,
+    36036,
+    36036,
+    19224,
+    19224,
+    19224,
+    19224,
+    19224,
+    16812,
+    16812,
+    16812,
+    16812,
+    16812,
+    33624,
+    33624,
+    52848,
+    52848,
+    18088,
+    18088,
+    18088,
+    18088,
+    52848,
+    52848,
     0,
     0,
-    7692,
-    8956,
-    8956,
-    11640,
-    4148,
-    4148,
-    4148,
-    4148,
-    4148,
-    4148,
+    20820,
+    24516,
+    24516,
+    52848,
+    18088,
+    18088,
+    18088,
+    18088,
+    18088,
+    18088,
     984,
     984,
     984,
@@ -49313,26 +49210,26 @@
     984,
     984,
     984,
-    3176,
-    3176,
-    3176,
-    3176,
-    3176,
-    3176,
-    3176,
-    3176,
-    3176,
-    3176,
-    3176,
-    3176,
-    3176,
-    3176,
-    3176,
-    3176,
-    1264,
-    1264,
-    7492,
-    7492,
+    9000,
+    9000,
+    9000,
+    9000,
+    9000,
+    9000,
+    9000,
+    9000,
+    9000,
+    9000,
+    9000,
+    9000,
+    9000,
+    9000,
+    9000,
+    9000,
+    3696,
+    3696,
+    34760,
+    34760,
     1,
     1,
     1,
