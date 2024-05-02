@@ -3,7 +3,8 @@ from set import *
 
 def Game() returns game:
     game = { .waiting: [], .team1: {}, .team2: {}, .lock: Lock(), 
-            .active_game: Condition(), .players: Condition()}
+            .active_game: Condition(), .players: Condition(), .complete_game: Condition(), 
+            .game_headcount: 0, .exited: []}
 
 def game_umpire(g):
     acquire(?g->lock)
@@ -12,7 +13,7 @@ def game_umpire(g):
         # If there's an active game, wait for it to finish
         while (len(g->waiting) < 2) or (len(g->team1) != 0) or (len(g->team2) != 0):
             wait(?g->active_game, ?g->lock)
-       
+        
        #let gives me an error here on the next line
         let pairedplayers = len(g->waiting) - (len(g->waiting) % 2):
             var i = 0
@@ -25,7 +26,8 @@ def game_umpire(g):
             while j < pairedplayers:
                 del g->waiting[0]
                 j += 1
-
+            g->game_headcount = pairedplayers
+        g->exited = []
         # Signal players to start the game
         # assert (len(g->waiting) <= 1)
         notifyAll(?g->players)
@@ -49,18 +51,23 @@ def game_join(g, id) returns teams:
     # Return tuple of teams
     teams = (g->team1, g->team2)
 
+    # Complete game
+    g->exited = g->exited + [id,]
+    notifyAll(?g->complete_game)
+
     release(?g->lock)
 
 def game_leave(g, id):
     acquire(?g->lock)
+    # Wait for game to finish
+    while (len(g->exited) != g->game_headcount):
+        wait(?g->complete_game, ?g->lock)
     
     # Remove player from team
     if id in g->team1:
-        g->team1 = remove(g->team1, id)
-    elif id in g->team2:
         g->team1 = add(g->team2, id)
+    elif id in g->team2:
         g->team2 = remove(g->team2, id)
-
     
     # If teams are empty (game complete), signal umpire to make new teams
     if (len(g->team1) == 0) and (len(g->team2) == 0):
