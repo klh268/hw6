@@ -347,7 +347,7 @@
             "lines": [
                 "from game import *",
                 "",
-                "const NPLAYERS = 4",
+                "const NPLAYERS = 6",
                 "",
                 "thegame = Game()",
                 "nplayers = NPLAYERS",

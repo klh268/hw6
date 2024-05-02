@@ -19,6 +19,8 @@ def game_umpire(g):
             var i = 0
             while i < pairedplayers:
                 g->team1 = add(g->team1, g->waiting[i])
+                g->team1 = add(g->team1, g->waiting[i+1])
+                g->team2 = add(g->team2, g->waiting[i])
                 g->team2 = add(g->team2, g->waiting[i+1])
                 i += 2
 
@@ -65,9 +67,11 @@ def game_leave(g, id):
     
     # Remove player from team
     if id in g->team1:
-        g->team1 = add(g->team2, id)
+        g->team1 = remove(g->team1, id)
+        g->team2 = remove(g->team2, id)
     elif id in g->team2:
         g->team2 = remove(g->team2, id)
+        g->team1 = remove(g->team1, id)
     
     # If teams are empty (game complete), signal umpire to make new teams
     if (len(g->team1) == 0) and (len(g->team2) == 0):
